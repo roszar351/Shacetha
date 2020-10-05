@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Responsible for handling input and logic behind player movement.
+ * 
+ */
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 1f;
