@@ -12,6 +12,8 @@ using TMPro;
  */
 public class TextPopup : MonoBehaviour
 {
+    public float moveYSpeed = 1f;
+
     public static TextPopup Create(Vector3 position, int damageAmount)
     {
         Transform textPopupTransform = Instantiate(GameAssets.i.pfTextPopup, position, Quaternion.identity);
@@ -67,7 +69,6 @@ public class TextPopup : MonoBehaviour
 
     private void Update()
     {
-        float moveYSpeed = 3f;
         transform.position += new Vector3(0, moveYSpeed) * Time.deltaTime;
 
         popupLifeTime -= Time.deltaTime;
