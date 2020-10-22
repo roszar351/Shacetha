@@ -8,14 +8,18 @@ using UnityEngine;
  */
 public class PlayerController : MonoBehaviour
 {
+    // Initialized public variables
     public float leftCooldown = 1f;
     public float rightCooldown = 1f;
 
+    // Uninitialized public variables
     public PlayerAnimations playerAnimations;
     public Transform leftAttackPoint;
     public Transform rightAttackPoint;
     public LayerMask enemyLayers;
+    public so_NPCStats myStats;
 
+    // Initialized private variables
     //private float horizontalSpeed = 0f;
     //private float verticalSpeed = 0f;
     private bool stopInput = false;
@@ -23,15 +27,16 @@ public class PlayerController : MonoBehaviour
     private float currentLeftCooldown = 0f;
     private float currentRightCooldown = 0f;
 
+    // Uninitialized private variables
     private Rigidbody2D rb;
     private Vector2 movementVector;
-    private CharacterStats myStats;
+    private int currentHp;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        myStats = GetComponent<CharacterStats>();
         movementVector = new Vector2(0f, 0f);
+        currentHp = myStats.maxHp;
     }
 
     // Update is called once per frame
@@ -94,16 +99,28 @@ public class PlayerController : MonoBehaviour
         stopInput = false;
     }
 
+    public void TakeDamage(int damage)
+    {
+        TextPopup.Create(transform.position, damage);
+        currentHp -= damage;
+
+        if (currentHp <= 0)
+            Die();
+    }
+
     private void Move()
     {
         if (stopMovementTimer > 0)
+        {
+            playerAnimations.PlayMovementAnimation(new Vector2(0, 0));
             return;
+        }
+
+        playerAnimations.PlayMovementAnimation(movementVector);
 
         // Normalizing as movementVector is initially used as just direction and then speed and fixedDeltaTime is the actual speed
         // Helped prevent quicker movement in diagonals(hopefully :)
         rb.MovePosition(rb.position + movementVector.normalized * myStats.movementSpeed * Time.fixedDeltaTime);
-
-        // TODO: animation based on what is in the movementVector
     }
 
     // Handle the attack input
@@ -121,7 +138,7 @@ public class PlayerController : MonoBehaviour
             playerAnimations.PlayLeftAttack();
             currentLeftCooldown = leftCooldown;
 
-            Invoke("CreateDamageArea", .4f);
+            Invoke("CreateDamageArea", .7f);
         }
         if (Input.GetMouseButton(1) && currentRightCooldown <= 0)
         {
@@ -131,7 +148,7 @@ public class PlayerController : MonoBehaviour
             playerAnimations.PlayRightAttack();
             currentRightCooldown = rightCooldown;
 
-            Invoke("CreateDamageArea", .4f);
+            Invoke("CreateDamageArea", .7f);
         }
     }
 
@@ -140,7 +157,12 @@ public class PlayerController : MonoBehaviour
         Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(leftAttackPoint.position, myStats.attackRange, enemyLayers);
         foreach (Collider2D enemy in enemiesHit)
         {
-            enemy.GetComponent<CharacterStats>().TakeDamage(myStats.damage);
+            //enemy.GetComponent<CharacterStats>().TakeDamage(myStats.baseDamage);
         }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }

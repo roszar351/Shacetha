@@ -23,13 +23,26 @@ public class PlayerAnimations : MonoBehaviour
         player.ResumeMovement();
     }
 
+    public void PlayMovementAnimation(Vector2 movement)
+    {
+        if(movement.x == 0 && movement.y == 0)
+            playerAnimator.SetBool("Moving", false);
+        else
+            playerAnimator.SetBool("Moving", true);
+
+        playerAnimator.SetFloat("VerticalMovement", movement.y);
+        playerAnimator.SetFloat("HorizontalMovement", movement.x);
+    }
+
     public void PlayLeftAttack()
     {
+        playerAnimator.SetBool("Moving", false);
         playerAnimator.SetTrigger("LPunch");
     }
 
     public void PlayRightAttack()
     {
+        playerAnimator.SetBool("Moving", false);
         playerAnimator.SetTrigger("RPunch");
     }
 }
