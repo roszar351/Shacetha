@@ -34,6 +34,12 @@ public class PlayerAnimations : MonoBehaviour
         playerAnimator.SetFloat("HorizontalMovement", movement.x);
     }
 
+    public void UpdateIdleAnimation(Vector2 lookVector)
+    {
+        playerAnimator.SetFloat("VerticalLook", lookVector.y);
+        playerAnimator.SetFloat("HorizontalLook", lookVector.x);
+    }
+
     public void PlayLeftAttack()
     {
         playerAnimator.SetBool("Moving", false);

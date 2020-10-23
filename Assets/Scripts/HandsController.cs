@@ -4,9 +4,30 @@ using UnityEngine;
 
 public class HandsController : MonoBehaviour
 {
+    public so_NPCStats myBaseStats; // Used to get base damage
+
+    [SerializeField]
+    private so_Item leftItem;
+    [SerializeField]
+    private so_Item rightItem;
+
     void Update()
     {
         Aiming();
+    }
+
+    // Handles equiping an item which also involves unequiping the old item
+    // TODO: unequip old item
+    public void EquipItem(so_Item item, bool inLeft = true)
+    {
+        if(inLeft)
+        {
+            leftItem = item;
+        }
+        else
+        {
+            rightItem = item;
+        }
     }
 
     private void Aiming()

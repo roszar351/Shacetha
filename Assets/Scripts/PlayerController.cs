@@ -8,20 +8,11 @@ using UnityEngine;
  */
 public class PlayerController : MonoBehaviour
 {
-    // Initialized public variables
-    public float leftCooldown = 1f;
-    public float rightCooldown = 1f;
-
     // Uninitialized public variables
     public PlayerAnimations playerAnimations;
-    public Transform leftAttackPoint;
-    public Transform rightAttackPoint;
-    public LayerMask enemyLayers;
     public so_NPCStats myStats;
 
     // Initialized private variables
-    //private float horizontalSpeed = 0f;
-    //private float verticalSpeed = 0f;
     private bool stopInput = false;
     private float stopMovementTimer = 0f;
     private float currentLeftCooldown = 0f;
@@ -45,27 +36,8 @@ public class PlayerController : MonoBehaviour
         if (stopInput)
             return;
 
-        movementVector.x = 0;
-        movementVector.y = 0;
-        stopMovementTimer -= Time.deltaTime;
-
-        if (Input.GetButton("Up"))
-        {
-            movementVector.y = 1f;
-        }
-        if (Input.GetButton("Down"))
-        {
-            movementVector.y = -1f;
-        }
-        if (Input.GetButton("Right"))
-        {
-            movementVector.x = 1f;
-        }
-        if (Input.GetButton("Left"))
-        {
-            movementVector.x = -1f;
-        }
-        
+        Look();
+        HandleMove();
         HandleAttack(); 
     }
 
@@ -108,6 +80,36 @@ public class PlayerController : MonoBehaviour
             Die();
     }
 
+    private void Look()
+    {
+        Vector2 lookDirection = (GetMousePosition() - transform.position).normalized;
+        playerAnimations.UpdateIdleAnimation(lookDirection);
+    }
+
+    private void HandleMove()
+    {
+        movementVector.x = 0;
+        movementVector.y = 0;
+        stopMovementTimer -= Time.deltaTime;
+
+        if (Input.GetButton("Up"))
+        {
+            movementVector.y = 1f;
+        }
+        if (Input.GetButton("Down"))
+        {
+            movementVector.y = -1f;
+        }
+        if (Input.GetButton("Right"))
+        {
+            movementVector.x = 1f;
+        }
+        if (Input.GetButton("Left"))
+        {
+            movementVector.x = -1f;
+        }
+    }
+
     private void Move()
     {
         if (stopMovementTimer > 0)
@@ -135,34 +137,26 @@ public class PlayerController : MonoBehaviour
             movementVector.x = 0;
             movementVector.y = 0;
 
-            playerAnimations.PlayLeftAttack();
-            currentLeftCooldown = leftCooldown;
-
-            Invoke("CreateDamageArea", .7f);
+            Debug.Log("Left attack!");
         }
         if (Input.GetMouseButton(1) && currentRightCooldown <= 0)
         {
             movementVector.x = 0;
             movementVector.y = 0;
 
-            playerAnimations.PlayRightAttack();
-            currentRightCooldown = rightCooldown;
-
-            Invoke("CreateDamageArea", .7f);
-        }
-    }
-
-    private void CreateDamageArea()
-    {
-        Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(leftAttackPoint.position, myStats.attackRange, enemyLayers);
-        foreach (Collider2D enemy in enemiesHit)
-        {
-            //enemy.GetComponent<CharacterStats>().TakeDamage(myStats.baseDamage);
+            Debug.Log("Right attack!");
         }
     }
 
     private void Die()
     {
         Destroy(gameObject);
+    }
+
+    private Vector3 GetMousePosition()
+    {
+        Vector3 temp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        temp.z = 0;
+        return temp;
     }
 }
