@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03d2ee8510db0d941add16a130cf009c, type: 3}
   m_Name: npcstats_Player
   m_EditorClassIdentifier: 
+  name: Player
   maxHp: 100
   baseDamage: 10
+  baseArmor: 0
+  totalArmor: 0
   movementSpeed: 5
   attackRange: 0.5

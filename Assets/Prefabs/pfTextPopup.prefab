@@ -75,8 +75,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1936118753
-  m_SortingLayer: 0
+  m_SortingLayerID: -2139876833
+  m_SortingLayer: 6
   m_SortingOrder: 0
 --- !u!222 &6573189230368030198
 CanvasRenderer:
@@ -132,8 +132,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2
-  m_fontSizeBase: 2
+  m_fontSize: 6
+  m_fontSizeBase: 6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 2
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 6573189230368030201}
   m_maskType: 0
-  _SortingLayerID: -1936118753
+  _SortingLayerID: -2139876833
   _SortingOrder: 0
 --- !u!114 &888920530854902584
 MonoBehaviour:
@@ -188,3 +188,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936e196b8d3755940b8024c8df357cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveYSpeed: 1

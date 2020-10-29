@@ -11,12 +11,11 @@ public class PlayerController : MonoBehaviour
     // Uninitialized public variables
     public PlayerAnimations playerAnimations;
     public so_NPCStats myStats;
+    public HandsController myHands;
 
     // Initialized private variables
     private bool stopInput = false;
     private float stopMovementTimer = 0f;
-    private float currentLeftCooldown = 0f;
-    private float currentRightCooldown = 0f;
 
     // Uninitialized private variables
     private Rigidbody2D rb;
@@ -128,23 +127,22 @@ public class PlayerController : MonoBehaviour
     // Handle the attack input
     private void HandleAttack()
     {
-        currentLeftCooldown -= Time.deltaTime;
-        currentRightCooldown -= Time.deltaTime;
+        
 
         // TODO: add animation + sound for attacks
-        if (Input.GetMouseButton(0) && currentLeftCooldown <= 0)
+        if (Input.GetMouseButton(0))
         {
             movementVector.x = 0;
             movementVector.y = 0;
 
-            Debug.Log("Left attack!");
+            myHands.UseLeftHand();
         }
-        if (Input.GetMouseButton(1) && currentRightCooldown <= 0)
+        if (Input.GetMouseButton(1))
         {
             movementVector.x = 0;
             movementVector.y = 0;
 
-            Debug.Log("Right attack!");
+            myHands.UseRightHand();
         }
     }
 
