@@ -18,4 +18,4 @@ MonoBehaviour:
   baseArmor: 0
   totalArmor: 0
   movementSpeed: 2
-  attackRange: 0.5
+  attackRange: 1

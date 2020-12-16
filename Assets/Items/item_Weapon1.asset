@@ -18,4 +18,4 @@ MonoBehaviour:
   modifierValue: 5
   itemRange: 0.3
   useCooldown: 1.5
-  duration: 0.5
+  duration: 1

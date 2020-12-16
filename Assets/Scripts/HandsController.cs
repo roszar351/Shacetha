@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class HandsController : MonoBehaviour
 {
-    public so_NPCStats myBaseStats; // Used to get base damage
+    public so_NPCStats myBaseStats; // Used to get and alter character stats when using items i.e. for damage and defense
     public LayerMask myEnemyLayers;
-    public Animator myAnimator;
+    public Animator myLeftAnimator;
+    public Animator myRightAnimator;
 
     [SerializeField]
     private so_Item leftItem = null;
@@ -54,11 +55,13 @@ public class HandsController : MonoBehaviour
             leftSprite.sprite = leftItem.weaponSprite;
             if(leftItem.itemType == ItemType.Weapon)
             {
+                myLeftAnimator.enabled = true;
                 leftHand.transform.localPosition = new Vector3(0.4f, -0.3f, 0);
                 leftSprite.flipY = true;
             }
             else
             {
+                myLeftAnimator.enabled = false;
                 leftHand.transform.localPosition = new Vector3(0.25f, -0.15f, 0);
                 leftSprite.flipY = false;
             }
@@ -69,12 +72,13 @@ public class HandsController : MonoBehaviour
             rightSprite.sprite = rightItem.weaponSprite;
             if (rightItem.itemType == ItemType.Weapon)
             {
+                myRightAnimator.enabled = true;
                 rightHand.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
                 rightSprite.flipY = true;
             }
             else
             {
-                // TODO: Shield position doesn't set properly(might be related to animator)
+                myRightAnimator.enabled = false;
                 rightHand.transform.localPosition = new Vector3(-0.25f, -0.15f, 0);
                 rightSprite.flipY = false;
             }
@@ -121,7 +125,7 @@ public class HandsController : MonoBehaviour
         leftSprite.enabled = true;
         if(leftItem.itemType == ItemType.Weapon)
         {
-            myAnimator.SetBool("LeftAttack", true);
+            myLeftAnimator.SetBool("Attack", true);
         }
         else
         {
@@ -130,7 +134,7 @@ public class HandsController : MonoBehaviour
 
         yield return new WaitForSeconds(leftItem.duration);
 
-        myAnimator.SetBool("LeftAttack", false);
+        myLeftAnimator.SetBool("Attack", false);
         leftSprite.enabled = false;
         myBaseStats.totalArmor = myBaseStats.baseArmor;
     }
@@ -141,7 +145,7 @@ public class HandsController : MonoBehaviour
         rightSprite.enabled = true;
         if (rightItem.itemType == ItemType.Weapon)
         {
-            myAnimator.SetBool("RightAttack", true);
+            myRightAnimator.SetBool("Attack", true);
         }
         else
         {
@@ -151,7 +155,7 @@ public class HandsController : MonoBehaviour
 
         yield return new WaitForSeconds(rightItem.duration);
 
-        myAnimator.SetBool("RightAttack", false);
+        myRightAnimator.SetBool("Attack", false);
         rightSprite.enabled = false;
         myBaseStats.totalArmor = myBaseStats.baseArmor;
     }

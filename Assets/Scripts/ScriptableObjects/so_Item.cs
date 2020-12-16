@@ -13,13 +13,6 @@ public class so_Item : ScriptableObject
     public float useCooldown;
     public float duration = 1f;
 
-    private GameObject parentObject;
-
-    public virtual void Use()
-    {
-        Debug.Log("Using Item: " + name);
-    }
-
     public override string ToString()
     {
         return name;

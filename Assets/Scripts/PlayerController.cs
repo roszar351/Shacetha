@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementVector;
     private int currentHp;
 
+    // Events
+    public event System.Action<int, int> OnHealthChanged;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -34,6 +37,11 @@ public class PlayerController : MonoBehaviour
     {
         if (stopInput)
             return;
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(5);
+        }
 
         Look();
         HandleMove();
@@ -74,6 +82,11 @@ public class PlayerController : MonoBehaviour
     {
         TextPopup.Create(transform.position, damage);
         currentHp -= damage;
+
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(myStats.maxHp, currentHp);
+        }
 
         if (currentHp <= 0)
             Die();
