@@ -10,11 +10,13 @@ public class Enemy : MonoBehaviour
 
     protected int currentHp;
     protected Transform target;
+    protected Rigidbody2D rb;
 
     protected virtual void Start()
     {
         currentHp = myStats.maxHp;
         SetTarget(PlayerManager.instance.player.transform);
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public virtual void Move()
@@ -36,13 +38,15 @@ public class Enemy : MonoBehaviour
     public virtual void SetTarget(Transform target)
     {
         this.target = target;
+        myHands.SetFollowTarget(target);
     }
 
     public virtual void TakeDamage(int damageAmount)
     {
         //Debug.Log("Damage taken!");
-        TextPopup.Create(transform.position, damageAmount);
+        damageAmount = (int)(damageAmount * (100f / (100f + myStats.totalArmor)));
         currentHp -= damageAmount;
+        TextPopup.Create(transform.position, damageAmount);
 
         if (currentHp <= 0)
         {

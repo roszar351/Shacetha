@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicEnemy1 : Enemy
+public class SimpleChaseAndAttackEnemy : Enemy
 {
     private Node rootNode;
 
@@ -28,5 +28,19 @@ public class BasicEnemy1 : Enemy
         Sequence attackSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });
 
         rootNode = new Selector(new List<Node> { attackSequence, movementSequence });
+    }
+
+    public override void Attack()
+    {
+        // TODO: Add a tell before attacking
+
+        myHands.UseLeftHand();
+        myHands.UseRightHand();
+    }
+
+    public override void Move()
+    {
+        Vector2 movementVector = target.position - transform.position;
+        rb.MovePosition(rb.position + movementVector.normalized * myStats.movementSpeed * Time.fixedDeltaTime);
     }
 }

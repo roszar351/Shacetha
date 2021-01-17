@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18a06b37e1e9d6c41860f1f77e65065c, type: 3}
-  m_Name: item_Weapon2
+  m_Name: item_Sword1
   m_EditorClassIdentifier: 
-  name: StaffWeapon
+  name: Sword1
   itemType: 0
-  weaponSprite: {fileID: 21300000, guid: 19852149af43b744f83e897dbfe3e0e9, type: 3}
-  modifierValue: 20
-  itemRange: 1
-  useCooldown: 1
+  weaponSprite: {fileID: 21300000, guid: 48c9bb30325158f4a98e8825c3a1b272, type: 3}
+  modifierValue: 5
+  itemRange: 0
+  damageRadius: 0.5
+  useCooldown: 1.5
   duration: 1

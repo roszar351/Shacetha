@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /*
  * Responsible for handling input and logic behind player movement.
@@ -80,8 +81,9 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        TextPopup.Create(transform.position, damage);
+        damage = (int)(damage * (100f / (100f + myStats.totalArmor)));
         currentHp -= damage;
+        TextPopup.Create(transform.position, damage);
 
         if (OnHealthChanged != null)
         {
@@ -140,7 +142,7 @@ public class PlayerController : MonoBehaviour
     // Handle the attack input
     private void HandleAttack()
     {
-        
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
         // TODO: add animation + sound for attacks
         if (Input.GetMouseButton(0))
@@ -161,7 +163,8 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        PlayerManager.instance.KillPlayer();
     }
 
     private Vector3 GetMousePosition()

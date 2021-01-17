@@ -10,6 +10,8 @@ public class HandsController : MonoBehaviour
     public Animator myRightAnimator;
 
     [SerializeField]
+    private bool followMouse = false;
+    [SerializeField]
     private so_Item leftItem = null;
     [SerializeField]
     private so_Item rightItem = null;
@@ -24,6 +26,7 @@ public class HandsController : MonoBehaviour
 
     private SpriteRenderer leftSprite;
     private SpriteRenderer rightSprite;
+    private Transform followTarget;
 
     private float currentLeftCooldown = 0f;
     private float currentRightCooldown = 0f;
@@ -32,8 +35,12 @@ public class HandsController : MonoBehaviour
     {
         leftSprite = leftHand.GetComponent<SpriteRenderer>();
         rightSprite = rightHand.GetComponent<SpriteRenderer>();
-        EquipItem(leftItem, true);
-        EquipItem(rightItem, false);
+        so_Item tempItem = leftItem;
+        leftItem = null;
+        EquipItem(tempItem, true);
+        tempItem = rightItem;
+        rightItem = null;
+        EquipItem(tempItem, false);
         leftSprite.enabled = false;
         rightSprite.enabled = false;
     }
@@ -43,60 +50,103 @@ public class HandsController : MonoBehaviour
         currentLeftCooldown -= Time.deltaTime;
         currentRightCooldown -= Time.deltaTime;
 
+        if(followMouse)
+            PlayerCooldownUIHelper.instance.UpdateCooldowns(currentLeftCooldown, currentRightCooldown);
+
         Aiming();
     }
 
     // Handles equiping an item
     public void EquipItem(so_Item item, bool inLeft = true)
     {
+        if (item == null)
+            return;
+
         if(inLeft)
         {
+            if (followMouse && leftItem != null)
+                PlayerManager.instance.playerInventory.Add(leftItem);
+
             leftItem = item;
             leftSprite.sprite = leftItem.weaponSprite;
-            if(leftItem.itemType == ItemType.Weapon)
+
+            if (followMouse)
+            {
+                PlayerCooldownUIHelper.instance.ChangeImages(leftSprite.sprite, inLeft);
+                PlayerCooldownUIHelper.instance.SetMaxLeftCooldown(leftItem.useCooldown);
+            }
+
+            if(leftItem.itemType == ItemType.Shield)
+            {
+                myLeftAnimator.enabled = false;
+                leftHand.transform.localPosition = new Vector3(0.25f, -0.15f, 0);
+                leftSprite.flipY = false;
+                leftAttackPoint.transform.localPosition = new Vector3(0f, -.2f, 0f) - new Vector3(0f, leftItem.itemRange, 0f);
+            }
+            else
             {
                 myLeftAnimator.enabled = true;
                 leftHand.transform.localPosition = new Vector3(0.4f, -0.3f, 0);
                 leftSprite.flipY = true;
             }
-            else
-            {
-                myLeftAnimator.enabled = false;
-                leftHand.transform.localPosition = new Vector3(0.25f, -0.15f, 0);
-                leftSprite.flipY = false;
-            }
         }
         else
         {
+            if (followMouse && rightItem != null)
+                PlayerManager.instance.playerInventory.Add(rightItem);
+
             rightItem = item;
             rightSprite.sprite = rightItem.weaponSprite;
-            if (rightItem.itemType == ItemType.Weapon)
+
+            if (followMouse)
             {
-                myRightAnimator.enabled = true;
-                rightHand.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
-                rightSprite.flipY = true;
+                PlayerCooldownUIHelper.instance.ChangeImages(rightSprite.sprite, inLeft);
+                PlayerCooldownUIHelper.instance.SetMaxRightCooldown(rightItem.useCooldown);
             }
-            else
+
+            if (rightItem.itemType == ItemType.Shield)
             {
                 myRightAnimator.enabled = false;
                 rightHand.transform.localPosition = new Vector3(-0.25f, -0.15f, 0);
                 rightSprite.flipY = false;
+            }
+            else
+            {
+                myRightAnimator.enabled = true;
+                rightHand.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
+                rightSprite.flipY = true;
+                rightAttackPoint.transform.localPosition = new Vector3(0f, -.2f, 0f) - new Vector3(0f, rightItem.itemRange, 0f);
             }
         }
     }
 
     public void UseLeftHand()
     {
+        if (leftItem == null)
+            return;
+
         if (currentLeftCooldown <= 0)
         {
             StartCoroutine("UseLeftItem");
 
-            if (leftItem.itemType == ItemType.Weapon)
+            if (leftItem.itemType != ItemType.Shield)
             {
-                Collider2D[] damageArea = Physics2D.OverlapCircleAll(leftAttackPoint.position, leftItem.itemRange, myEnemyLayers);
+                Collider2D[] damageArea = Physics2D.OverlapCircleAll(leftAttackPoint.position, leftItem.damageRadius, myEnemyLayers);
                 for (int i = 0; i < damageArea.Length; i++)
                 {
-                    damageArea[i].GetComponent<Enemy>().TakeDamage(myBaseStats.baseDamage + leftItem.modifierValue);
+                    Enemy e = damageArea[i].GetComponent<Enemy>();
+                    if (e != null)
+                    {
+                        e.TakeDamage(myBaseStats.baseDamage + leftItem.modifierValue);
+                    }
+                    else
+                    {
+                        PlayerController p = damageArea[i].GetComponent<PlayerController>();
+                        if(p != null)
+                        {
+                            p.TakeDamage(myBaseStats.baseDamage + leftItem.modifierValue);
+                        }
+                    }  
                 }
             }
         }
@@ -104,32 +154,57 @@ public class HandsController : MonoBehaviour
 
     public void UseRightHand()
     {
+        if (rightItem == null)
+            return;
+
         if (currentRightCooldown <= 0)
         {
             StartCoroutine("UseRightItem");
 
-            if (rightItem.itemType == ItemType.Weapon)
+            if (rightItem.itemType != ItemType.Shield)
             {
-                Collider2D[] damageArea = Physics2D.OverlapCircleAll(rightAttackPoint.position, rightItem.itemRange, myEnemyLayers);
+                Collider2D[] damageArea = Physics2D.OverlapCircleAll(rightAttackPoint.position, rightItem.damageRadius, myEnemyLayers);
                 for (int i = 0; i < damageArea.Length; i++)
                 {
-                    damageArea[i].GetComponent<Enemy>().TakeDamage(myBaseStats.baseDamage + rightItem.modifierValue);
+                    Enemy e = damageArea[i].GetComponent<Enemy>();
+                    if (e != null)
+                    {
+                        e.TakeDamage(myBaseStats.baseDamage + rightItem.modifierValue);
+                    }
+                    else
+                    {
+                        PlayerController p = damageArea[i].GetComponent<PlayerController>();
+                        if (p != null)
+                        {
+                            p.TakeDamage(myBaseStats.baseDamage + rightItem.modifierValue);
+                        }
+                    }
                 }
             }
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        if(rightItem != null)
+            Gizmos.DrawWireSphere(rightAttackPoint.position, rightItem.damageRadius);
+        Gizmos.color = new Color(255 / 255, 192 / 255, 203 / 255);
+        if(leftItem != null)
+            Gizmos.DrawWireSphere(leftAttackPoint.position, leftItem.damageRadius);
     }
 
     IEnumerator UseLeftItem()
     {
         currentLeftCooldown = leftItem.useCooldown;
         leftSprite.enabled = true;
-        if(leftItem.itemType == ItemType.Weapon)
+        if(leftItem.itemType == ItemType.Shield)
         {
-            myLeftAnimator.SetBool("Attack", true);
+            myBaseStats.totalArmor = myBaseStats.baseArmor + leftItem.modifierValue;
         }
         else
         {
-            myBaseStats.totalArmor = myBaseStats.baseArmor + leftItem.modifierValue;
+            myLeftAnimator.SetBool("Attack", true);
         }
 
         yield return new WaitForSeconds(leftItem.duration);
@@ -143,13 +218,13 @@ public class HandsController : MonoBehaviour
     {
         currentRightCooldown = rightItem.useCooldown;
         rightSprite.enabled = true;
-        if (rightItem.itemType == ItemType.Weapon)
+        if (rightItem.itemType == ItemType.Shield)
         {
-            myRightAnimator.SetBool("Attack", true);
+            myBaseStats.totalArmor = myBaseStats.baseArmor + rightItem.modifierValue;
         }
         else
         {
-            myBaseStats.totalArmor = myBaseStats.baseArmor + rightItem.modifierValue;
+            myRightAnimator.SetBool("Attack", true);
         }
 
 
@@ -162,11 +237,26 @@ public class HandsController : MonoBehaviour
 
     private void Aiming()
     {
-        Vector3 mousePos = GetMousePosition();
-        Vector3 aimDirection = (mousePos - transform.position).normalized;
+        if (followMouse)
+        {
+            Vector3 mousePos = GetMousePosition();
+            Vector3 aimDirection = (mousePos - transform.position).normalized;
 
-        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        transform.eulerAngles = new Vector3(0, 0, angle + 90f);
+            float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+            transform.eulerAngles = new Vector3(0, 0, angle + 90f);
+        }
+        else
+        {
+            Vector3 aimDirection = (followTarget.position - transform.position).normalized;
+
+            float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+            transform.eulerAngles = new Vector3(0, 0, angle + 90f);
+        }
+    }
+
+    public void SetFollowTarget(Transform target)
+    {
+        followTarget = target;
     }
 
     // TODO: Move this function to some helper script as it is also used in PlayerController and might be useful in future

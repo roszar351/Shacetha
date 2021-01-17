@@ -10,6 +10,7 @@ public class so_Item : ScriptableObject
     public Sprite weaponSprite = null;
     public int modifierValue; // If item is a shield it will reduce incoming damage by this value, if its a weapon it will do this much damage
     public float itemRange;
+    public float damageRadius;
     public float useCooldown;
     public float duration = 1f;
 
@@ -22,7 +23,10 @@ public class so_Item : ScriptableObject
 // TODO: can add different item types such as spear weapon, aoe weapon that function differently
 public enum ItemType
 {
-    Weapon,
+    Sword,
+    Spear,
+    Dagger,
+    Axe,
     Shield
 }
 

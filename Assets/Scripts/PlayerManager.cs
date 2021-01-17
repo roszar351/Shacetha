@@ -17,9 +17,12 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     public GameObject player;
+    public HandsController playerHands;
+    public Inventory playerInventory;
 
     public void KillPlayer()
     {
+        Destroy(player);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
