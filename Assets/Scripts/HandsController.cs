@@ -35,12 +35,15 @@ public class HandsController : MonoBehaviour
     {
         leftSprite = leftHand.GetComponent<SpriteRenderer>();
         rightSprite = rightHand.GetComponent<SpriteRenderer>();
+
         so_Item tempItem = leftItem;
         leftItem = null;
         EquipItem(tempItem, true);
+
         tempItem = rightItem;
         rightItem = null;
         EquipItem(tempItem, false);
+
         leftSprite.enabled = false;
         rightSprite.enabled = false;
     }
@@ -74,6 +77,7 @@ public class HandsController : MonoBehaviour
             {
                 PlayerCooldownUIHelper.instance.ChangeImages(leftSprite.sprite, inLeft);
                 PlayerCooldownUIHelper.instance.SetMaxLeftCooldown(leftItem.useCooldown);
+                PlayerCooldownUIHelper.instance.ChangeItem(item, true);
             }
 
             if(leftItem.itemType == ItemType.Shield)
@@ -102,6 +106,7 @@ public class HandsController : MonoBehaviour
             {
                 PlayerCooldownUIHelper.instance.ChangeImages(rightSprite.sprite, inLeft);
                 PlayerCooldownUIHelper.instance.SetMaxRightCooldown(rightItem.useCooldown);
+                PlayerCooldownUIHelper.instance.ChangeItem(item, false);
             }
 
             if (rightItem.itemType == ItemType.Shield)

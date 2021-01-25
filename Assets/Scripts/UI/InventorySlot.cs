@@ -15,7 +15,8 @@ public class InventorySlot : MonoBehaviour
         item = newItem;
         icon.sprite = item.weaponSprite;
         icon.enabled = true;
-        removeButton.interactable = true;
+        if(removeButton != null)
+            removeButton.interactable = true;
     }
 
     public void ClearSlot()
@@ -23,7 +24,8 @@ public class InventorySlot : MonoBehaviour
         item = null;
         icon.sprite = null;
         icon.enabled = false;
-        removeButton.interactable = false;
+        if (removeButton != null)
+            removeButton.interactable = false;
     }
 
     public void OnRemoveButton()

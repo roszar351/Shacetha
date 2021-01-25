@@ -20,6 +20,8 @@ public class PlayerCooldownUIHelper : MonoBehaviour
     }
     #endregion
 
+    public event System.Action<so_Item, bool> OnEquippedItemChanged;
+
     private float maxLeftCD = 1;
     private float maxRightCD = 1;
 
@@ -33,6 +35,12 @@ public class PlayerCooldownUIHelper : MonoBehaviour
             right = 0;
 
         ui.UpdateSliders(left / maxLeftCD, right / maxRightCD);
+    }
+
+    public void ChangeItem(so_Item item, bool isLeft)
+    {
+        if (OnEquippedItemChanged != null)
+            OnEquippedItemChanged(item, isLeft);
     }
 
     public void SetMaxCooldowns(float maxLeft, float maxRight)

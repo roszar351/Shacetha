@@ -16,7 +16,22 @@ public class so_Item : ScriptableObject
 
     public override string ToString()
     {
-        return name;
+        string ret = name;
+        ret += "\nType: " + itemType;
+        if (itemType == ItemType.Shield)
+        {
+            ret += "\nDefence: " + modifierValue;
+        }
+        else
+        {
+            ret += "\nDamage: " + modifierValue;
+            ret += "\nRange: " + itemRange;
+            ret += "\nAoE: " + damageRadius;
+        }
+
+        ret += "\nCooldown: " + useCooldown;
+
+        return ret;
     }
 }
 
