@@ -20,9 +20,22 @@ public class PlayerManager : MonoBehaviour
     public HandsController playerHands;
     public Inventory playerInventory;
 
+    [SerializeField]
+    private so_NPCStats defaultPlayerStats;
+
+    private void Start()
+    {
+        ResetPlayerStats();
+    }
+
     public void KillPlayer()
     {
         Destroy(player);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ResetPlayerStats()
+    {
+        player.GetComponent<PlayerController>().myStats.ResetStats(defaultPlayerStats);
     }
 }

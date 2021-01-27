@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03d2ee8510db0d941add16a130cf009c, type: 3}
-  m_Name: npcstats_Player
+  m_Name: npcstats_DefaultPlayerStats
   m_EditorClassIdentifier: 
-  name: Player
+  name: DEFAULTPLAYER
   maxHp: 100
   baseDamage: 10
   baseArmor: 0

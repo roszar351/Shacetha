@@ -42,6 +42,7 @@ public enum ItemType
     Spear,
     Dagger,
     Axe,
-    Shield
+    Shield,
+    NULL
 }
 

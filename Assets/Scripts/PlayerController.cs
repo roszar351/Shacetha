@@ -81,9 +81,32 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        damage = (int)(damage * (100f / (100f + myStats.totalArmor)));
+        float tempValue = 100f + myStats.totalArmor;
+        if(tempValue <= 0)
+        {
+            tempValue = 1;
+        }
+
+        damage = (int)(damage * (100f / tempValue));
         currentHp -= damage;
         TextPopup.Create(transform.position, damage);
+
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(myStats.maxHp, currentHp);
+        }
+
+        if (currentHp <= 0)
+            Die();
+    }
+
+    public void Heal(int damage)
+    {
+        currentHp += damage;
+        if (currentHp > myStats.maxHp)
+            currentHp = myStats.maxHp;
+
+        TextPopup.Create(transform.position, damage, Color.green);
 
         if (OnHealthChanged != null)
         {

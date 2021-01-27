@@ -887,7 +887,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 277315589}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1457480954}
+        m_MethodName: PickReward
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &277315589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -941,7 +952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &289765277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7485,7 +7496,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 766429340}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1457480954}
+        m_MethodName: PickReward
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &766429340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7606,7 +7628,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 794212167}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1457480954}
+        m_MethodName: PickReward
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &794212167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8087,7 +8120,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000041604, y: 18.434}
+  m_AnchoredPosition: {x: 0.00019119, y: 55.5}
   m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &847610100
@@ -8536,8 +8569,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00016785, y: -51.783}
-  m_SizeDelta: {x: 105.862305, y: 76.43349}
+  m_AnchoredPosition: {x: 0.00016785, y: -33.25}
+  m_SizeDelta: {x: 105.862305, y: 113.49974}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &883891593
 MonoBehaviour:
@@ -8558,7 +8591,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '+
+  m_text: 'Error: Human
+
+    +
 
     Error: Human'
   m_isRightToLeft: 0
@@ -11854,6 +11889,7 @@ MonoBehaviour:
   player: {fileID: 2015592086}
   playerHands: {fileID: 1583938304}
   playerInventory: {fileID: 2015592092}
+  defaultPlayerStats: {fileID: 11400000, guid: 7b210b5089873ce48a7f8e3973794ede, type: 2}
 --- !u!4 &1457480953
 Transform:
   m_ObjectHideFlags: 0
@@ -11891,6 +11927,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0f96d461ecb34ab4793fa9f849ac3f06, type: 2}
   - {fileID: 11400000, guid: c7a67d90541139a4a9682806b8328027, type: 2}
   - {fileID: 11400000, guid: 4b0302f900edc9042a4627d5f14dbb59, type: 2}
+  playerStats: {fileID: 11400000, guid: adb8d98c45cb9244982c8305ff134047, type: 2}
+  nullItem: {fileID: 11400000, guid: 8e0bcc3a75d297b4fbf0ff448cee9560, type: 2}
 --- !u!114 &1457480955
 MonoBehaviour:
   m_ObjectHideFlags: 0
