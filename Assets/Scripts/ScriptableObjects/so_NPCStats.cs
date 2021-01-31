@@ -13,6 +13,11 @@ public class so_NPCStats : ScriptableObject
     public float movementSpeed = 1f;
     public float attackRange = 0.5f;
 
+    private void Awake()
+    {
+        totalArmor = baseArmor;
+    }
+
     // Used to increase or decrease max hp value, maxHp cant go under 1
     public void UpdateMaxHp(int value)
     {
@@ -41,6 +46,7 @@ public class so_NPCStats : ScriptableObject
     public void UpdateBaseArmor(int value)
     {
         baseArmor += value;
+        totalArmor += value;
     }
 
     public void ResetStats(so_NPCStats defaultStats)

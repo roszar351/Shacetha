@@ -23,9 +23,24 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private so_NPCStats defaultPlayerStats;
 
+    private PlayerController playerController;
+
     private void Start()
     {
         ResetPlayerStats();
+        playerController = player.GetComponent<PlayerController>();
+    }
+
+    public void StopPlayerInput()
+    {
+        playerHands.gameObject.SetActive(false);
+        playerController.StopInput();
+    }
+    
+    public void ResumePlayerInput()
+    {
+        playerHands.gameObject.SetActive(true);
+        playerController.ResumeInput();
     }
 
     public void KillPlayer()

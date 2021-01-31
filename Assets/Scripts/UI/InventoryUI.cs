@@ -19,6 +19,8 @@ public class InventoryUI : MonoBehaviour
 
         // Make sure to display any items already present.
         UpdateUI();
+
+        inventoryUI.SetActive(false);
     }
 
     void Update()

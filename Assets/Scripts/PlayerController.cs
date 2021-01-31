@@ -39,11 +39,6 @@ public class PlayerController : MonoBehaviour
         if (stopInput)
             return;
 
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(5);
-        }
-
         Look();
         HandleMove();
         HandleAttack(); 
