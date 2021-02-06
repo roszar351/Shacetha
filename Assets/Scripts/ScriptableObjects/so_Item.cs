@@ -35,7 +35,6 @@ public class so_Item : ScriptableObject
     }
 }
 
-// TODO: can add different item types such as spear weapon, aoe weapon that function differently
 public enum ItemType
 {
     Sword,

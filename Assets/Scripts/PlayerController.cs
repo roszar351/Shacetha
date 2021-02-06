@@ -160,15 +160,18 @@ public class PlayerController : MonoBehaviour
     // Handle the attack input
     private void HandleAttack()
     {
+        // dont attack if clicking in UI
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
         // TODO: add animation + sound for attacks
+
         if (Input.GetMouseButton(0))
         {
             movementVector.x = 0;
             movementVector.y = 0;
 
             myHands.UseLeftHand();
+            playerAnimations.StopPlayerMovement(.5f);
         }
         if (Input.GetMouseButton(1))
         {
@@ -176,6 +179,7 @@ public class PlayerController : MonoBehaviour
             movementVector.y = 0;
 
             myHands.UseRightHand();
+            playerAnimations.StopPlayerMovement(.5f);
         }
     }
 

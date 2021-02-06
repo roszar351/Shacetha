@@ -7,16 +7,23 @@ public class Enemy : MonoBehaviour
 {
     public so_NPCStats myStats;
     public HandsController myHands;
+    public EnemyAnimations myAnimations;
 
     protected int currentHp;
     protected Transform target;
     protected Rigidbody2D rb;
+    protected bool attacking = false;
 
     protected virtual void Start()
     {
         currentHp = myStats.maxHp;
         SetTarget(PlayerManager.instance.player.transform);
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void LateUpdate()
+    {
+        myAnimations.UpdateIdleAnimation(target.position - transform.position);
     }
 
     public virtual void Move()
@@ -33,6 +40,11 @@ public class Enemy : MonoBehaviour
     {
         Debug.LogError("Implement UseAbility Method!");
         return false;
+    }
+
+    public virtual void Idle()
+    {
+        myAnimations.PlayMovementAnimation(new Vector2(0, 0));
     }
 
     public virtual void SetTarget(Transform target)
