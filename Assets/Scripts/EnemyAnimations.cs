@@ -36,6 +36,12 @@ public class EnemyAnimations : MonoBehaviour
         myAnimator.SetTrigger("AttackTell");
     }
 
+    public void PlayAbilityTell()
+    {
+        myAnimator.SetBool("Moving", false);
+        myAnimator.SetTrigger("SpellTell");
+    }
+
     public void PlayLeftAttack()
     {
         myAnimator.SetBool("Moving", false);

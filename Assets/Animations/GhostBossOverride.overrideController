@@ -8,4 +8,20 @@ AnimatorOverrideController:
   m_PrefabAsset: {fileID: 0}
   m_Name: GhostBossOverride
   m_Controller: {fileID: 9100000, guid: 982c51a987024a14b98438a9d0d99371, type: 2}
-  m_Clips: []
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 364684cbfef7ebe448d575223dac4dde, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d980c017792b5e247a0454e2abd18bef, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2e7907e822cb1fa41a97d683af8ccbf1, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 867f2b9a4cea3974199799ea3c87ca92, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: cd6a1367db954354b9ed040d16ac3997, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1199ddc6f0ece15428064ab3c7e965ce, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 022c0fd0148b6a3459f8f640affec6f1, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b1cbb1008b282f84f9dd4319cd7de999, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b99c03cd207a98d4ba020fe8bf7af17a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a60331bf9a24d9d4d9fbccd9cbe472be, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a7b7e9036bde75140a7237393e4bf3e1, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 79ecdb2bc000c9646882a752b55e6eaf, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 38946e15eccdc774b9bd3b0bb9627e7f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a914c1b8261f87844bfc5c7cd96842d9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6b5bc92cb1736514d99ca134886e06be, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f07a2d4e7d4e94c458ac0c609ec80442, type: 2}

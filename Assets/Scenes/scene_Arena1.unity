@@ -8948,12 +8948,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 733014871}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e69239f44d534344fbafe104d79d061e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e774b788af94ea4fbe6012564bdebb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myStats: {fileID: 11400000, guid: 68aef9ac58d372b42ba9fdf6988d9bed, type: 2}
+  myStats: {fileID: 11400000, guid: 300ded8dea10dd849b705ec92cd3f1a7, type: 2}
   myHands: {fileID: 1888420326}
   myAnimations: {fileID: 1350861408}
+  abilityCooldown: 7
 --- !u!61 &733014873
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13870,7 +13871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1425269250
 MonoBehaviour:
   m_ObjectHideFlags: 0

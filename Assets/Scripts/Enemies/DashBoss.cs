@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class DashBoss : Enemy
 {
+    [SerializeField]
+    private float abilityCooldown = 10f;
+    [SerializeField]
+    private int dashDamage = 30;
+
     //TODO: Implement dashing boss, move some methods/logic into the base class
     private Node rootNode;
+    private float currentAbilityCooldown = 0f;
+    private bool usingAbility = false;
 
     protected override void Start()
     {
@@ -13,47 +20,111 @@ public class DashBoss : Enemy
         ConstructBehaviourTree();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        currentAbilityCooldown -= Time.fixedDeltaTime;
         rootNode.Execute();
     }
 
     private void ConstructBehaviourTree()
     {
+        AbilityNode abilityNode = new AbilityNode(this);
+        RangeNode abilityRangeNode = new RangeNode(transform, target, myStats.attackRange * 4);
         AttackNode attackNode = new AttackNode(this);
         RangeNode attackRangeNode = new RangeNode(transform, target, myStats.attackRange);
         ChaseNode chaseNode = new ChaseNode(this, transform, target);
         RangeNode searchRangeNode = new RangeNode(transform, target, myStats.attackRange * 5);
 
+        IdleNode idleNode = new IdleNode(this);
         Sequence movementSequence = new Sequence(new List<Node> { searchRangeNode, chaseNode });
         Sequence attackSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });
-        IdleNode idleNode = new IdleNode(this);
+        Sequence abilitySequence = new Sequence(new List<Node> { abilityRangeNode, abilityNode });
 
-        rootNode = new Selector(new List<Node> { attackSequence, movementSequence, idleNode });
+        rootNode = new Selector(new List<Node> { abilitySequence, attackSequence, movementSequence, idleNode });
     }
 
     public override void Attack()
     {
-        base.Attack();
+        if (attacking)
+            return;
+
+        myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
+
+        StartCoroutine("MyAttackTell");
     }
 
     public override bool UseAbility()
     {
-        return base.UseAbility();
+        if (currentAbilityCooldown > 0)
+            return false;
+
+        if (attacking)
+            return false;
+
+        currentAbilityCooldown = abilityCooldown;
+        myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
+
+        StartCoroutine("MyAbilityTell");
+        return true;
     }
 
     public override void Move()
     {
-        base.Move();
+        if (attacking)
+            return;
+
+        Vector2 movementVector = target.position - transform.position;
+
+        myAnimations.PlayMovementAnimation(movementVector);
+
+        rb.MovePosition(rb.position + movementVector.normalized * myStats.movementSpeed * Time.fixedDeltaTime);
     }
 
-    public override void TakeDamage(int damageAmount)
+    IEnumerator MyAttackTell()
     {
-        base.TakeDamage(damageAmount);
+        attacking = true;
+
+        myAnimations.PlayAttackTell();
+
+        yield return new WaitForSeconds(1f);
+
+        myHands.UseLeftHand();
+        myHands.UseRightHand();
+
+        attacking = false;
     }
 
-    public override void Idle()
+    IEnumerator MyAbilityTell()
     {
-        base.Idle();
+        attacking = true;
+
+        myAnimations.PlayAbilityTell();
+
+        yield return new WaitForSeconds(1f);
+
+        usingAbility = true;
+
+        Vector2 movementVector = target.position - transform.position;
+
+        myAnimations.PlayMovementAnimation(movementVector);
+
+        rb.AddForce(movementVector.normalized * myStats.movementSpeed * Time.fixedDeltaTime * 10000);
+
+        yield return new WaitForSeconds(2f);
+
+        rb.velocity = Vector3.zero;
+        usingAbility = false;
+        attacking = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!usingAbility)
+            return;
+
+        if (collision.gameObject.layer == 8)
+        {
+            collision.GetComponent<PlayerController>().TakeDamage(dashDamage);
+        }
     }
 }
