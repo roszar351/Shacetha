@@ -16,7 +16,5 @@ MonoBehaviour:
   itemType: 2
   weaponSprite: {fileID: 21300000, guid: 05c44b5048a6c034ab709ae9c4238193, type: 3}
   modifierValue: 20
-  itemRange: 0
-  damageRadius: 0.25
+  damageRadius: 0.1
   useCooldown: 0.5
-  duration: 1

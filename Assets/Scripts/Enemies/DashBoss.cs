@@ -117,8 +117,10 @@ public class DashBoss : Enemy
         attacking = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        base.OnTriggerEnter2D(collision);
+
         if (!usingAbility)
             return;
 

@@ -12,7 +12,7 @@ public class SimpleChaseAndAttackEnemy : Enemy
         ConstructBehaviourTree();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         rootNode.Execute();
     }
@@ -22,7 +22,7 @@ public class SimpleChaseAndAttackEnemy : Enemy
         AttackNode attackNode = new AttackNode(this);
         RangeNode attackRangeNode = new RangeNode(transform, target, myStats.attackRange);
         ChaseNode chaseNode = new ChaseNode(this, transform, target);
-        RangeNode searchRangeNode = new RangeNode(transform, target, myStats.attackRange * 5);
+        RangeNode searchRangeNode = new RangeNode(transform, target, myStats.attackRange * 20);
 
         Sequence movementSequence = new Sequence(new List<Node> { searchRangeNode, chaseNode });
         Sequence attackSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });

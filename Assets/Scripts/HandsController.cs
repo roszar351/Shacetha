@@ -20,12 +20,14 @@ public class HandsController : MonoBehaviour
     [SerializeField]
     private GameObject rightHand = null;
     [SerializeField]
-    private Transform leftAttackPoint = null;
+    private CircleCollider2D leftCollider = null;
     [SerializeField]
-    private Transform rightAttackPoint = null;
+    private CircleCollider2D rightCollider = null;
 
     private SpriteRenderer leftSprite;
     private SpriteRenderer rightSprite;
+    private CurrentItemStats leftStats;
+    private CurrentItemStats rightStats;
     private Transform followTarget;
 
     private float currentLeftCooldown = 0f;
@@ -35,6 +37,9 @@ public class HandsController : MonoBehaviour
     {
         leftSprite = leftHand.GetComponent<SpriteRenderer>();
         rightSprite = rightHand.GetComponent<SpriteRenderer>();
+
+        leftStats = leftHand.GetComponent<CurrentItemStats>();
+        rightStats = rightHand.GetComponent<CurrentItemStats>();
 
         so_Item tempItem = leftItem;
         leftItem = null;
@@ -46,6 +51,9 @@ public class HandsController : MonoBehaviour
 
         leftSprite.enabled = false;
         rightSprite.enabled = false;
+
+        leftCollider.enabled = false;
+        rightCollider.enabled = false;
     }
 
     void Update()
@@ -80,18 +88,21 @@ public class HandsController : MonoBehaviour
                 PlayerCooldownUIHelper.instance.ChangeItem(item, true);
             }
 
-            if(leftItem.itemType == ItemType.Shield)
+            myLeftAnimator.enabled = true;
+            leftStats.SetStats(leftItem);
+
+            if (leftItem.itemType == ItemType.Shield)
             {
-                myLeftAnimator.enabled = false;
-                leftHand.transform.localPosition = new Vector3(0.25f, -0.15f, 0);
+                //myLeftAnimator.enabled = false;
+                //leftHand.transform.localPosition = new Vector3(0.25f, -0.15f, 0);
                 leftSprite.flipY = false;
-                leftAttackPoint.transform.localPosition = new Vector3(0f, -.2f, 0f) - new Vector3(0f, leftItem.itemRange, 0f);
             }
             else
             {
-                myLeftAnimator.enabled = true;
-                leftHand.transform.localPosition = new Vector3(0.4f, -0.3f, 0);
+                //myLeftAnimator.enabled = true;
+                //leftHand.transform.localPosition = new Vector3(0.4f, -0.3f, 0);
                 leftSprite.flipY = true;
+                leftCollider.radius = leftItem.damageRadius;
             }
         }
         else
@@ -109,18 +120,21 @@ public class HandsController : MonoBehaviour
                 PlayerCooldownUIHelper.instance.ChangeItem(item, false);
             }
 
+            myRightAnimator.enabled = true;
+            rightStats.SetStats(rightItem);
+
             if (rightItem.itemType == ItemType.Shield)
             {
-                myRightAnimator.enabled = false;
-                rightHand.transform.localPosition = new Vector3(-0.25f, -0.15f, 0);
+                //myRightAnimator.enabled = false;
+                //rightHand.transform.localPosition = new Vector3(-0.25f, -0.15f, 0);
                 rightSprite.flipY = false;
             }
             else
             {
-                myRightAnimator.enabled = true;
-                rightHand.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
+                //myRightAnimator.enabled = true;
+                //rightHand.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
                 rightSprite.flipY = true;
-                rightAttackPoint.transform.localPosition = new Vector3(0f, -.2f, 0f) - new Vector3(0f, rightItem.itemRange, 0f);
+                rightCollider.radius = rightItem.damageRadius;
             }
         }
     }
@@ -133,7 +147,7 @@ public class HandsController : MonoBehaviour
         if (currentLeftCooldown <= 0)
         {
             StartCoroutine("UseLeftItem");
-
+            /*
             if (leftItem.itemType != ItemType.Shield)
             {
                 Collider2D[] damageArea = Physics2D.OverlapCircleAll(leftAttackPoint.position, leftItem.damageRadius, myEnemyLayers);
@@ -154,6 +168,7 @@ public class HandsController : MonoBehaviour
                     }  
                 }
             }
+            */
         }
     }
 
@@ -161,11 +176,11 @@ public class HandsController : MonoBehaviour
     {
         if (rightItem == null)
             return;
-
+        
         if (currentRightCooldown <= 0)
         {
             StartCoroutine("UseRightItem");
-
+            /*
             if (rightItem.itemType != ItemType.Shield)
             {
                 Collider2D[] damageArea = Physics2D.OverlapCircleAll(rightAttackPoint.position, rightItem.damageRadius, myEnemyLayers);
@@ -186,35 +201,29 @@ public class HandsController : MonoBehaviour
                     }
                 }
             }
+            */
         }
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        if(rightItem != null)
-            Gizmos.DrawWireSphere(rightAttackPoint.position, rightItem.damageRadius);
-        Gizmos.color = new Color(255 / 255, 192 / 255, 203 / 255);
-        if(leftItem != null)
-            Gizmos.DrawWireSphere(leftAttackPoint.position, leftItem.damageRadius);
     }
 
     IEnumerator UseLeftItem()
     {
         currentLeftCooldown = leftItem.useCooldown;
         leftSprite.enabled = true;
+
         if(leftItem.itemType == ItemType.Shield)
         {
             myBaseStats.totalArmor = myBaseStats.baseArmor + leftItem.modifierValue;
         }
         else
         {
-            myLeftAnimator.SetBool("Attack", true);
+            leftCollider.enabled = true;
         }
 
-        yield return new WaitForSeconds(leftItem.duration);
+        myLeftAnimator.SetTrigger("Use" + leftItem.itemType.ToString());
 
-        myLeftAnimator.SetBool("Attack", false);
+        yield return new WaitForSeconds(.5f);
+
+        leftCollider.enabled = false;
         leftSprite.enabled = false;
         myBaseStats.totalArmor = myBaseStats.baseArmor;
     }
@@ -223,19 +232,21 @@ public class HandsController : MonoBehaviour
     {
         currentRightCooldown = rightItem.useCooldown;
         rightSprite.enabled = true;
+
         if (rightItem.itemType == ItemType.Shield)
         {
             myBaseStats.totalArmor = myBaseStats.baseArmor + rightItem.modifierValue;
         }
         else
         {
-            myRightAnimator.SetBool("Attack", true);
+            rightCollider.enabled = true;
         }
 
+        myRightAnimator.SetTrigger("Use" + rightItem.itemType.ToString());
 
-        yield return new WaitForSeconds(rightItem.duration);
+        yield return new WaitForSeconds(.5f);
 
-        myRightAnimator.SetBool("Attack", false);
+        rightCollider.enabled = false;
         rightSprite.enabled = false;
         myBaseStats.totalArmor = myBaseStats.baseArmor;
     }

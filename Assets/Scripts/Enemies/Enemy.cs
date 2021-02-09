@@ -13,6 +13,10 @@ public class Enemy : MonoBehaviour
     protected Transform target;
     protected Rigidbody2D rb;
     protected bool attacking = false;
+    protected float currentInvincibleTimer = 0f;
+
+    [SerializeField]
+    protected float invincibleTime = 1f;
 
     [SerializeField]
     private so_GameEvent onDeathEvent;
@@ -22,6 +26,11 @@ public class Enemy : MonoBehaviour
         currentHp = myStats.maxHp;
         SetTarget(PlayerManager.instance.player.transform);
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        currentInvincibleTimer -= Time.deltaTime;
     }
 
     private void LateUpdate()
@@ -58,6 +67,10 @@ public class Enemy : MonoBehaviour
 
     public virtual void TakeDamage(int damageAmount)
     {
+        if (currentInvincibleTimer > 0)
+            return;
+
+        currentInvincibleTimer = invincibleTime;
         //Debug.Log("Damage taken!");
         damageAmount = (int)(damageAmount * (100f / (100f + myStats.totalArmor)));
         currentHp -= damageAmount;
@@ -74,5 +87,13 @@ public class Enemy : MonoBehaviour
     {
         onDeathEvent.Raise();
         Destroy(gameObject);
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 10)
+        {
+            TakeDamage(collision.GetComponent<CurrentItemStats>().GetModifierValue());
+        }
     }
 }

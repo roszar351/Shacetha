@@ -69,6 +69,23 @@ public class ArenaManager : MonoBehaviour
         enemiesKilled = 0;
     }
 
+    public void UpdateMaxLevel()
+    {
+        if (PlayerPrefs.HasKey("MaxLevel"))
+        {
+            if (level > PlayerPrefs.GetInt("MaxLevel"))
+            {
+                PlayerPrefs.SetInt("MaxLevel", level);
+            }
+        }
+        else
+        {
+            PlayerPrefs.SetInt("MaxLevel", level);
+        }
+
+        PlayerPrefs.Save();
+    }
+
     private void NextLevel()
     {
         level++;

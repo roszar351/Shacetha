@@ -23,6 +23,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private so_NPCStats defaultPlayerStats;
 
+    [SerializeField]
+    private so_GameEvent onPlayerDied;
+
     private PlayerController playerController;
 
     private void Start()
@@ -45,6 +48,7 @@ public class PlayerManager : MonoBehaviour
 
     public void KillPlayer()
     {
+        onPlayerDied.Raise();
         Destroy(player);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

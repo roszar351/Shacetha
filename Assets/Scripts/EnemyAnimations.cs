@@ -41,16 +41,4 @@ public class EnemyAnimations : MonoBehaviour
         myAnimator.SetBool("Moving", false);
         myAnimator.SetTrigger("SpellTell");
     }
-
-    public void PlayLeftAttack()
-    {
-        myAnimator.SetBool("Moving", false);
-        myAnimator.SetTrigger("LPunch");
-    }
-
-    public void PlayRightAttack()
-    {
-        myAnimator.SetBool("Moving", false);
-        myAnimator.SetTrigger("RPunch");
-    }
 }

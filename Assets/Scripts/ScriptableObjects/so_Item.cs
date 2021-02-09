@@ -9,10 +9,10 @@ public class so_Item : ScriptableObject
     public ItemType itemType;
     public Sprite weaponSprite = null;
     public int modifierValue; // If item is a shield it will reduce incoming damage by this value, if its a weapon it will do this much damage
-    public float itemRange;
+    //public float itemRange;
     public float damageRadius;
     public float useCooldown;
-    public float duration = 1f;
+    //public float duration = 1f;
 
     public override string ToString()
     {
@@ -25,7 +25,7 @@ public class so_Item : ScriptableObject
         else
         {
             ret += "\nDamage: " + modifierValue;
-            ret += "\nRange: " + itemRange;
+            //ret += "\nRange: " + itemRange;
             ret += "\nAoE: " + damageRadius;
         }
 

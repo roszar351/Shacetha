@@ -195,4 +195,12 @@ public class PlayerController : MonoBehaviour
         temp.z = 0;
         return temp;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 11)
+        {
+            TakeDamage(collision.GetComponent<CurrentItemStats>().GetModifierValue());
+        }
+    }
 }

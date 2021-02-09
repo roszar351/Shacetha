@@ -39,16 +39,4 @@ public class PlayerAnimations : MonoBehaviour
         playerAnimator.SetFloat("VerticalLook", lookVector.y);
         playerAnimator.SetFloat("HorizontalLook", lookVector.x);
     }
-
-    public void PlayLeftAttack()
-    {
-        playerAnimator.SetBool("Moving", false);
-        playerAnimator.SetTrigger("LPunch");
-    }
-
-    public void PlayRightAttack()
-    {
-        playerAnimator.SetBool("Moving", false);
-        playerAnimator.SetTrigger("RPunch");
-    }
 }
