@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: npcstats_BasicEnemy
   m_EditorClassIdentifier: 
   name: BasicEnemy
-  maxHp: 50
+  maxHp: 10
   baseDamage: 5
   baseArmor: 0
   totalArmor: 0

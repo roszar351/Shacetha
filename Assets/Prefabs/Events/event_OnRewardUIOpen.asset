@@ -9,13 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03d2ee8510db0d941add16a130cf009c, type: 3}
-  m_Name: npcstats_DashBoss
+  m_Script: {fileID: 11500000, guid: f0d82af17eadd514386bef06ab2452bc, type: 3}
+  m_Name: event_OnRewardUIOpen
   m_EditorClassIdentifier: 
-  name: Im a Dasher
-  maxHp: 100
-  baseDamage: 20
-  baseArmor: 2
-  totalArmor: 2
-  movementSpeed: 0.7
-  attackRange: 1

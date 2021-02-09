@@ -41,6 +41,12 @@ public class RewardManager : MonoBehaviour
 
     private string[] statStrings = new string[] { " max HP", " attack damage", " base armor" };
 
+    [SerializeField]
+    private so_GameEvent onRewardUIOpen;
+        
+    [SerializeField]
+    private so_GameEvent onRewardUIClose;
+
     private void Start()
     {
         icons = new InventorySlot[choiceButtons.Length];
@@ -71,16 +77,26 @@ public class RewardManager : MonoBehaviour
 
     private void Update()
     {
+        /* for testing
         if(Input.GetKeyDown(KeyCode.R))
         {
-            if (!rewardUIParent.activeSelf)
-            {
-                rewardUIParent.SetActive(true);
-                RollNewItemRewards();
-                RollStatReward();
-                EnableButtons();
-            }
+            OpenRewardScreen();
         }
+        */
+    }
+
+    public void OpenRewardScreen()
+    {
+        if (rewardUIParent.activeSelf)
+        {
+            return;
+        }
+
+        rewardUIParent.SetActive(true);
+
+        RollNewItemRewards();
+        RollStatReward();
+        EnableButtons();
     }
 
     public void PickReward(int whichReward)
@@ -115,7 +131,9 @@ public class RewardManager : MonoBehaviour
         item2 = nullItem;
         icons[0].AddItem(item1);
         icons[1].AddItem(item2);
+        
         rewardUIParent.SetActive(false);
+        onRewardUIClose.Raise();
 
         Debug.Log("Healing for 20 after picking reward!");
         PlayerManager.instance.player.GetComponent<PlayerController>().Heal(20);

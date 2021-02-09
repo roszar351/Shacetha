@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour
     protected Rigidbody2D rb;
     protected bool attacking = false;
 
+    [SerializeField]
+    private so_GameEvent onDeathEvent;
+
     protected virtual void Start()
     {
         currentHp = myStats.maxHp;
@@ -69,6 +72,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Die()
     {
+        onDeathEvent.Raise();
         Destroy(gameObject);
     }
 }
