@@ -5,7 +5,7 @@ using UnityEngine;
 public class HandsController : MonoBehaviour
 {
     public so_NPCStats myBaseStats; // Used to get and alter character stats when using items i.e. for damage and defense
-    public LayerMask myEnemyLayers;
+    //public LayerMask myEnemyLayers;
     public Animator myLeftAnimator;
     public Animator myRightAnimator;
 
@@ -29,6 +29,7 @@ public class HandsController : MonoBehaviour
     private CurrentItemStats leftStats;
     private CurrentItemStats rightStats;
     private Transform followTarget;
+    private bool[] usingItem = { false, false };
 
     private float currentLeftCooldown = 0f;
     private float currentRightCooldown = 0f;
@@ -209,8 +210,9 @@ public class HandsController : MonoBehaviour
     {
         currentLeftCooldown = leftItem.useCooldown;
         leftSprite.enabled = true;
+        usingItem[0] = true;
 
-        if(leftItem.itemType == ItemType.Shield)
+        if (leftItem.itemType == ItemType.Shield)
         {
             myBaseStats.totalArmor = myBaseStats.baseArmor + leftItem.modifierValue;
         }
@@ -223,6 +225,7 @@ public class HandsController : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
 
+        usingItem[0] = false;
         leftCollider.enabled = false;
         leftSprite.enabled = false;
         myBaseStats.totalArmor = myBaseStats.baseArmor;
@@ -232,6 +235,7 @@ public class HandsController : MonoBehaviour
     {
         currentRightCooldown = rightItem.useCooldown;
         rightSprite.enabled = true;
+        usingItem[1] = true;
 
         if (rightItem.itemType == ItemType.Shield)
         {
@@ -246,6 +250,7 @@ public class HandsController : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
 
+        usingItem[1] = false;
         rightCollider.enabled = false;
         rightSprite.enabled = false;
         myBaseStats.totalArmor = myBaseStats.baseArmor;
@@ -253,6 +258,9 @@ public class HandsController : MonoBehaviour
 
     private void Aiming()
     {
+        if (usingItem[0] || usingItem[1])
+            return;
+
         if (followMouse)
         {
             Vector3 mousePos = GetMousePosition();

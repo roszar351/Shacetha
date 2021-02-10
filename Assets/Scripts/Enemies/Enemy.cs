@@ -62,7 +62,9 @@ public class Enemy : MonoBehaviour
     public virtual void SetTarget(Transform target)
     {
         this.target = target;
-        myHands.SetFollowTarget(target);
+
+        if(myHands != null && myHands.enabled)
+            myHands.SetFollowTarget(target);
     }
 
     public virtual void TakeDamage(int damageAmount)
@@ -85,6 +87,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Die()
     {
+        myHands.gameObject.SetActive(false);
         onDeathEvent.Raise();
         Destroy(gameObject);
     }
