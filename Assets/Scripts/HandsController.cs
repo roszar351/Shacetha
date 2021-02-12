@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: if enough time try to seperate HandsController into 2 seperate scripts one for player and one for enemies
 public class HandsController : MonoBehaviour
 {
     public so_NPCStats myBaseStats; // Used to get and alter character stats when using items i.e. for damage and defense
@@ -34,8 +35,21 @@ public class HandsController : MonoBehaviour
     private float currentLeftCooldown = 0f;
     private float currentRightCooldown = 0f;
 
+    // if seperating this script these would be in their correseponding scripts
+    private Enemy enemyScript = null;
+    private PlayerController playerScript = null;
+
     private void Start()
     {
+        if(followMouse)
+        {
+            playerScript = transform.parent.gameObject.GetComponent<PlayerController>();
+        }
+        else
+        {
+            enemyScript = transform.parent.gameObject.GetComponent<Enemy>();
+        }
+
         leftSprite = leftHand.GetComponent<SpriteRenderer>();
         rightSprite = rightHand.GetComponent<SpriteRenderer>();
 
@@ -208,13 +222,20 @@ public class HandsController : MonoBehaviour
 
     IEnumerator UseLeftItem()
     {
+        float waitTime = 0.5f;
         currentLeftCooldown = leftItem.useCooldown;
         leftSprite.enabled = true;
         usingItem[0] = true;
 
         if (leftItem.itemType == ItemType.Shield)
         {
-            myBaseStats.totalArmor = myBaseStats.baseArmor + leftItem.modifierValue;
+            if (enemyScript != null)
+                enemyScript.UpdateArmor(leftItem.modifierValue);
+            
+            if (playerScript != null)
+                playerScript.UpdateArmor(leftItem.modifierValue);
+
+            waitTime += .5f;
         }
         else
         {
@@ -223,23 +244,38 @@ public class HandsController : MonoBehaviour
 
         myLeftAnimator.SetTrigger("Use" + leftItem.itemType.ToString());
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(waitTime);
 
         usingItem[0] = false;
         leftCollider.enabled = false;
         leftSprite.enabled = false;
-        myBaseStats.totalArmor = myBaseStats.baseArmor;
+
+        if (leftItem.itemType == ItemType.Shield)
+        {
+            if (enemyScript != null)
+                enemyScript.UpdateArmor(-leftItem.modifierValue);
+
+            if (playerScript != null)
+                playerScript.UpdateArmor(-leftItem.modifierValue);
+        }
     }
 
     IEnumerator UseRightItem()
     {
+        float waitTime = 0.5f;
         currentRightCooldown = rightItem.useCooldown;
         rightSprite.enabled = true;
         usingItem[1] = true;
 
         if (rightItem.itemType == ItemType.Shield)
         {
-            myBaseStats.totalArmor = myBaseStats.baseArmor + rightItem.modifierValue;
+            if (enemyScript != null)
+                enemyScript.UpdateArmor(rightItem.modifierValue);
+
+            if (playerScript != null)
+                playerScript.UpdateArmor(rightItem.modifierValue);
+
+            waitTime += .5f;
         }
         else
         {
@@ -248,12 +284,20 @@ public class HandsController : MonoBehaviour
 
         myRightAnimator.SetTrigger("Use" + rightItem.itemType.ToString());
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(waitTime);
 
         usingItem[1] = false;
         rightCollider.enabled = false;
         rightSprite.enabled = false;
-        myBaseStats.totalArmor = myBaseStats.baseArmor;
+
+        if (rightItem.itemType == ItemType.Shield)
+        {
+            if (enemyScript != null)
+                enemyScript.UpdateArmor(-rightItem.modifierValue);
+
+            if (playerScript != null)
+                playerScript.UpdateArmor(-rightItem.modifierValue);
+        }
     }
 
     private void Aiming()
@@ -271,6 +315,8 @@ public class HandsController : MonoBehaviour
         }
         else
         {
+            if (followTarget == null)
+                return;
             Vector3 aimDirection = (followTarget.position - transform.position).normalized;
 
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;

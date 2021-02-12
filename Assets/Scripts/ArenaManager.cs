@@ -105,13 +105,18 @@ public class ArenaManager : MonoBehaviour
         //TODO: spawn enemies, rework spawn system
         // for each enemy to spawn, spawn enemy, enemiesLeft++
         int howMany = 2 + (int)(1.5 * level);
+        int whichEnemy, whichPoint;
+        Vector3 randomOffset;
+
         for (int i = 0; i < howMany; ++i)
         {
-            int whichEnemy = Random.Range(0, enemies.Length);
-            int whichPoint = Random.Range(0, spawnPoints.Length);
+            whichEnemy = Random.Range(0, enemies.Length);
+            whichPoint = Random.Range(0, spawnPoints.Length);
+
+            randomOffset = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0f);
 
             //spawnPoints[whichPoint].SetActive(true);
-            Instantiate(enemies[whichEnemy], spawnPoints[whichPoint].transform.position, Quaternion.identity, enemiesParent.transform);
+            Instantiate(enemies[whichEnemy], spawnPoints[whichPoint].transform.position + randomOffset, Quaternion.identity, enemiesParent.transform);
             enemiesLeft++;
         }
     }

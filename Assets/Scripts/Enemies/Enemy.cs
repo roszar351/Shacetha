@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public EnemyAnimations myAnimations;
 
     protected int currentHp;
+    protected int totalArmor;
     protected Transform target;
     protected Rigidbody2D rb;
     protected bool attacking = false;
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
         currentHp = myStats.maxHp;
         SetTarget(PlayerManager.instance.player.transform);
         rb = GetComponent<Rigidbody2D>();
+        totalArmor = myStats.baseArmor;
     }
 
     private void Update()
@@ -35,12 +37,23 @@ public class Enemy : MonoBehaviour
 
     private void LateUpdate()
     {
-        myAnimations.UpdateIdleAnimation(target.position - transform.position);
+        if(target != null)
+            myAnimations.UpdateIdleAnimation(target.position - transform.position);
+    }
+
+    public void UpdateArmor(int modifierValue)
+    {
+        totalArmor = myStats.baseArmor + modifierValue;
     }
 
     public virtual void Move()
     {
         Debug.LogError("Implement Move Method!");
+    }
+
+    public virtual void MoveAway()
+    {
+        Debug.LogError("Implement MoveAway Method!");
     }
 
     public virtual void Attack()
@@ -74,7 +87,7 @@ public class Enemy : MonoBehaviour
 
         currentInvincibleTimer = invincibleTime;
         //Debug.Log("Damage taken!");
-        damageAmount = (int)(damageAmount * (100f / (100f + myStats.totalArmor)));
+        damageAmount = (int)(damageAmount * (100f / (100f + totalArmor)));
         currentHp -= damageAmount;
         TextPopup.Create(transform.position, damageAmount);
 
@@ -83,6 +96,12 @@ public class Enemy : MonoBehaviour
             GetComponent<Collider2D>().enabled = false;
             Invoke("Die", 0.5f);
         }
+    }
+
+    // Can be overwritten to return the desired bool value
+    public virtual bool CheckBool(int whichBool = 0)
+    {
+        return false;
     }
 
     protected virtual void Die()

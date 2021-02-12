@@ -34,6 +34,12 @@ public class PlayerManager : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     public void StopPlayerInput()
     {
         playerHands.gameObject.SetActive(false);

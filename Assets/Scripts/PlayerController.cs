@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movementVector;
     private int currentHp;
+    private int totalArmor;
 
     // Events
     public event System.Action<int, int> OnHealthChanged;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         movementVector = new Vector2(0f, 0f);
         currentHp = myStats.maxHp;
+        totalArmor = myStats.baseArmor;
     }
 
     // Update is called once per frame
@@ -74,9 +76,14 @@ public class PlayerController : MonoBehaviour
         stopInput = false;
     }
 
+    public void UpdateArmor(int modifierValue)
+    {
+        totalArmor = myStats.baseArmor + modifierValue;
+    }
+
     public void TakeDamage(int damage)
     {
-        float tempValue = 100f + myStats.totalArmor;
+        float tempValue = 100f + totalArmor;
         if(tempValue <= 0)
         {
             tempValue = 1;
