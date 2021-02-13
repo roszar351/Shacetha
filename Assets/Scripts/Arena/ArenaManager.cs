@@ -51,7 +51,7 @@ public class ArenaManager : MonoBehaviour
         enemiesLeft -= 1;
         enemiesKilled++;
 
-        if(bossFight)
+        if(enemiesLeft <= 0 && bossFight)
         {
             bossFight = false;
             onRewardUIOpen.Raise();
@@ -94,6 +94,7 @@ public class ArenaManager : MonoBehaviour
         levelText.SetText("Level: " + level);
         if (level % 5 == 0)
         {
+            Debug.LogWarning("BOSS");
             SpawnBoss();
         }
         else
@@ -126,6 +127,19 @@ public class ArenaManager : MonoBehaviour
     private void SpawnBoss()
     {
         bossFight = true;
+
+        int howMany = level / 5;
+        Vector3 randomOffset;
+
+        for (int i = 0; i < howMany; ++i)
+        {
+            enemiesLeft++;
+
+            randomOffset = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0f);
+
+            Instantiate(bosses[0], spawnPoints[0].transform.position + randomOffset * 2, Quaternion.identity, enemiesParent.transform);
+        }
+
         AudioManager.instance.PlayRandomMusic(MusicType.BossMusic);
     }
 

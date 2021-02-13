@@ -1,6 +1,7 @@
 ﻿using UnityEngine.Audio;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // TODO: if time left rework this script to not create an audio source for every single clip, but use an array in sound class to have multiple audio clips of same category e.g. PlayerDeathSounds, FootSteps etc.
 // Contains methods to play music and sounds, change volume levels
@@ -88,7 +89,10 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        PlayMusic("Music1", MusicType.GameMusic);
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+            PlayMusic("Music1", MusicType.MenuMusic);
+        else
+            PlayRandomMusic(MusicType.GameMusic);
     }
 
     private void Update()

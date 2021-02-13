@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public so_NPCStats myStats;
     public HandsController myHands;
     public EnemyAnimations myAnimations;
+    public so_NPCStats playerStats;
 
     protected int currentHp;
     protected int totalArmor;
@@ -125,7 +126,8 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.layer == 10)
         {
-            TakeDamage(collision.GetComponent<CurrentItemStats>().GetModifierValue());
+            int tempDmg = playerStats.baseDamage > 0 ? playerStats.baseDamage : 0;
+            TakeDamage(collision.GetComponent<CurrentItemStats>().GetModifierValue() + tempDmg);
         }
     }
 }

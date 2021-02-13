@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         //SceneManager.LoadScene(1);
+        referenceKeeper.levelLoader.LoadNextLevelWithNoStory();
     }
 
     public void ExitGame()

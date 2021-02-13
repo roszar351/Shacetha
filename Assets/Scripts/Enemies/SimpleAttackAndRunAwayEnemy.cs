@@ -7,6 +7,9 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
     private Node rootNode;
     private bool runAway = false;
 
+    [SerializeField]
+    private Transform myTarget;
+
     protected override void Start()
     {
         base.Start();
@@ -20,7 +23,7 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
 
     private void ConstructBehaviourTree()
     {
-        RunAwayNode runAwayNode = new RunAwayNode(this, transform, target);
+        RunAwayNode runAwayNode = new RunAwayNode(this);
         CheckBoolNode checkRunAwayNode = new CheckBoolNode(this);
         AttackNode attackNode = new AttackNode(this);
         RangeNode attackRangeNode = new RangeNode(transform, target, myStats.attackRange);
@@ -62,11 +65,14 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
 
     public override void MoveAway()
     {
+        Vector2 movementVector = target.position - transform.position;
+        myTarget.position = movementVector.normalized * -5;
+
         //myHands.UseRightHand();
 
         AudioManager.instance.PlaySound("MovementEnemy");
 
-        Vector2 movementVector = transform.position - target.position;
+        movementVector = myTarget.position - transform.position;
 
         myAnimations.PlayMovementAnimation(movementVector);
 
@@ -92,7 +98,7 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
         yield return new WaitForSeconds(.5f);
 
         runAway = true;
-        Invoke("ResetRunAway", myHands.GetHighestCooldown());
+        Invoke("ResetRunAway", 1f);
 
         attacking = false;
     }

@@ -152,11 +152,12 @@ MonoBehaviour:
   myStats: {fileID: 11400000, guid: 300ded8dea10dd849b705ec92cd3f1a7, type: 2}
   myHands: {fileID: 971599079359306995}
   myAnimations: {fileID: 374779887064035469}
+  playerStats: {fileID: 11400000, guid: adb8d98c45cb9244982c8305ff134047, type: 2}
   deathSoundName: GhostDeath
   damageSoundName: DeathOther
   invincibleTime: 1
   onDeathEvent: {fileID: 11400000, guid: 5019f2baa26913045954d3a2dbcbdf92, type: 2}
-  abilityCooldown: 7
+  abilityCooldown: 10
   dashDamage: 30
 --- !u!1 &374779887064035506
 GameObject:

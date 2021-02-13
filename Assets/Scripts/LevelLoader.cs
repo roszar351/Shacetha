@@ -9,21 +9,25 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadNextLevelWithStory()
     {
+        AudioManager.instance.PlayRandomMusic(MusicType.GameMusic);
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1, true));
     }
 
     public void LoadNextLevelWithNoStory()
     {
+        AudioManager.instance.PlayRandomMusic(MusicType.GameMusic);
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1, false));
     }
 
     public void LoadSpecificLevel(int buildIndex, bool withStory)
     {
+        AudioManager.instance.PlayRandomMusic(MusicType.GameMusic);
         StartCoroutine(LoadLevel(buildIndex, withStory));
     }
 
     public void GoBackToMenu()
     {
+        AudioManager.instance.PlayRandomMusic(MusicType.MenuMusic);
         StartCoroutine(LoadLevel(0, false));
     }
 

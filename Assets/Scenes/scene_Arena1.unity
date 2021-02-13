@@ -11077,6 +11077,7 @@ MonoBehaviour:
   myStats: {fileID: 11400000, guid: 1a21156e0da98fb41a7a88c08c5b46fd, type: 2}
   myHands: {fileID: 185604692}
   myAnimations: {fileID: 15606985}
+  playerStats: {fileID: 0}
   deathSoundName: DeathMonster
   damageSoundName: DamageMonster
   invincibleTime: 5

@@ -33,7 +33,7 @@ public class DashBoss : Enemy
         AttackNode attackNode = new AttackNode(this);
         RangeNode attackRangeNode = new RangeNode(transform, target, myStats.attackRange);
         ChaseNode chaseNode = new ChaseNode(this, transform, target);
-        RangeNode searchRangeNode = new RangeNode(transform, target, myStats.attackRange * 5);
+        RangeNode searchRangeNode = new RangeNode(transform, target, myStats.attackRange * 1000);
 
         IdleNode idleNode = new IdleNode(this);
         Sequence movementSequence = new Sequence(new List<Node> { searchRangeNode, chaseNode });

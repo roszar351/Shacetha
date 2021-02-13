@@ -16,6 +16,5 @@ MonoBehaviour:
   maxHp: 100
   baseDamage: 10
   baseArmor: 0
-  totalArmor: 0
-  movementSpeed: 5
+  movementSpeed: 4
   attackRange: 0.5
