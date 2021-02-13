@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65672571828227432}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.03, y: 0.55, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 65672572136530967}
@@ -97,6 +97,8 @@ MonoBehaviour:
   myStats: {fileID: 11400000, guid: 68aef9ac58d372b42ba9fdf6988d9bed, type: 2}
   myHands: {fileID: 2867848691114161687}
   myAnimations: {fileID: 65672572136531177}
+  deathSoundName: DeathMonster
+  damageSoundName: DamagedMonster
   invincibleTime: 1
   onDeathEvent: {fileID: 11400000, guid: 5019f2baa26913045954d3a2dbcbdf92, type: 2}
 --- !u!1 &65672572136530964
@@ -256,7 +258,7 @@ Animator:
   m_GameObject: {fileID: 3151646247765212940}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 32220b614958ed24e8a3e6a29aa0a516, type: 2}
+  m_Controller: {fileID: 22100000, guid: f2b5b69289ba0224384985715b2352c3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

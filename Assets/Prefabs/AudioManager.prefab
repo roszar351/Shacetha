@@ -49,15 +49,197 @@ MonoBehaviour:
   musicMixer: {fileID: -7449948567659906218, guid: 73b00552c7b4ee545866c790a85f0b09,
     type: 2}
   sounds:
-  - name: BatDash
-    clip: {fileID: 8300000, guid: ac18a42c8508a1b409d13ecb6df2e9cf, type: 3}
+  - name: MouseOver
+    clip: {fileID: 8300000, guid: 266ae89514fe63941a364738025809fd, type: 3}
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-  music:
-  - name: Theme
-    clip: {fileID: 8300000, guid: 40b548e3abcfe164592e7dfaf7b2b8e3, type: 3}
+  - name: ButtonClicked
+    clip: {fileID: 8300000, guid: 27b5a2dd970b1ff428aa7baad4fb7822, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: MovementPlayer
+    clip: {fileID: 8300000, guid: 9f8418376c156b04da92e106b08201c9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Swing1
+    clip: {fileID: 8300000, guid: cebf2d1c067610246af494f27278a5d7, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Swing2
+    clip: {fileID: 8300000, guid: 466f16445ee3e064195921f33d95a641, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Swing3
+    clip: {fileID: 8300000, guid: 1aa45ccb8bd66254b82e4f36973d3122, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Spell1
+    clip: {fileID: 8300000, guid: e51e5de5ad9835a43bc9a4af739b2ed2, type: 3}
+    volume: 0.2
+    pitch: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: Spell2
+    clip: {fileID: 8300000, guid: 0a66fdf8d4ace574f8a326e10d5d821c, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Spell3
+    clip: {fileID: 8300000, guid: cd0d74f0185ccd148819aa86ff5301ab, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DeathPlayer
+    clip: {fileID: 8300000, guid: 7e58deb60a511d749af8a3e7b651eb8a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DeathMonster
+    clip: {fileID: 8300000, guid: c6905fb4c89edd4469c225dd4e960089, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DeathOther
+    clip: {fileID: 8300000, guid: e23a3b95248836d4f8cbede72786c741, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: OpenUI
+    clip: {fileID: 8300000, guid: 194438e66522f0145b8eeaf7ee3ed6fc, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CloseUI
+    clip: {fileID: 8300000, guid: 194438e66522f0145b8eeaf7ee3ed6fc, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: EquipItem
+    clip: {fileID: 8300000, guid: 47b67a65c370f3d4cace977f3bdb0c7f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: RewardUI
+    clip: {fileID: 8300000, guid: a1ae88eeb28cee04caabe62913db5905, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DamagedPlayer
+    clip: {fileID: 8300000, guid: ff74556999e1afe4d984100ef8c523a6, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DamagedMonster
+    clip: {fileID: 8300000, guid: 0d4d67b5a0dde084085ea0c446411edb, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DamagedOther
+    clip: {fileID: 8300000, guid: cf5c0a661545b9c42ad6a833550f7254, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: MovementEnemy
+    clip: {fileID: 8300000, guid: 1dae03cbed187524996255beb8a915dd, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: ScaryGhost
+    clip: {fileID: 8300000, guid: dc832b4a0727ebd4f8c1eaa4fc983c92, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DeathScreen
+    clip: {fileID: 8300000, guid: cd4ad0e3a1134524e8547316207c5178, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GhostDeath
+    clip: {fileID: 8300000, guid: 125b1aebf7deaed47bc8f16f55a2eab4, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: NextLevel
+    clip: {fileID: 8300000, guid: e2ecfb7714233ce458a557301c056b10, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: UseShield
+    clip: {fileID: 8300000, guid: 6437db815e707374d8322b594b976aea, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  menuMusic:
+  - name: Music1
+    clip: {fileID: 8300000, guid: fe6bf893e24b167458cfd6bb687445e5, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  gameMusic:
+  - name: Music1
+    clip: {fileID: 8300000, guid: 7a0e7042cdba5b2489e285bacaf47662, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Music2
+    clip: {fileID: 8300000, guid: 5b96359f00477e244990be0ef60b36a4, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Music3
+    clip: {fileID: 8300000, guid: 70f6b78fc58066344be2c2c65724d71a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Music4
+    clip: {fileID: 8300000, guid: d17c5b0d1075eae4b8b7d8a0a5b4b0ff, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Music5
+    clip: {fileID: 8300000, guid: c39baff37b1e9c54d8c7c388eba25c1f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  bossMusic:
+  - name: Music1
+    clip: {fileID: 8300000, guid: 62a7ed3938f88e44293213b8ce6522eb, type: 3}
     volume: 1
     pitch: 1
     loop: 1

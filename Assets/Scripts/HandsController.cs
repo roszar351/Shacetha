@@ -154,6 +154,11 @@ public class HandsController : MonoBehaviour
         }
     }
 
+    public float GetHighestCooldown()
+    {
+        return leftItem.useCooldown > rightItem.useCooldown ? leftItem.useCooldown : rightItem.useCooldown;
+    }
+
     public void UseLeftHand()
     {
         if (leftItem == null)
@@ -229,6 +234,8 @@ public class HandsController : MonoBehaviour
 
         if (leftItem.itemType == ItemType.Shield)
         {
+            AudioManager.instance.PlayOneShotSound("UseShield");
+
             if (enemyScript != null)
                 enemyScript.UpdateArmor(leftItem.modifierValue);
             
@@ -240,6 +247,18 @@ public class HandsController : MonoBehaviour
         else
         {
             leftCollider.enabled = true;
+            switch(leftItem.itemType)
+            {
+                case ItemType.Spear:
+                    AudioManager.instance.PlayOneShotSound("Swing2");
+                    break;
+                case ItemType.Dagger:
+                    AudioManager.instance.PlayOneShotSound("Swing3");
+                    break;
+                default:
+                    AudioManager.instance.PlayOneShotSound("Swing1");
+                    break;
+            }
         }
 
         myLeftAnimator.SetTrigger("Use" + leftItem.itemType.ToString());
@@ -269,6 +288,8 @@ public class HandsController : MonoBehaviour
 
         if (rightItem.itemType == ItemType.Shield)
         {
+            AudioManager.instance.PlayOneShotSound("UseShield");
+
             if (enemyScript != null)
                 enemyScript.UpdateArmor(rightItem.modifierValue);
 
@@ -280,6 +301,18 @@ public class HandsController : MonoBehaviour
         else
         {
             rightCollider.enabled = true;
+            switch (rightItem.itemType)
+            {
+                case ItemType.Spear:
+                    AudioManager.instance.PlayOneShotSound("Swing2");
+                    break;
+                case ItemType.Dagger:
+                    AudioManager.instance.PlayOneShotSound("Swing3");
+                    break;
+                default:
+                    AudioManager.instance.PlayOneShotSound("Swing1");
+                    break;
+            }
         }
 
         myRightAnimator.SetTrigger("Use" + rightItem.itemType.ToString());

@@ -17,6 +17,11 @@ public class Enemy : MonoBehaviour
     protected float currentInvincibleTimer = 0f;
 
     [SerializeField]
+    protected string deathSoundName = "DeathMonster";
+    [SerializeField]
+    protected string damageSoundName = "DamagedMonster";
+
+    [SerializeField]
     protected float invincibleTime = 1f;
 
     [SerializeField]
@@ -89,6 +94,9 @@ public class Enemy : MonoBehaviour
         //Debug.Log("Damage taken!");
         damageAmount = (int)(damageAmount * (100f / (100f + totalArmor)));
         currentHp -= damageAmount;
+
+        AudioManager.instance.PlayOneShotSound(damageSoundName);
+
         TextPopup.Create(transform.position, damageAmount);
 
         if (currentHp <= 0)
@@ -106,6 +114,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Die()
     {
+        AudioManager.instance.PlayOneShotSound(deathSoundName);
+
         myHands.gameObject.SetActive(false);
         onDeathEvent.Raise();
         Destroy(gameObject);

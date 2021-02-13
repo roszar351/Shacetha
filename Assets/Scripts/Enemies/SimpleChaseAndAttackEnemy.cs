@@ -33,10 +33,11 @@ public class SimpleChaseAndAttackEnemy : Enemy
 
     public override void Attack()
     {
-        myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
-
         if (attacking)
             return;
+
+        myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
+        AudioManager.instance.StopSound("MovementEnemy");
 
         StartCoroutine("MyAttackTell");
     }
@@ -45,6 +46,8 @@ public class SimpleChaseAndAttackEnemy : Enemy
     {
         if (attacking)
             return;
+
+        AudioManager.instance.PlaySound("MovementEnemy");
 
         Vector2 movementVector = target.position - transform.position;
 

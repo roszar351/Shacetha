@@ -20,12 +20,10 @@ public class RunAwayNode : Node
     public override NodeState Execute()
     {
         float distance = Vector3.Distance(origin.position, target.position);
-        myNodeState = distance > distanceForSuccess ? NodeState.SUCCESS : NodeState.RUNNING;
-        if(myNodeState == NodeState.RUNNING)
-        {
-            ai.SetTarget(target);
-            ai.MoveAway();
-        }
+        myNodeState = NodeState.RUNNING;
+
+        ai.SetTarget(target);
+        ai.MoveAway();
 
         return myNodeState;
     }

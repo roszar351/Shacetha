@@ -21,7 +21,6 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
     private void ConstructBehaviourTree()
     {
         RunAwayNode runAwayNode = new RunAwayNode(this, transform, target);
-        RangeNode runAwayRangeNode = new RangeNode(transform, target, myStats.attackRange * 5);
         CheckBoolNode checkRunAwayNode = new CheckBoolNode(this);
         AttackNode attackNode = new AttackNode(this);
         RangeNode attackRangeNode = new RangeNode(transform, target, myStats.attackRange);
@@ -31,17 +30,18 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
         IdleNode idleNode = new IdleNode(this);
         Sequence movementSequence = new Sequence(new List<Node> { searchRangeNode, chaseNode });
         Sequence attackSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });
-        Sequence runAwaySequence = new Sequence(new List<Node> { checkRunAwayNode, runAwayRangeNode, runAwayNode });
+        Sequence runAwaySequence = new Sequence(new List<Node> { checkRunAwayNode, runAwayNode });
 
         rootNode = new Selector(new List<Node> { runAwaySequence, attackSequence, movementSequence, idleNode });
     }
 
     public override void Attack()
     {
-        myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
-
         if (attacking)
             return;
+
+        AudioManager.instance.StopSound("MovementEnemy");
+        myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
 
         StartCoroutine("MyAttackTell");
     }
@@ -50,6 +50,8 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
     {
         if (attacking)
             return;
+
+        AudioManager.instance.PlaySound("MovementEnemy");
 
         Vector2 movementVector = target.position - transform.position;
 
@@ -61,6 +63,8 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
     public override void MoveAway()
     {
         //myHands.UseRightHand();
+
+        AudioManager.instance.PlaySound("MovementEnemy");
 
         Vector2 movementVector = transform.position - target.position;
 
@@ -88,7 +92,7 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
         yield return new WaitForSeconds(.5f);
 
         runAway = true;
-        Invoke("ResetRunAway", 2f);
+        Invoke("ResetRunAway", myHands.GetHighestCooldown());
 
         attacking = false;
     }

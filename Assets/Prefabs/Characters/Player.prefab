@@ -42,7 +42,7 @@ Animator:
   m_GameObject: {fileID: 3216610978662218268}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 32220b614958ed24e8a3e6a29aa0a516, type: 2}
+  m_Controller: {fileID: 22100000, guid: f2b5b69289ba0224384985715b2352c3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -208,9 +208,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myBaseStats: {fileID: 11400000, guid: adb8d98c45cb9244982c8305ff134047, type: 2}
-  myEnemyLayers:
-    serializedVersion: 2
-    m_Bits: 512
   myLeftAnimator: {fileID: 3216610978662218274}
   myRightAnimator: {fileID: 3216610980567705929}
   followMouse: 1

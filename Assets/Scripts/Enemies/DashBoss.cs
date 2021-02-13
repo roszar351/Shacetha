@@ -88,6 +88,8 @@ public class DashBoss : Enemy
 
         yield return new WaitForSeconds(1f);
 
+        AudioManager.instance.PlayOneShotSound("ScaryGhost");
+
         myHands.UseLeftHand();
         myHands.UseRightHand();
 
@@ -103,6 +105,8 @@ public class DashBoss : Enemy
         yield return new WaitForSeconds(1f);
 
         usingAbility = true;
+
+        AudioManager.instance.PlayOneShotSound("ScaryGhost");
 
         Vector2 movementVector = target.position - transform.position;
 
