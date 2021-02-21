@@ -71,12 +71,12 @@ public class Projectile : MonoBehaviour
         attackDamage = (int)(attackDamage * damageMultiplier);
         projectileDirection = aimDirection;
 
-        Invoke("KillProjectile", projectileLifeTime);
+        Invoke(nameof(KillProjectile), projectileLifeTime);
     }
 
     protected virtual void MoveProjectile()
     {
-        rb.MovePosition(rb.position + projectileDirection * projectileSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + projectileDirection * (projectileSpeed * Time.fixedDeltaTime));
     }
 
     protected virtual void KillProjectile()

@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class IdleNode : Node
 {
-    private Enemy ai;
+    private Enemy _ai;
 
     public IdleNode(Enemy ai)
     {
-        this.ai = ai;
+        this._ai = ai;
     }
 
     public override NodeState Execute()
     {
-        ai.Idle();
+        _ai.Idle();
         myNodeState = NodeState.RUNNING;
 
         return myNodeState;

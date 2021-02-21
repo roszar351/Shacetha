@@ -4,41 +4,53 @@ using UnityEngine;
 
 public class EnemyAnimations : MonoBehaviour
 {
-    private Animator myAnimator;
-    private Enemy enemy;
+    private Animator _myAnimator;
+    private Enemy _enemy;
+    
+    #region caching
+    // caching animator variables to improve performance
+    private static readonly int Moving = Animator.StringToHash("Moving");
+    private static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
+    private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
+    private static readonly int VerticalLook = Animator.StringToHash("VerticalLook");
+    private static readonly int HorizontalLook = Animator.StringToHash("HorizontalLook");
+    private static readonly int AttackTell = Animator.StringToHash("AttackTell");
+    private static readonly int SpellTell = Animator.StringToHash("SpellTell");
+
+    #endregion 
 
     void Start()
     {
-        myAnimator = GetComponent<Animator>();
-        enemy = GetComponentInParent<Enemy>();
+        _myAnimator = GetComponent<Animator>();
+        _enemy = GetComponentInParent<Enemy>();
     }
 
     public void PlayMovementAnimation(Vector2 movement)
     {
         if (movement.x == 0 && movement.y == 0)
-            myAnimator.SetBool("Moving", false);
+            _myAnimator.SetBool(Moving, false);
         else
-            myAnimator.SetBool("Moving", true);
+            _myAnimator.SetBool(Moving, true);
 
-        myAnimator.SetFloat("VerticalMovement", movement.y);
-        myAnimator.SetFloat("HorizontalMovement", movement.x);
+        _myAnimator.SetFloat(VerticalMovement, movement.y);
+        _myAnimator.SetFloat(HorizontalMovement, movement.x);
     }
 
     public void UpdateIdleAnimation(Vector2 lookVector)
     {
-        myAnimator.SetFloat("VerticalLook", lookVector.y);
-        myAnimator.SetFloat("HorizontalLook", lookVector.x);
+        _myAnimator.SetFloat(VerticalLook, lookVector.y);
+        _myAnimator.SetFloat(HorizontalLook, lookVector.x);
     }
 
     public void PlayAttackTell()
     {
-        myAnimator.SetBool("Moving", false);
-        myAnimator.SetTrigger("AttackTell");
+        _myAnimator.SetBool(Moving, false);
+        _myAnimator.SetTrigger(AttackTell);
     }
 
     public void PlayAbilityTell()
     {
-        myAnimator.SetBool("Moving", false);
-        myAnimator.SetTrigger("SpellTell");
+        _myAnimator.SetBool(Moving, false);
+        _myAnimator.SetTrigger(SpellTell);
     }
 }

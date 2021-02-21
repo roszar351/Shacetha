@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SimpleAttackAndRunAwayEnemy : Enemy
 {
-    private Node rootNode;
-    private bool runAway = false;
+    private Node _rootNode;
+    private bool _runAway = false;
 
     [SerializeField]
     private Transform myTarget;
@@ -13,29 +13,35 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
     protected override void Start()
     {
         base.Start();
+        name = "SimpleAttackAndRun";
         ConstructBehaviourTree();
     }
 
     private void FixedUpdate()
     {
-        rootNode.Execute();
+        if (isDying)
+            return;
+
+        _rootNode.Execute();
     }
 
     private void ConstructBehaviourTree()
     {
+        Transform myTransform = transform;
+        
         RunAwayNode runAwayNode = new RunAwayNode(this);
         CheckBoolNode checkRunAwayNode = new CheckBoolNode(this);
         AttackNode attackNode = new AttackNode(this);
-        RangeNode attackRangeNode = new RangeNode(transform, target, myStats.attackRange);
-        ChaseNode chaseNode = new ChaseNode(this, transform, target);
-        RangeNode searchRangeNode = new RangeNode(transform, target, myStats.attackRange * 20);
+        RangeNode attackRangeNode = new RangeNode(myTransform, target, myStats.attackRange);
+        ChaseNode chaseNode = new ChaseNode(this, myTransform, target);
+        RangeNode searchRangeNode = new RangeNode(myTransform, target, myStats.attackRange * 20);
   
         IdleNode idleNode = new IdleNode(this);
         Sequence movementSequence = new Sequence(new List<Node> { searchRangeNode, chaseNode });
         Sequence attackSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });
         Sequence runAwaySequence = new Sequence(new List<Node> { checkRunAwayNode, runAwayNode });
 
-        rootNode = new Selector(new List<Node> { runAwaySequence, attackSequence, movementSequence, idleNode });
+        _rootNode = new Selector(new List<Node> { runAwaySequence, attackSequence, movementSequence, idleNode });
     }
 
     public override void Attack()
@@ -46,11 +52,14 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
         AudioManager.instance.StopSound("MovementEnemy");
         myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
 
-        StartCoroutine("MyAttackTell");
+        StartCoroutine(nameof(MyAttackTell));
     }
 
     public override void Move()
     {
+        if (target == null)
+            return;
+
         if (attacking)
             return;
 
@@ -60,13 +69,16 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
 
         myAnimations.PlayMovementAnimation(movementVector);
 
-        rb.MovePosition(rb.position + movementVector.normalized * myStats.movementSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movementVector.normalized * (myStats.movementSpeed * Time.fixedDeltaTime));
     }
 
     public override void MoveAway()
     {
+        if (target == null)
+            return;
+
         Vector2 movementVector = target.position - transform.position;
-        myTarget.position = movementVector.normalized * -5;
+        myTarget.position = movementVector.normalized * -4;
 
         //myHands.UseRightHand();
 
@@ -76,12 +88,12 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
 
         myAnimations.PlayMovementAnimation(movementVector);
 
-        rb.MovePosition(rb.position + movementVector.normalized * myStats.movementSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movementVector.normalized * (myStats.movementSpeed * Time.fixedDeltaTime));
     }
 
     public override bool CheckBool(int whichBool = 0)
     {
-        return runAway;
+        return _runAway;
     }
 
     IEnumerator MyAttackTell()
@@ -97,14 +109,14 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
 
         yield return new WaitForSeconds(.5f);
 
-        runAway = true;
-        Invoke("ResetRunAway", 1f);
+        _runAway = true;
+        Invoke(nameof(ResetRunAway), 1f);
 
         attacking = false;
     }
 
     private void ResetRunAway()
     {
-        runAway = false;
+        _runAway = false;
     }
 }

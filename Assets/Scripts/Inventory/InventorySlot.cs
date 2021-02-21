@@ -8,14 +8,14 @@ public class InventorySlot : MonoBehaviour
     public Image icon;
     public Button removeButton;
 
-    so_Item item;
+    so_Item _item;
 
     public void AddItem(so_Item newItem)
     {
-        item = newItem;
+        _item = newItem;
         if (newItem.itemType != ItemType.NULL)
         {
-            icon.sprite = item.weaponSprite;
+            icon.sprite = _item.weaponSprite;
             icon.enabled = true;
         }
         else
@@ -29,13 +29,13 @@ public class InventorySlot : MonoBehaviour
 
     public void ClearSlot()
     {
-        if (item != null && item.itemType == ItemType.NULL)
+        if (_item != null && _item.itemType == ItemType.NULL)
         {
             Debug.LogError("Attempted to remove a null item!");
             return;
         }
 
-        item = null;
+        _item = null;
         icon.sprite = null;
         icon.enabled = false;
         if (removeButton != null)
@@ -44,34 +44,34 @@ public class InventorySlot : MonoBehaviour
 
     public void OnRemoveButton()
     {
-        if (item.itemType == ItemType.NULL)
+        if (_item.itemType == ItemType.NULL)
         {
             Debug.LogError("Attempted to remove a null item!");
             return;
         }
 
-        PlayerManager.instance.playerInventory.Remove(item);
+        PlayerManager.instance.playerInventory.Remove(_item);
     }
 
     public void UseItem(bool isLeft)
     {
-        if (item.itemType == ItemType.NULL)
+        if (_item.itemType == ItemType.NULL)
         {
             Debug.LogError("Attempted to use a null item!");
             return;
         }
 
-        if (item != null)
+        if (_item != null)
         {
             AudioManager.instance.PlayOneShotSound("EquipItem");
             if (isLeft)
             {
-                PlayerManager.instance.playerHands.EquipItem(item, true);
+                PlayerManager.instance.playerHands.EquipItem(_item, true);
                 OnRemoveButton();
             }
             else
             {
-                PlayerManager.instance.playerHands.EquipItem(item, false);
+                PlayerManager.instance.playerHands.EquipItem(_item, false);
                 OnRemoveButton();
             }
         }
@@ -79,13 +79,13 @@ public class InventorySlot : MonoBehaviour
 
     public override string ToString()
     {
-        if (item == null || item.itemType == ItemType.NULL)
+        if (_item == null || _item.itemType == ItemType.NULL)
         {
             return null;
         }
         else
         {
-            return item.ToString();
+            return _item.ToString();
         }
     }
 }

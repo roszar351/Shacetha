@@ -10,7 +10,7 @@ public class GameAssets : MonoBehaviour
 {
     private static GameAssets _i;
 
-    public static GameAssets i
+    public static GameAssets I
     {
         get
         {
@@ -20,4 +20,5 @@ public class GameAssets : MonoBehaviour
     }
 
     public Transform pfTextPopup;
+    public Material diffuseMaterial;
 }

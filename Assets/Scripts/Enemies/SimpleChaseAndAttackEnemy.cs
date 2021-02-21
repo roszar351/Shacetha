@@ -4,31 +4,37 @@ using UnityEngine;
 
 public class SimpleChaseAndAttackEnemy : Enemy
 {
-    private Node rootNode;
+    private Node _rootNode;
 
     protected override void Start()
     {
         base.Start();
+        name = "SimpleChaseAndAttack";
         ConstructBehaviourTree();
     }
 
     private void FixedUpdate()
     {
-        rootNode.Execute();
+        if (isDying)
+            return;
+
+        _rootNode.Execute();
     }
 
     private void ConstructBehaviourTree()
     {
+        Transform myTransform = transform;
+        
         AttackNode attackNode = new AttackNode(this);
-        RangeNode attackRangeNode = new RangeNode(transform, target, myStats.attackRange);
-        ChaseNode chaseNode = new ChaseNode(this, transform, target);
-        RangeNode searchRangeNode = new RangeNode(transform, target, myStats.attackRange * 20);
+        RangeNode attackRangeNode = new RangeNode(myTransform, target, myStats.attackRange);
+        ChaseNode chaseNode = new ChaseNode(this, myTransform, target);
+        RangeNode searchRangeNode = new RangeNode(myTransform, target, myStats.attackRange * 20);
 
         Sequence movementSequence = new Sequence(new List<Node> { searchRangeNode, chaseNode });
         Sequence attackSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });
         IdleNode idleNode = new IdleNode(this);
 
-        rootNode = new Selector(new List<Node> { attackSequence, movementSequence, idleNode });
+        _rootNode = new Selector(new List<Node> { attackSequence, movementSequence, idleNode });
     }
 
     public override void Attack()
@@ -44,6 +50,9 @@ public class SimpleChaseAndAttackEnemy : Enemy
 
     public override void Move()
     {
+        if (target == null)
+            return;
+
         if (attacking)
             return;
 
@@ -53,7 +62,7 @@ public class SimpleChaseAndAttackEnemy : Enemy
 
         myAnimations.PlayMovementAnimation(movementVector);
 
-        rb.MovePosition(rb.position + movementVector.normalized * myStats.movementSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movementVector.normalized * (myStats.movementSpeed * Time.fixedDeltaTime));
     }
 
     IEnumerator MyAttackTell()

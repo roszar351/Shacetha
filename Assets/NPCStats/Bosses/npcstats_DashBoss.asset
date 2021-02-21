@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Im a Dasher
   maxHp: 100
-  baseDamage: 20
-  baseArmor: 2
+  baseDamage: 25
+  baseArmor: 20
   movementSpeed: 1.5
-  attackRange: 1
+  attackRange: 1.3

@@ -10,37 +10,43 @@ public class DashBoss : Enemy
     private int dashDamage = 30;
 
     //TODO: Implement dashing boss, move some methods/logic into the base class
-    private Node rootNode;
-    private float currentAbilityCooldown = 0f;
-    private bool usingAbility = false;
+    private Node _rootNode;
+    private float _currentAbilityCooldown = 0f;
+    private bool _usingAbility = false;
 
     protected override void Start()
     {
         base.Start();
+        name = "DashBoss";
         ConstructBehaviourTree();
     }
 
     private void FixedUpdate()
     {
-        currentAbilityCooldown -= Time.fixedDeltaTime;
-        rootNode.Execute();
+        if (isDying)
+            return;
+
+        _currentAbilityCooldown -= Time.fixedDeltaTime;
+        _rootNode.Execute();
     }
 
     private void ConstructBehaviourTree()
     {
+        Transform myTransform = transform;
+        
         AbilityNode abilityNode = new AbilityNode(this);
-        RangeNode abilityRangeNode = new RangeNode(transform, target, myStats.attackRange * 4);
+        RangeNode abilityRangeNode = new RangeNode(myTransform, target, myStats.attackRange * 4);
         AttackNode attackNode = new AttackNode(this);
-        RangeNode attackRangeNode = new RangeNode(transform, target, myStats.attackRange);
-        ChaseNode chaseNode = new ChaseNode(this, transform, target);
-        RangeNode searchRangeNode = new RangeNode(transform, target, myStats.attackRange * 1000);
+        RangeNode attackRangeNode = new RangeNode(myTransform, target, myStats.attackRange);
+        ChaseNode chaseNode = new ChaseNode(this, myTransform, target);
+        RangeNode searchRangeNode = new RangeNode(myTransform, target, myStats.attackRange * 1000);
 
         IdleNode idleNode = new IdleNode(this);
         Sequence movementSequence = new Sequence(new List<Node> { searchRangeNode, chaseNode });
         Sequence attackSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });
         Sequence abilitySequence = new Sequence(new List<Node> { abilityRangeNode, abilityNode });
 
-        rootNode = new Selector(new List<Node> { abilitySequence, attackSequence, movementSequence, idleNode });
+        _rootNode = new Selector(new List<Node> { abilitySequence, attackSequence, movementSequence, idleNode });
     }
 
     public override void Attack()
@@ -50,18 +56,21 @@ public class DashBoss : Enemy
 
         myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
 
-        StartCoroutine("MyAttackTell");
+        StartCoroutine(nameof(MyAttackTell));
     }
 
     public override bool UseAbility()
     {
-        if (currentAbilityCooldown > 0)
+        if (target == null)
+            return false;
+
+        if (_currentAbilityCooldown > 0)
             return false;
 
         if (attacking)
             return false;
 
-        currentAbilityCooldown = abilityCooldown;
+        _currentAbilityCooldown = abilityCooldown;
         myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
 
         StartCoroutine("MyAbilityTell");
@@ -70,6 +79,9 @@ public class DashBoss : Enemy
 
     public override void Move()
     {
+        if (target == null)
+            return;
+
         if (attacking)
             return;
 
@@ -77,7 +89,7 @@ public class DashBoss : Enemy
 
         myAnimations.PlayMovementAnimation(movementVector);
 
-        rb.MovePosition(rb.position + movementVector.normalized * myStats.movementSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movementVector.normalized * (myStats.movementSpeed * Time.fixedDeltaTime));
     }
 
     IEnumerator MyAttackTell()
@@ -104,7 +116,7 @@ public class DashBoss : Enemy
 
         yield return new WaitForSeconds(1f);
 
-        usingAbility = true;
+        _usingAbility = true;
 
         AudioManager.instance.PlayOneShotSound("ScaryGhost");
 
@@ -112,12 +124,12 @@ public class DashBoss : Enemy
 
         myAnimations.PlayMovementAnimation(movementVector);
 
-        rb.AddForce(movementVector.normalized * myStats.movementSpeed * Time.fixedDeltaTime * 10000);
+        rb.AddForce(movementVector.normalized * (myStats.movementSpeed * Time.fixedDeltaTime * 10000));
 
         yield return new WaitForSeconds(2f);
 
         rb.velocity = Vector3.zero;
-        usingAbility = false;
+        _usingAbility = false;
         attacking = false;
     }
 
@@ -125,7 +137,7 @@ public class DashBoss : Enemy
     {
         base.OnTriggerEnter2D(collision);
 
-        if (!usingAbility)
+        if (!_usingAbility)
             return;
 
         if (collision.gameObject.layer == 8)

@@ -25,36 +25,36 @@ public class HandsController : MonoBehaviour
     [SerializeField]
     private CircleCollider2D rightCollider = null;
 
-    private SpriteRenderer leftSprite;
-    private SpriteRenderer rightSprite;
-    private CurrentItemStats leftStats;
-    private CurrentItemStats rightStats;
-    private Transform followTarget;
-    private bool[] usingItem = { false, false };
+    private SpriteRenderer _leftSprite;
+    private SpriteRenderer _rightSprite;
+    private CurrentItemStats _leftStats;
+    private CurrentItemStats _rightStats;
+    private Transform _followTarget;
+    private bool[] _usingItem = { false, false };
 
-    private float currentLeftCooldown = 0f;
-    private float currentRightCooldown = 0f;
+    private float _currentLeftCooldown = 0f;
+    private float _currentRightCooldown = 0f;
 
     // if seperating this script these would be in their correseponding scripts
-    private Enemy enemyScript = null;
-    private PlayerController playerScript = null;
+    private Enemy _enemyScript = null;
+    private PlayerController _playerScript = null;
 
     private void Start()
     {
         if(followMouse)
         {
-            playerScript = transform.parent.gameObject.GetComponent<PlayerController>();
+            _playerScript = transform.parent.gameObject.GetComponent<PlayerController>();
         }
         else
         {
-            enemyScript = transform.parent.gameObject.GetComponent<Enemy>();
+            _enemyScript = transform.parent.gameObject.GetComponent<Enemy>();
         }
 
-        leftSprite = leftHand.GetComponent<SpriteRenderer>();
-        rightSprite = rightHand.GetComponent<SpriteRenderer>();
+        _leftSprite = leftHand.GetComponent<SpriteRenderer>();
+        _rightSprite = rightHand.GetComponent<SpriteRenderer>();
 
-        leftStats = leftHand.GetComponent<CurrentItemStats>();
-        rightStats = rightHand.GetComponent<CurrentItemStats>();
+        _leftStats = leftHand.GetComponent<CurrentItemStats>();
+        _rightStats = rightHand.GetComponent<CurrentItemStats>();
 
         so_Item tempItem = leftItem;
         leftItem = null;
@@ -64,8 +64,8 @@ public class HandsController : MonoBehaviour
         rightItem = null;
         EquipItem(tempItem, false);
 
-        leftSprite.enabled = false;
-        rightSprite.enabled = false;
+        _leftSprite.enabled = false;
+        _rightSprite.enabled = false;
 
         leftCollider.enabled = false;
         rightCollider.enabled = false;
@@ -73,11 +73,11 @@ public class HandsController : MonoBehaviour
 
     void Update()
     {
-        currentLeftCooldown -= Time.deltaTime;
-        currentRightCooldown -= Time.deltaTime;
+        _currentLeftCooldown -= Time.deltaTime;
+        _currentRightCooldown -= Time.deltaTime;
 
         if(followMouse)
-            PlayerCooldownUIHelper.instance.UpdateCooldowns(currentLeftCooldown, currentRightCooldown);
+            PlayerCooldownUIHelper.instance.UpdateCooldowns(_currentLeftCooldown, _currentRightCooldown);
 
         Aiming();
     }
@@ -94,29 +94,29 @@ public class HandsController : MonoBehaviour
                 PlayerManager.instance.playerInventory.Add(leftItem);
 
             leftItem = item;
-            leftSprite.sprite = leftItem.weaponSprite;
+            _leftSprite.sprite = leftItem.weaponSprite;
 
             if (followMouse)
             {
-                PlayerCooldownUIHelper.instance.ChangeImages(leftSprite.sprite, inLeft);
+                PlayerCooldownUIHelper.instance.ChangeImages(_leftSprite.sprite, inLeft);
                 PlayerCooldownUIHelper.instance.SetMaxLeftCooldown(leftItem.useCooldown);
                 PlayerCooldownUIHelper.instance.ChangeItem(item, true);
             }
 
             myLeftAnimator.enabled = true;
-            leftStats.SetStats(leftItem);
+            _leftStats.SetStats(leftItem);
 
             if (leftItem.itemType == ItemType.Shield)
             {
                 //myLeftAnimator.enabled = false;
                 //leftHand.transform.localPosition = new Vector3(0.25f, -0.15f, 0);
-                leftSprite.flipY = false;
+                _leftSprite.flipY = false;
             }
             else
             {
                 //myLeftAnimator.enabled = true;
                 //leftHand.transform.localPosition = new Vector3(0.4f, -0.3f, 0);
-                leftSprite.flipY = true;
+                _leftSprite.flipY = true;
                 leftCollider.radius = leftItem.damageRadius;
             }
         }
@@ -126,29 +126,29 @@ public class HandsController : MonoBehaviour
                 PlayerManager.instance.playerInventory.Add(rightItem);
 
             rightItem = item;
-            rightSprite.sprite = rightItem.weaponSprite;
+            _rightSprite.sprite = rightItem.weaponSprite;
 
             if (followMouse)
             {
-                PlayerCooldownUIHelper.instance.ChangeImages(rightSprite.sprite, inLeft);
+                PlayerCooldownUIHelper.instance.ChangeImages(_rightSprite.sprite, inLeft);
                 PlayerCooldownUIHelper.instance.SetMaxRightCooldown(rightItem.useCooldown);
                 PlayerCooldownUIHelper.instance.ChangeItem(item, false);
             }
 
             myRightAnimator.enabled = true;
-            rightStats.SetStats(rightItem);
+            _rightStats.SetStats(rightItem);
 
             if (rightItem.itemType == ItemType.Shield)
             {
                 //myRightAnimator.enabled = false;
                 //rightHand.transform.localPosition = new Vector3(-0.25f, -0.15f, 0);
-                rightSprite.flipY = false;
+                _rightSprite.flipY = false;
             }
             else
             {
                 //myRightAnimator.enabled = true;
                 //rightHand.transform.localPosition = new Vector3(-0.4f, -0.3f, 0);
-                rightSprite.flipY = true;
+                _rightSprite.flipY = true;
                 rightCollider.radius = rightItem.damageRadius;
             }
         }
@@ -161,12 +161,12 @@ public class HandsController : MonoBehaviour
 
     public void UseLeftHand()
     {
-        if (leftItem == null)
+        if (leftItem == null || !gameObject.activeSelf)
             return;
 
-        if (currentLeftCooldown <= 0)
+        if (_currentLeftCooldown <= 0)
         {
-            StartCoroutine("UseLeftItem");
+            StartCoroutine(nameof(UseLeftItem));
             /*
             if (leftItem.itemType != ItemType.Shield)
             {
@@ -194,12 +194,12 @@ public class HandsController : MonoBehaviour
 
     public void UseRightHand()
     {
-        if (rightItem == null)
+        if (rightItem == null || !gameObject.activeSelf)
             return;
         
-        if (currentRightCooldown <= 0)
+        if (_currentRightCooldown <= 0)
         {
-            StartCoroutine("UseRightItem");
+            StartCoroutine(nameof(UseRightItem));
             /*
             if (rightItem.itemType != ItemType.Shield)
             {
@@ -228,19 +228,19 @@ public class HandsController : MonoBehaviour
     IEnumerator UseLeftItem()
     {
         float waitTime = 0.5f;
-        currentLeftCooldown = leftItem.useCooldown;
-        leftSprite.enabled = true;
-        usingItem[0] = true;
+        _currentLeftCooldown = leftItem.useCooldown;
+        _leftSprite.enabled = true;
+        _usingItem[0] = true;
 
         if (leftItem.itemType == ItemType.Shield)
         {
             AudioManager.instance.PlayOneShotSound("UseShield");
 
-            if (enemyScript != null)
-                enemyScript.UpdateArmor(leftItem.modifierValue);
+            if (_enemyScript != null)
+                _enemyScript.UpdateArmor(leftItem.modifierValue);
             
-            if (playerScript != null)
-                playerScript.UpdateArmor(leftItem.modifierValue);
+            if (_playerScript != null)
+                _playerScript.UpdateArmor(leftItem.modifierValue);
 
             waitTime += .5f;
         }
@@ -265,36 +265,36 @@ public class HandsController : MonoBehaviour
 
         yield return new WaitForSeconds(waitTime);
 
-        usingItem[0] = false;
+        _usingItem[0] = false;
         leftCollider.enabled = false;
-        leftSprite.enabled = false;
+        _leftSprite.enabled = false;
 
         if (leftItem.itemType == ItemType.Shield)
         {
-            if (enemyScript != null)
-                enemyScript.UpdateArmor(-leftItem.modifierValue);
+            if (_enemyScript != null)
+                _enemyScript.UpdateArmor(-leftItem.modifierValue);
 
-            if (playerScript != null)
-                playerScript.UpdateArmor(-leftItem.modifierValue);
+            if (_playerScript != null)
+                _playerScript.UpdateArmor(-leftItem.modifierValue);
         }
     }
 
     IEnumerator UseRightItem()
     {
         float waitTime = 0.5f;
-        currentRightCooldown = rightItem.useCooldown;
-        rightSprite.enabled = true;
-        usingItem[1] = true;
+        _currentRightCooldown = rightItem.useCooldown;
+        _rightSprite.enabled = true;
+        _usingItem[1] = true;
 
         if (rightItem.itemType == ItemType.Shield)
         {
             AudioManager.instance.PlayOneShotSound("UseShield");
 
-            if (enemyScript != null)
-                enemyScript.UpdateArmor(rightItem.modifierValue);
+            if (_enemyScript != null)
+                _enemyScript.UpdateArmor(rightItem.modifierValue);
 
-            if (playerScript != null)
-                playerScript.UpdateArmor(rightItem.modifierValue);
+            if (_playerScript != null)
+                _playerScript.UpdateArmor(rightItem.modifierValue);
 
             waitTime += .5f;
         }
@@ -319,23 +319,23 @@ public class HandsController : MonoBehaviour
 
         yield return new WaitForSeconds(waitTime);
 
-        usingItem[1] = false;
+        _usingItem[1] = false;
         rightCollider.enabled = false;
-        rightSprite.enabled = false;
+        _rightSprite.enabled = false;
 
         if (rightItem.itemType == ItemType.Shield)
         {
-            if (enemyScript != null)
-                enemyScript.UpdateArmor(-rightItem.modifierValue);
+            if (_enemyScript != null)
+                _enemyScript.UpdateArmor(-rightItem.modifierValue);
 
-            if (playerScript != null)
-                playerScript.UpdateArmor(-rightItem.modifierValue);
+            if (_playerScript != null)
+                _playerScript.UpdateArmor(-rightItem.modifierValue);
         }
     }
 
     private void Aiming()
     {
-        if (usingItem[0] || usingItem[1])
+        if (_usingItem[0] || _usingItem[1])
             return;
 
         if (followMouse)
@@ -348,9 +348,9 @@ public class HandsController : MonoBehaviour
         }
         else
         {
-            if (followTarget == null)
+            if (_followTarget == null)
                 return;
-            Vector3 aimDirection = (followTarget.position - transform.position).normalized;
+            Vector3 aimDirection = (_followTarget.position - transform.position).normalized;
 
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, 0, angle + 90f);
@@ -359,7 +359,7 @@ public class HandsController : MonoBehaviour
 
     public void SetFollowTarget(Transform target)
     {
-        followTarget = target;
+        _followTarget = target;
     }
 
     // TODO: Move this function to some helper script as it is also used in PlayerController and might be useful in future

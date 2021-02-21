@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Enemy : MonoBehaviour
 {
+    public new string name = "Enemy";
     public so_NPCStats myStats;
     public HandsController myHands;
     public EnemyAnimations myAnimations;
@@ -21,15 +22,30 @@ public class Enemy : MonoBehaviour
     protected string deathSoundName = "DeathMonster";
     [SerializeField]
     protected string damageSoundName = "DamagedMonster";
-
     [SerializeField]
     protected float invincibleTime = 1f;
 
+    protected float dissolveAmount;
+    protected bool isDying;
+    //protected Material myMaterial;
+    protected MaterialPropertyBlock propBlock;
+
+    [SerializeField]
+    private Renderer myRenderer;
     [SerializeField]
     private so_GameEvent onDeathEvent;
 
+    private static readonly int DissolveValue = Shader.PropertyToID("_DissolveValue");
+
     protected virtual void Start()
     {
+        myRenderer.material = Instantiate(GameAssets.I.diffuseMaterial);
+        //myMaterial = myRenderer.material;
+        isDying = false;
+        dissolveAmount = 1f;
+        propBlock = new MaterialPropertyBlock();
+        //myMaterial.SetFloat(DissolveValue, dissolveAmount);
+
         currentHp = myStats.maxHp;
         SetTarget(PlayerManager.instance.player.transform);
         rb = GetComponent<Rigidbody2D>();
@@ -38,6 +54,15 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (isDying)
+        {
+            dissolveAmount = Mathf.Clamp01(dissolveAmount - Time.deltaTime);
+            myRenderer.GetPropertyBlock(propBlock);
+            propBlock.SetFloat(DissolveValue, dissolveAmount);
+            myRenderer.SetPropertyBlock(propBlock);
+            //myMaterial.SetFloat(DissolveValue, dissolveAmount);
+        }
+
         currentInvincibleTimer -= Time.deltaTime;
     }
 
@@ -103,7 +128,7 @@ public class Enemy : MonoBehaviour
         if (currentHp <= 0)
         {
             GetComponent<Collider2D>().enabled = false;
-            Invoke("Die", 0.5f);
+            Invoke(nameof(Die), 0.5f);
         }
     }
 
@@ -115,11 +140,16 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Die()
     {
+        if (isDying)
+            return;
+        
+        isDying = true;
         AudioManager.instance.PlayOneShotSound(deathSoundName);
-
-        myHands.gameObject.SetActive(false);
+        if(myHands != null)
+            myHands.gameObject.SetActive(false);
         onDeathEvent.Raise();
-        Destroy(gameObject);
+        
+        Destroy(gameObject, 1f);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

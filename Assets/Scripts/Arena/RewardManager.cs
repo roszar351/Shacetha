@@ -13,33 +13,34 @@ public class RewardManager : MonoBehaviour
     // on a random number roll
     public List<so_Item> allItems;
 
-    private List<so_Item> itemPool;
-    private InventorySlot[] icons;
-    private TextMeshProUGUI[] descriptions;
+    private List<so_Item> _itemPool;
+    private InventorySlot[] _icons;
+    private TextMeshProUGUI[] _descriptions;
 
     [SerializeField]
     private so_NPCStats playerStats;
     [SerializeField]
     private so_Item nullItem;
 
-    private so_Item item1;
-    private so_Item item2;
+    private so_Item _item1;
+    private so_Item _item2;
 
     // first index indicates which stat is to be improved
     // second index indicates by how much
-    private int[] statReward1;
-    private int[] statReward2;
+    private int[] _statReward1;
+    private int[] _statReward2;
     // first and third index indicates which stat is to be improved
     // second and fourth index indicates by how much
-    private int[] statReward3;
+    private int[] _statReward3;
+    private int _healReward = 0;
 
-    private int lowStatStartRange = 1;
-    private int averageStatStartRange = 3;
-    private int highStatStartRange = 5;
-    private int veryHighStatStartRange = 8;
-    private int extremeStatStartRange = 11;
+    private int _lowStatStartRange = 1;
+    private int _averageStatStartRange = 3;
+    private int _highStatStartRange = 5;
+    private int _veryHighStatStartRange = 8;
+    private int _extremeStatStartRange = 11;
 
-    private string[] statStrings = new string[] { " max HP", " attack damage", " base armor" };
+    private string[] _statStrings = new string[] { " max HP", " attack damage", " base armor" };
 
     [SerializeField]
     private so_GameEvent onRewardUIOpen;
@@ -49,28 +50,26 @@ public class RewardManager : MonoBehaviour
 
     private void Start()
     {
-        icons = new InventorySlot[choiceButtons.Length];
-        descriptions = new TextMeshProUGUI[choiceButtons.Length];
+        _icons = new InventorySlot[choiceButtons.Length];
+        _descriptions = new TextMeshProUGUI[choiceButtons.Length];
 
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 4; ++i)
         {
-            icons[i] = choiceButtons[i].GetComponentInChildren<InventorySlot>();
+            _icons[i] = choiceButtons[i].GetComponentInChildren<InventorySlot>();
             foreach (TextMeshProUGUI t in choiceButtons[i].GetComponentsInChildren<TextMeshProUGUI>())
             {
-                if(t.gameObject.name.Equals("Description"))
-                {
-                    descriptions[i] = t;
-                    break;
-                }
+                if (!t.gameObject.name.Equals("Description")) continue;
+                _descriptions[i] = t;
+                break;
             }
         }
 
-        itemPool = new List<so_Item>();
-        itemPool.AddRange(allItems);
+        _itemPool = new List<so_Item>();
+        _itemPool.AddRange(allItems);
 
-        statReward1 = new int[2];
-        statReward2 = new int[2];
-        statReward3 = new int[4];
+        _statReward1 = new int[2];
+        _statReward2 = new int[2];
+        _statReward3 = new int[4];
 
         DisableButtons();
     }
@@ -91,53 +90,72 @@ public class RewardManager : MonoBehaviour
         {
             return;
         }
+        
+        StartCoroutine(nameof(RewardSetup));
+    }
 
-        AudioManager.instance.PlayOneShotSound("RewardUI");
-        rewardUIParent.SetActive(true);
-
+    IEnumerator RewardSetup()
+    {
         RollNewItemRewards();
         RollStatReward();
+        RollHealReward();
         EnableButtons();
+
+        yield return new WaitForSeconds(1f);
+        
+        AudioManager.instance.PlayOneShotSound("RewardUI");
+        rewardUIParent.SetActive(true);
     }
 
     public void PickReward(int whichReward)
     {
+        int healamount = 5;
         DisableButtons();
-        if(whichReward == 0)
+        switch (whichReward)
         {
-            if (item1 != null && item1.itemType != ItemType.NULL)
+            case 0:
             {
-                PlayerManager.instance.playerInventory.Add(item1);
-                itemPool.Remove(item1);
-            }
+                if (_item1 != null && _item1.itemType != ItemType.NULL)
+                {
+                    PlayerManager.instance.playerInventory.Add(_item1);
+                    _itemPool.Remove(_item1);
+                }
 
-            ApplyStatReward(0);
-        }
-        else if(whichReward == 1)
-        {
-            if (item1 != null && item1.itemType != ItemType.NULL)
+                ApplyStatReward(0);
+                break;
+            }
+            case 1:
             {
-                PlayerManager.instance.playerInventory.Add(item2);
-                itemPool.Remove(item2);
+                if (_item1 != null && _item1.itemType != ItemType.NULL)
+                {
+                    PlayerManager.instance.playerInventory.Add(_item2);
+                    _itemPool.Remove(_item2);
+                }
+
+                ApplyStatReward(1);
+                break;
             }
-
-            ApplyStatReward(1);
+            case 2:
+                ApplyStatReward(2);
+                break;
+            case 3:
+                healamount = _healReward;
+                break;
+            default:
+                Debug.LogError("Picked reward with index out of bounds!");
+                return;
         }
-        else
-        {
-            ApplyStatReward(2);
-        }
 
-        item1 = nullItem;
-        item2 = nullItem;
-        icons[0].AddItem(item1);
-        icons[1].AddItem(item2);
+        _item1 = nullItem;
+        _item2 = nullItem;
+        _icons[0].AddItem(_item1);
+        _icons[1].AddItem(_item2);
         
         rewardUIParent.SetActive(false);
         onRewardUIClose.Raise();
 
-        Debug.Log("Healing for 20 after picking reward!");
-        PlayerManager.instance.player.GetComponent<PlayerController>().Heal(20);
+        //Debug.Log("Healing after picking reward!");
+        PlayerManager.instance.player.GetComponent<PlayerController>().Heal(healamount);
     }
 
     private void RollNewItemRewards()
@@ -146,48 +164,52 @@ public class RewardManager : MonoBehaviour
         // If no items left assign dummy items to rewards
         // If 1 item left assign that to reward 1 and then assign dummy item to reward 2
         // Else just assign random items to the rewards
-        if (itemPool.Count < 1)
+        if (_itemPool.Count < 1)
         {
-            item1 = nullItem;
-            item2 = nullItem;
+            _item1 = nullItem;
+            _item2 = nullItem;
+
+            choiceButtons[0].GetComponent<Button>().interactable = false;
+            choiceButtons[1].GetComponent<Button>().interactable = false;
         }
         else
         {
             do
             {
-                firstRanNum = Random.Range(0, itemPool.Count);
-            } while (itemPool[firstRanNum] == null);
+                firstRanNum = Random.Range(0, _itemPool.Count);
+            } while (_itemPool[firstRanNum] == null);
 
-            item1 = itemPool[firstRanNum];
+            _item1 = _itemPool[firstRanNum];
             //allItems[ranNum] = null;
 
-            if (itemPool.Count < 2)
+            if (_itemPool.Count < 2)
             {
-                item2 = nullItem;
+                _item2 = nullItem;
+                choiceButtons[1].GetComponent<Button>().interactable = false;
             }
             else
             {
                 int secondRanNum = 0;
                 do
                 {
-                    secondRanNum = Random.Range(0, itemPool.Count);
-                } while (itemPool[secondRanNum] == null || firstRanNum == secondRanNum);
+                    secondRanNum = Random.Range(0, _itemPool.Count);
+                } while (_itemPool[secondRanNum] == null || firstRanNum == secondRanNum);
 
-                item2 = itemPool[secondRanNum];
+                _item2 = _itemPool[secondRanNum];
                 //allItems[ranNum] = null;
             }
         }
 
-        icons[0].AddItem(item1);
-        icons[1].AddItem(item2);
+        _icons[0].AddItem(_item1);
+        _icons[1].AddItem(_item2);
     }
 
     private void RollStatReward()
     {
         // assume no extra stat award was gained
-        statReward1[0] = -1;
-        statReward2[0] = -1;
-        statReward3[2] = -1;
+        _statReward1[0] = -1;
+        _statReward2[0] = -1;
+        _statReward3[2] = -1;
 
         int randomNum = 0;
         int statValue = 0;
@@ -208,6 +230,13 @@ public class RewardManager : MonoBehaviour
         // Currently only 2 item rewards planned.
         for (int i = 0; i < 2; ++i)
         {
+            switch (i)
+            {
+                case 0 when _item1 == nullItem:
+                case 1 when _item2 == nullItem:
+                    continue;
+            }
+
             randomNum = Random.Range(0, 100);
             if (randomNum < 5)
             {
@@ -235,17 +264,17 @@ public class RewardManager : MonoBehaviour
                 actualStatValue = statValue * multiplier;
                 whichStat = Random.Range(0, 3);
 
-                descriptions[i].SetText("and\n" + actualStatValue + statStrings[whichStat]);
+                _descriptions[i].SetText("and\n" + actualStatValue + _statStrings[whichStat]);
 
                 switch (i)
                 {
                     case 0:
-                        statReward1[0] = whichStat;
-                        statReward1[1] = actualStatValue;
+                        _statReward1[0] = whichStat;
+                        _statReward1[1] = actualStatValue;
                         break;
                     case 1:
-                        statReward2[0] = whichStat;
-                        statReward2[1] = actualStatValue;
+                        _statReward2[0] = whichStat;
+                        _statReward2[1] = actualStatValue;
                         break;
                     default:
                         Debug.LogError("Error with assigning stat rewards to items.");
@@ -254,7 +283,7 @@ public class RewardManager : MonoBehaviour
             }
             else
             {
-                descriptions[i].SetText("");
+                _descriptions[i].SetText("");
             }
         }
 
@@ -282,9 +311,9 @@ public class RewardManager : MonoBehaviour
         actualStatValue = statValue * multiplier;
         whichStat = Random.Range(0, 3);
 
-        string tempStr = actualStatValue + statStrings[whichStat];
-        statReward3[0] = whichStat;
-        statReward3[1] = actualStatValue;
+        string tempStr = actualStatValue + _statStrings[whichStat];
+        _statReward3[0] = whichStat;
+        _statReward3[1] = actualStatValue;
 
         // additional stat reward
         randomNum = Random.Range(0, 100);
@@ -309,30 +338,41 @@ public class RewardManager : MonoBehaviour
         {
             statValue = GetStatValue();
             actualStatValue = statValue * multiplier;
-            whichStat = Random.Range(0, 3);
+            do
+            {
+                whichStat = Random.Range(0, 3);
+            } while (_statReward3[0] == whichStat);
 
-            tempStr += "\nand\n" + actualStatValue + statStrings[whichStat];
-            statReward3[2] = whichStat;
-            statReward3[3] = actualStatValue;
+            tempStr += "\nand\n" + actualStatValue + _statStrings[whichStat];
+            _statReward3[2] = whichStat;
+            _statReward3[3] = actualStatValue;
         }
 
-        descriptions[2].SetText(tempStr);
+        _descriptions[2].SetText(tempStr);
+    }
+
+    private void RollHealReward()
+    {
+        // currently heal player for 25% of their max hp
+        _healReward = playerStats.maxHp / 4;
+        _descriptions[3].SetText("Heal for " + _healReward);
+
     }
 
     private void ApplyStatReward(int whichReward)
     {
         if(whichReward == 0)
         {
-            switch(statReward1[0])
+            switch(_statReward1[0])
             {
                 case 0:
-                    playerStats.UpdateMaxHp(statReward1[1]);
+                    playerStats.UpdateMaxHp(_statReward1[1]);
                     break;
                 case 1:
-                    playerStats.UpdateBaseDamage(statReward1[1]);
+                    playerStats.UpdateBaseDamage(_statReward1[1]);
                     break;
                 case 2:
-                    playerStats.UpdateBaseArmor(statReward1[1]);
+                    playerStats.UpdateBaseArmor(_statReward1[1]);
                     break;
                 default:
                     break;
@@ -340,16 +380,16 @@ public class RewardManager : MonoBehaviour
         }
         else if(whichReward == 1)
         {
-            switch (statReward2[0])
+            switch (_statReward2[0])
             {
                 case 0:
-                    playerStats.UpdateMaxHp(statReward2[1]);
+                    playerStats.UpdateMaxHp(_statReward2[1]);
                     break;
                 case 1:
-                    playerStats.UpdateBaseDamage(statReward2[1]);
+                    playerStats.UpdateBaseDamage(_statReward2[1]);
                     break;
                 case 2:
-                    playerStats.UpdateBaseArmor(statReward2[1]);
+                    playerStats.UpdateBaseArmor(_statReward2[1]);
                     break;
                 default:
                     break;
@@ -357,31 +397,31 @@ public class RewardManager : MonoBehaviour
         }
         else
         {
-            switch (statReward3[0])
+            switch (_statReward3[0])
             {
                 case 0:
-                    playerStats.UpdateMaxHp(statReward3[1]);
+                    playerStats.UpdateMaxHp(_statReward3[1]);
                     break;
                 case 1:
-                    playerStats.UpdateBaseDamage(statReward3[1]);
+                    playerStats.UpdateBaseDamage(_statReward3[1]);
                     break;
                 case 2:
-                    playerStats.UpdateBaseArmor(statReward3[1]);
+                    playerStats.UpdateBaseArmor(_statReward3[1]);
                     break;
                 default:
                     break;
             }
 
-            switch (statReward3[2])
+            switch (_statReward3[2])
             {
                 case 0:
-                    playerStats.UpdateMaxHp(statReward3[3]);
+                    playerStats.UpdateMaxHp(_statReward3[3]);
                     break;
                 case 1:
-                    playerStats.UpdateBaseDamage(statReward3[3]);
+                    playerStats.UpdateBaseDamage(_statReward3[3]);
                     break;
                 case 2:
-                    playerStats.UpdateBaseArmor(statReward3[3]);
+                    playerStats.UpdateBaseArmor(_statReward3[3]);
                     break;
                 default:
                     break;
@@ -396,23 +436,23 @@ public class RewardManager : MonoBehaviour
 
         if (randomNum < 15)
         {
-            statValue = Random.Range(lowStatStartRange, averageStatStartRange);
+            statValue = Random.Range(_lowStatStartRange, _averageStatStartRange);
         }
         else if (randomNum < 85)
         {
-            statValue = Random.Range(averageStatStartRange, highStatStartRange);
+            statValue = Random.Range(_averageStatStartRange, _highStatStartRange);
         }
         else if (randomNum < 95)
         {
-            statValue = Random.Range(highStatStartRange, veryHighStatStartRange);
+            statValue = Random.Range(_highStatStartRange, _veryHighStatStartRange);
         }
         else if (randomNum < 99)
         {
-            statValue = Random.Range(veryHighStatStartRange, extremeStatStartRange);
+            statValue = Random.Range(_veryHighStatStartRange, _extremeStatStartRange);
         }
         else
         {
-            statValue = Random.Range(extremeStatStartRange, extremeStatStartRange + 2);
+            statValue = Random.Range(_extremeStatStartRange, _extremeStatStartRange + 2);
         }
 
         return statValue;

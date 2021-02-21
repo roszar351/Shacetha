@@ -30,6 +30,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         AudioManager.instance.ResumeMusic();
+        AudioManager.instance.StopPauseMenuMusic();
 
         if (PlayerManager.instance != null && PlayerManager.instance.player != null)
         {
@@ -43,7 +44,9 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
-        AudioManager.instance.PlayPauseMenuMusic();
+        AudioManager.instance.StopMusic();
+        AudioManager.instance.StopPauseMenuMusic();
+        AudioManager.instance.PlayRandomMusic(MusicType.MenuMusic);
 
         Time.timeScale = 1f;
         //SceneManager.LoadScene(0);
@@ -58,6 +61,7 @@ public class PauseMenu : MonoBehaviour
     private void Pause()
     {
         AudioManager.instance.PauseMusic();
+        AudioManager.instance.PlayPauseMenuMusic();
 
         if (PlayerManager.instance != null && PlayerManager.instance.player != null)
         {

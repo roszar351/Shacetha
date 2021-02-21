@@ -45,3 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pfTextPopup: {fileID: 6573189230368030200, guid: e9eb8af57e19e0547a7d4cd0508e4aeb,
     type: 3}
+  diffuseMaterial: {fileID: 2100000, guid: 33330cdaf57cfd842872aed3275f84b4, type: 2}

@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class GameEventListener : MonoBehaviour
 {
-    public so_GameEvent Event;
-    public UnityEvent Response;
+    [FormerlySerializedAs("Event")] public so_GameEvent @event;
+    [FormerlySerializedAs("Response")] public UnityEvent response;
 
     private void OnEnable()
     { 
-        Event.RegisterListener(this); 
+        @event.RegisterListener(this); 
     }
 
     private void OnDisable()
     { 
-        Event.UnregisterListener(this); 
+        @event.UnregisterListener(this); 
     }
 
     public void OnEventRaised()
     { 
-        Response.Invoke(); 
+        response.Invoke(); 
     }
 }

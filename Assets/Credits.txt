@@ -1,0 +1,29 @@
+﻿All assets i.e. sprites, music and sounds have either been purchased, are free to use with an appropriate attribution or have been released under public domain.
+## Credits ##
+# Assets #
+Character & Enemy Sprites - Lanea Zimmerman (https://opengameart.org/content/tiny-16-basic)
+Items - https://blodyavenger.itch.io/rpg-items-retro-pack
+Particles - Kenney.nl (https://kenney.nl/assets/particle-pack)
+Other:
+- https://raou.itch.io/dungeon-tileset-top-down-rpg
+- https://raou.itch.io/topdown-rpg-pixel-art-tileset
+- https://iknowkingrabbit.itch.io/heroic-overworld
+- https://iknowkingrabbit.itch.io/heroic-building-pack
+- https://iknowkingrabbit.itch.io/heroic-icon-pack
+
+# Music #
+Boss Music - 3xBlast, https://opengameart.org/content/16bit-boss-battle-loop
+BGM_action(In game music) - CodeManu, https://opengameart.org/content/8-bit-music-pack-loopable
+Menu Music - https://opengameart.org/content/music-loop-variations
+
+# Sounds #
+Battle Sound Effects - artisticdude https://opengameart.org/content/battle-sound-effects
+Fantasy Sound Library - Little Robot Sound Factory, Website: www.littlerobotsoundfactory.com (https://opengameart.org/content/fantasy-sound-effects-library)
+Monster Grunt, Pain & Death Sounds - Michel Baradari, https://opengameart.org/content/15-monster-gruntpaindeath-sounds
+RPG Sound Pack - Sound package from Heroes of Hawks Haven By Tuomo Untinen, https://opengameart.org/content/rpg-sound-package
+RPG Sounds - Kenney.nl (https://opengameart.org/content/50-rpg-sound-effects)
+Zombie, Skeleton, Monster Voice Effects - https://opengameart.org/content/zombie-skeleton-monster-voice-effects
+Ghost Sound - https://opengameart.org/content/ghost
+
+
+Game author: Damian Skrzypek

@@ -22,8 +22,8 @@ public class PlayerCooldownUIHelper : MonoBehaviour
 
     public event System.Action<so_Item, bool> OnEquippedItemChanged;
 
-    private float maxLeftCD = 1;
-    private float maxRightCD = 1;
+    private float _maxLeftCd = 1;
+    private float _maxRightCd = 1;
 
     public CooldownUI ui;
 
@@ -34,7 +34,7 @@ public class PlayerCooldownUIHelper : MonoBehaviour
         if (right < 0)
             right = 0;
 
-        ui.UpdateSliders(left / maxLeftCD, right / maxRightCD);
+        ui.UpdateSliders(left / _maxLeftCd, right / _maxRightCd);
     }
 
     public void ChangeItem(so_Item item, bool isLeft)
@@ -45,18 +45,18 @@ public class PlayerCooldownUIHelper : MonoBehaviour
 
     public void SetMaxCooldowns(float maxLeft, float maxRight)
     {
-        maxLeftCD = maxLeft;
-        maxRightCD = maxRight;
+        _maxLeftCd = maxLeft;
+        _maxRightCd = maxRight;
     }
 
     public void SetMaxLeftCooldown(float maxLeft)
     {
-        maxLeftCD = maxLeft;
+        _maxLeftCd = maxLeft;
     }
 
     public void SetMaxRightCooldown(float maxRight)
     {
-        maxRightCD = maxRight;
+        _maxRightCd = maxRight;
     }
 
     public void ChangeImages(Sprite sprite, bool isLeft)

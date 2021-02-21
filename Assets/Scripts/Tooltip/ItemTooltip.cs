@@ -7,13 +7,13 @@ using TMPro;
 
 public class ItemTooltip : BaseTooltip
 {
-    private InventorySlot invSlot;
+    private InventorySlot _invSlot;
 
     private void Start()
     {
         tooltipBackground = tooltipParent.gameObject.GetComponentInChildren<Image>();
         tooltipText = tooltipParent.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        invSlot = gameObject.GetComponent<InventorySlot>();
+        _invSlot = gameObject.GetComponent<InventorySlot>();
     }
 
     void Update()
@@ -37,9 +37,9 @@ public class ItemTooltip : BaseTooltip
     private void SetItemText()
     {
         string tempStr;
-        if (invSlot != null)
+        if (_invSlot != null)
         {
-            tempStr = invSlot.ToString();
+            tempStr = _invSlot.ToString();
             if (tempStr != null)
             {
                 tooltipText.SetText(tempStr);

@@ -9,17 +9,17 @@ public class MainMenu : MonoBehaviour
     public GameObject optionsMenu;
     public TextMeshProUGUI highestArenaText;
 
-    private ReferenceKeeper referenceKeeper;
+    private ReferenceKeeper _referenceKeeper;
 
     private void Start()
     {
-        referenceKeeper = ReferenceKeeper.instance;
+        _referenceKeeper = ReferenceKeeper.instance;
     }
 
     public void PlayGame()
     {
         //SceneManager.LoadScene(1);
-        referenceKeeper.levelLoader.LoadNextLevelWithNoStory();
+        _referenceKeeper.levelLoader.LoadNextLevelWithNoStory();
     }
 
     public void ExitGame()

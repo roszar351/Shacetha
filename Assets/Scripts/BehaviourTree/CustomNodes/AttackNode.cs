@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class AttackNode : Node
 {
-    private Enemy ai;
+    private Enemy _ai;
 
     public AttackNode(Enemy ai)
     {
-        this.ai = ai;
+        this._ai = ai;
     }
 
     public override NodeState Execute()
     {
-        ai.Attack();
+        _ai.Attack();
         myNodeState = NodeState.RUNNING;
 
         return myNodeState;

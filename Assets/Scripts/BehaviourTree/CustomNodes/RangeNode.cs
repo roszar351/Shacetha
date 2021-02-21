@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class RangeNode : Node
 {
-    private Transform origin;
-    private Transform target;
-    private float range;
+    private Transform _origin;
+    private Transform _target;
+    private float _range;
 
     public RangeNode(Transform origin, Transform target, float range)
     {
-        this.origin = origin;
-        this.target = target;
-        this.range = range;
+        this._origin = origin;
+        this._target = target;
+        this._range = range;
     }
 
     public override NodeState Execute()
     {
-        float distance = Vector3.Distance(origin.position, target.position);
-        myNodeState = distance <= range ? NodeState.SUCCESS : NodeState.FAILURE;
+        if (_target == null || _origin == null)
+            return NodeState.FAILURE;
+
+        float distance = Vector3.Distance(_origin.position, _target.position);
+        myNodeState = distance <= _range ? NodeState.SUCCESS : NodeState.FAILURE;
 
         return myNodeState;
     }

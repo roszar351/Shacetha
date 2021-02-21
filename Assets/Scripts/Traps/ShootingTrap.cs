@@ -15,8 +15,10 @@ public class ShootingTrap : MonoBehaviour
     [SerializeField]
     private GameObject particles;
 
-    private float currentShotCooldown = 0f;
-    private Projectile currentProjectile;
+    private float _currentShotCooldown = 0f;
+    private Projectile _currentProjectile;
+    
+    private static readonly int TrapTell = Animator.StringToHash("TrapTell");
 
     private void Start()
     {
@@ -28,14 +30,14 @@ public class ShootingTrap : MonoBehaviour
 
     private void Update()
     {
-        if (currentShotCooldown <= 0)
+        if (_currentShotCooldown <= 0)
         {
-            currentShotCooldown = cooldown;
+            _currentShotCooldown = cooldown;
             ShootProjectile();
         }
         else
         {
-            currentShotCooldown -= Time.deltaTime;
+            _currentShotCooldown -= Time.deltaTime;
         }
     }
 
@@ -46,7 +48,7 @@ public class ShootingTrap : MonoBehaviour
 
     IEnumerator Shoot()
     {
-        animator.SetTrigger("TrapTell");
+        animator.SetTrigger(TrapTell);
         if (particles != null)
             particles.SetActive(true);
 
@@ -57,7 +59,7 @@ public class ShootingTrap : MonoBehaviour
         if (particles != null)
             particles.SetActive(false);
 
-        currentProjectile = Projectile.Create(transform.position, projectileTarget.position, projectile, 1, 1, 1, -45);
+        _currentProjectile = Projectile.Create(transform.position, projectileTarget.position, projectile, 1, 1, 1, -45);
         rotationPoint.localEulerAngles = new Vector3(0f, 0f, rotationPoint.localEulerAngles.z + 15f);
     }
 }

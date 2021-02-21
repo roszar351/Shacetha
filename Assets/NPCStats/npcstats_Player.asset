@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: npcstats_Player
   m_EditorClassIdentifier: 
   name: Player
-  maxHp: 100
+  maxHp: 50
   baseDamage: 10
   baseArmor: 0
   movementSpeed: 4

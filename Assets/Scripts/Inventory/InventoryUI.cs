@@ -8,14 +8,14 @@ public class InventoryUI : MonoBehaviour
     public GameObject characterSheetUI;
     public Transform itemsParent;
 
-    Inventory inventory;
-    InventorySlot[] slots;
+    Inventory _inventory;
+    InventorySlot[] _slots;
 
     void Start()
     {
-        inventory = PlayerManager.instance.playerInventory;
-        inventory.onItemChangedCallBack += UpdateUI;
-        slots = itemsParent.GetComponentsInChildren<InventorySlot>();
+        _inventory = PlayerManager.instance.playerInventory;
+        _inventory.onItemChangedCallBack += UpdateUI;
+        _slots = itemsParent.GetComponentsInChildren<InventorySlot>();
 
         // Make sure to display any items already present.
         UpdateUI();
@@ -57,15 +57,15 @@ public class InventoryUI : MonoBehaviour
     {
         //Debug.Log("UPDATING UI!");
 
-        for (int i = 0; i < slots.Length; ++i)
+        for (int i = 0; i < _slots.Length; ++i)
         {
-            if (i < inventory.items.Count)
+            if (i < _inventory.items.Count)
             {
-                slots[i].AddItem(inventory.items[i]);
+                _slots[i].AddItem(_inventory.items[i]);
             }
             else
             {
-                slots[i].ClearSlot();
+                _slots[i].ClearSlot();
             }
         }
     }

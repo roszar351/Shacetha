@@ -1,5 +1,6 @@
 ﻿using UnityEngine.Audio;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,15 +21,19 @@ public class AudioManager : MonoBehaviour
     public Sound[] bossMusic;
 
     // Only ever need 1 music clip to be playing
-    private AudioSource currentMusicClip = null;
-    private MusicType currentMusicType = MusicType.MenuMusic;
+    private AudioSource _currentMusicClip = null;
+    private MusicType _currentMusicType = MusicType.MenuMusic;
 
-    private AudioSource pauseMenuSource = null;
+    private AudioSource _pauseMenuSource = null;
+    private Dictionary<string, Sound> _soundEffects;
+
+    private bool _isGamePaused = false;
 
     // Singleton, need to initialize all the sound clips and make sure the audio manager doesnt get destroyed between scenes to keep music playing
     // using singleton as game should only ever have one audio manager playing sounds i.e. prevents duplication of sounds.
     private void Awake()
     {
+        _soundEffects = new Dictionary<string, Sound>();
         if (instance == null)
         {
             instance = this;
@@ -51,6 +56,7 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
 
             s.source.outputAudioMixerGroup = soundMixer;
+            _soundEffects.Add(s.name, s);
         }
 
         foreach (Sound s in menuMusic)
@@ -97,15 +103,16 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if(!currentMusicClip.isPlaying)
+        if(!_isGamePaused && !_currentMusicClip.isPlaying)
         {
-            PlayRandomMusic(currentMusicType);
+            PlayRandomMusic(_currentMusicType);
         }
     }
 
     public void PlaySound(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        //Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = _soundEffects[name];
         if (s == null)
         {
             Debug.LogWarning("Missing sound: " + name);
@@ -122,7 +129,8 @@ public class AudioManager : MonoBehaviour
 
     public void PauseSound(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        //Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = _soundEffects[name];
         if (s == null)
         {
             Debug.LogWarning("Missing sound: " + name);
@@ -139,7 +147,8 @@ public class AudioManager : MonoBehaviour
 
     public void StopSound(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        //Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = _soundEffects[name];
         if (s == null)
         {
             Debug.LogWarning("Missing sound: " + name);
@@ -176,7 +185,7 @@ public class AudioManager : MonoBehaviour
             randomNum = UnityEngine.Random.Range(0, menuMusic.Length);
             s = menuMusic[randomNum];
 
-            if (currentMusicClip == s.source)
+            if (_currentMusicClip == s.source)
                 s = menuMusic[(randomNum + 1) % menuMusic.Length];
         }
         else if(musicType == MusicType.GameMusic)
@@ -184,7 +193,7 @@ public class AudioManager : MonoBehaviour
             randomNum = UnityEngine.Random.Range(0, gameMusic.Length);
             s = gameMusic[randomNum];
 
-            if (currentMusicClip == s.source)
+            if (_currentMusicClip == s.source)
                 s = gameMusic[(randomNum + 1) % gameMusic.Length];
         }
         else if(musicType == MusicType.BossMusic)
@@ -192,7 +201,7 @@ public class AudioManager : MonoBehaviour
             randomNum = UnityEngine.Random.Range(0, bossMusic.Length);
             s = bossMusic[randomNum];
 
-            if (currentMusicClip == s.source)
+            if (_currentMusicClip == s.source)
                 s = bossMusic[(randomNum + 1) % bossMusic.Length];
         }
 
@@ -202,12 +211,12 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        currentMusicType = musicType;
-        if (currentMusicClip != null)
-            currentMusicClip.Stop();
+        _currentMusicType = musicType;
+        if (_currentMusicClip != null)
+            _currentMusicClip.Stop();
 
-        currentMusicClip = s.source;
-        currentMusicClip.Play();
+        _currentMusicClip = s.source;
+        _currentMusicClip.Play();
     }
 
     public void PlayMusic(string name, MusicType musicType)
@@ -235,30 +244,36 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        currentMusicType = musicType;
-        if (currentMusicClip != null)
-            currentMusicClip.Stop();
+        _currentMusicType = musicType;
+        if (_currentMusicClip != null)
+            _currentMusicClip.Stop();
 
-        currentMusicClip = s.source;
-        currentMusicClip.Play();
+        _currentMusicClip = s.source;
+        _currentMusicClip.Play();
     }
 
     public void ResumeMusic()
     {
-        if (currentMusicClip != null)
-            currentMusicClip.Play();
+        _isGamePaused = false;
+        if (_currentMusicClip != null)
+        {
+            _currentMusicClip.Play();
+        }
     }
 
     public void PauseMusic()
     {
-        if (currentMusicClip != null)
-            currentMusicClip.Pause();
+        _isGamePaused = true;
+        if (_currentMusicClip != null)
+        {
+            _currentMusicClip.Pause();
+        }
     }
 
     public void StopMusic()
     {
-        if (currentMusicClip != null)
-            currentMusicClip.Stop();
+        if (_currentMusicClip != null)
+            _currentMusicClip.Stop();
     }
 
     public void PlayOneShotMusic(string name, MusicType musicType)
@@ -302,16 +317,16 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        pauseMenuSource = s.source;
-        pauseMenuSource.Play();
+        _pauseMenuSource = s.source;
+        _pauseMenuSource.Play();
     }
 
     public void StopPauseMenuMusic()
     {
-        if (pauseMenuSource == null)
+        if (_pauseMenuSource == null)
             return;
 
-        pauseMenuSource.Stop();
+        _pauseMenuSource.Stop();
     }
 
     public void UpdateMasterVolume(float masterVolume)

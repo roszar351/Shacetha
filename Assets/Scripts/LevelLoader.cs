@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class LevelLoader : MonoBehaviour
 {
     public Animator transition;
+    
+    private static readonly int StartFade = Animator.StringToHash("StartFade");
 
     public void LoadNextLevelWithStory()
     {
@@ -45,7 +47,7 @@ public class LevelLoader : MonoBehaviour
         }
         else
         {
-            transition.SetTrigger("StartFade");
+            transition.SetTrigger(StartFade);
             yield return new WaitForSeconds(.9f);
         }
 

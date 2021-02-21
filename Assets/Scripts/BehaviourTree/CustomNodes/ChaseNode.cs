@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class ChaseNode : Node
 {
-    private Enemy ai;
-    private Transform origin;
-    private Transform target;
-    private float distanceForSuccess;
+    private Enemy _ai;
+    private Transform _origin;
+    private Transform _target;
+    private float _distanceForSuccess;
 
     public ChaseNode(Enemy ai, Transform origin, Transform target, float distanceForSuccess = 0.1f)
     {
-        this.ai = ai;
-        this.origin = origin;
-        this.target = target;
-        this.distanceForSuccess = distanceForSuccess;
+        this._ai = ai;
+        this._origin = origin;
+        this._target = target;
+        this._distanceForSuccess = distanceForSuccess;
     }
 
     public override NodeState Execute()
     {
-        float distance = Vector3.Distance(origin.position, target.position);
-        myNodeState = distance < distanceForSuccess ? NodeState.SUCCESS : NodeState.RUNNING;
+        float distance = Vector3.Distance(_origin.position, _target.position);
+        myNodeState = distance < _distanceForSuccess ? NodeState.SUCCESS : NodeState.RUNNING;
         if(myNodeState == NodeState.RUNNING)
         {
-            ai.SetTarget(target);
-            ai.Move();
+            _ai.SetTarget(_target);
+            _ai.Move();
         }
 
         return myNodeState;

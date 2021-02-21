@@ -17,12 +17,16 @@ public class ArenaManager : MonoBehaviour
 
     public TextMeshProUGUI levelText;
 
-    private int level = 0;
-    private float levelTimer = 0; // might be used for score or some other stat
-    private int enemiesLeft = 0;
-    private int enemiesKilled = 0;
-    private bool isRewardUIOpen = false;
-    private bool bossFight = false;
+    private int _level = 0;
+    private float _levelTimer = 0f; // might be used for score or some other stat
+    private int _enemiesLeft = 0;
+    private int _enemiesKilled = 0;
+    private bool _isRewardUIOpen = false;
+    private bool _bossFight = false;
+    private AudioManager _audioManager;
+
+    [SerializeField]
+    private int rewardScreenRequirement = 5;
 
     [SerializeField]
     private GameObject enemiesParent;
@@ -35,12 +39,13 @@ public class ArenaManager : MonoBehaviour
 
     private void Start()
     {
-        levelText.SetText("Level: " + (level+1));
+        _audioManager = AudioManager.instance;
+        levelText.SetText("Level: " + (_level+1));
     }
 
     private void Update()
     {
-        if(enemiesLeft <= 0 && !isRewardUIOpen)
+        if(_enemiesLeft <= 0 && !_isRewardUIOpen)
         {
             NextLevel();
         }
@@ -48,16 +53,16 @@ public class ArenaManager : MonoBehaviour
 
     public void EnemyDied()
     {
-        enemiesLeft -= 1;
-        enemiesKilled++;
+        _enemiesLeft -= 1;
+        _enemiesKilled++;
 
-        if(enemiesLeft <= 0 && bossFight)
+        if(_enemiesLeft <= 0 && _bossFight)
         {
-            bossFight = false;
+            _bossFight = false;
             onRewardUIOpen.Raise();
             AudioManager.instance.PlayRandomMusic(MusicType.GameMusic);
         }
-        else if(enemiesLeft <= 0 && enemiesKilled / 5 > 0)
+        else if(_enemiesLeft <= 0 && _enemiesKilled / rewardScreenRequirement > 0)
         {
             onRewardUIOpen.Raise();
         }
@@ -66,22 +71,22 @@ public class ArenaManager : MonoBehaviour
     public void RewardUIToggled(bool openOrClose)
     {
         // TODO: currently reward UI is based on enemies killed and after each boss
-        isRewardUIOpen = openOrClose;
-        enemiesKilled = 0;
+        _isRewardUIOpen = openOrClose;
+        _enemiesKilled = 0;
     }
 
     public void UpdateMaxLevel()
     {
         if (PlayerPrefs.HasKey("MaxLevel"))
         {
-            if (level > PlayerPrefs.GetInt("MaxLevel"))
+            if (_level > PlayerPrefs.GetInt("MaxLevel"))
             {
-                PlayerPrefs.SetInt("MaxLevel", level);
+                PlayerPrefs.SetInt("MaxLevel", _level);
             }
         }
         else
         {
-            PlayerPrefs.SetInt("MaxLevel", level);
+            PlayerPrefs.SetInt("MaxLevel", _level);
         }
 
         PlayerPrefs.Save();
@@ -89,12 +94,11 @@ public class ArenaManager : MonoBehaviour
 
     private void NextLevel()
     {
-        AudioManager.instance.PlayOneShotSound("NextLevel");
-        level++;
-        levelText.SetText("Level: " + level);
-        if (level % 5 == 0)
+        _audioManager.PlayOneShotSound("NextLevel");
+        _level++;
+        levelText.SetText("Level: " + _level);
+        if (_level % 5 == 0)
         {
-            Debug.LogWarning("BOSS");
             SpawnBoss();
         }
         else
@@ -107,7 +111,7 @@ public class ArenaManager : MonoBehaviour
     {
         //TODO: spawn enemies, rework spawn system
         // for each enemy to spawn, spawn enemy, enemiesLeft++
-        int howMany = 2 + (int)(1.5 * level);
+        int howMany = 2 + (int)(1.5 * _level);
         int whichEnemy, whichPoint;
         Vector3 randomOffset;
 
@@ -116,31 +120,41 @@ public class ArenaManager : MonoBehaviour
             whichEnemy = Random.Range(0, enemies.Length);
             whichPoint = Random.Range(0, spawnPoints.Length);
 
-            randomOffset = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0f);
+            randomOffset = new Vector3(Random.Range(-0.7f, 0.7f), Random.Range(-0.7f, 0.7f), 0f);
 
             //spawnPoints[whichPoint].SetActive(true);
             Instantiate(enemies[whichEnemy], spawnPoints[whichPoint].transform.position + randomOffset, Quaternion.identity, enemiesParent.transform);
-            enemiesLeft++;
+            _enemiesLeft++;
         }
     }
 
     private void SpawnBoss()
     {
-        bossFight = true;
+        _bossFight = true;
 
-        int howMany = level / 5;
+        int howMany = _level / 5;
         Vector3 randomOffset;
 
         for (int i = 0; i < howMany; ++i)
         {
-            enemiesLeft++;
+            int whichBoss = Random.Range(0, bosses.Length);
+            if (bosses[whichBoss].name == "SlimeBoss")
+            {
+                Debug.Log("Spawning slime!");
+                _enemiesLeft += 7;
+            }
+            else
+            {
+                Debug.Log("Spawning Ghost!");
+                _enemiesLeft++;
+            }
+            
+            randomOffset = new Vector3(Random.Range(-0.7f, 0.7f), Random.Range(-0.7f, 0.7f), 0f);
 
-            randomOffset = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0f);
-
-            Instantiate(bosses[0], spawnPoints[0].transform.position + randomOffset * 2, Quaternion.identity, enemiesParent.transform);
+            Instantiate(bosses[whichBoss], spawnPoints[0].transform.position + randomOffset * 2, Quaternion.identity, enemiesParent.transform);
         }
 
-        AudioManager.instance.PlayRandomMusic(MusicType.BossMusic);
+        _audioManager.PlayRandomMusic(MusicType.BossMusic);
     }
 
     private void ActivateTraps()

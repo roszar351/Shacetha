@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class CheckBoolNode : Node
 {
-    private Enemy ai;
-    private int whichBoolVal;
+    private Enemy _ai;
+    private int _whichBoolVal;
 
     public CheckBoolNode(Enemy ai, int whichBool = 0)
     {
-        this.ai = ai;
-        whichBoolVal = whichBool;
+        this._ai = ai;
+        _whichBoolVal = whichBool;
     }
 
     public override NodeState Execute()
     {
-        if (ai.CheckBool(whichBoolVal))
+        if (_ai.CheckBool(_whichBoolVal))
             myNodeState = NodeState.SUCCESS;
         else
             myNodeState = NodeState.FAILURE;

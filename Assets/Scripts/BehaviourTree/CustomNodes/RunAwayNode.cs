@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class RunAwayNode : Node
 {
-    private Enemy ai;
+    private Enemy _ai;
 
     public RunAwayNode(Enemy ai)
     {
-        this.ai = ai;
+        this._ai = ai;
     }
 
     public override NodeState Execute()
     {
         myNodeState = NodeState.RUNNING;
 
-        ai.MoveAway();
+        _ai.MoveAway();
 
         return myNodeState;
     }

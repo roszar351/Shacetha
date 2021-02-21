@@ -87,7 +87,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Spell1
     clip: {fileID: 8300000, guid: e51e5de5ad9835a43bc9a4af739b2ed2, type: 3}
-    volume: 0.2
+    volume: 0.05
     pitch: 0.5
     loop: 0
     source: {fileID: 0}
@@ -195,6 +195,24 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: UseShield
     clip: {fileID: 8300000, guid: 6437db815e707374d8322b594b976aea, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SlimeAttack
+    clip: {fileID: 8300000, guid: fc01533b82a6ba148b5760068e26ea49, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SlimeDamaged
+    clip: {fileID: 8300000, guid: 83bd44156d41c684aa0c90fa6746a643, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SlimeDeath
+    clip: {fileID: 8300000, guid: 0fb442e60bcb72e4eb92408699314bd2, type: 3}
     volume: 1
     pitch: 1
     loop: 0

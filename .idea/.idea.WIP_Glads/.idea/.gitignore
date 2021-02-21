@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/contentModel.xml
+/.idea.WIP_Glads.iml
+/projectSettingsUpdater.xml
+# Datasource local storage ignored files
+/../../../../../../:\GitProjects\WIP_Glads\.idea\.idea.WIP_Glads\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

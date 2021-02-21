@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class AbilityNode : Node
 {
-    private Enemy ai;
+    private Enemy _ai;
 
     public AbilityNode(Enemy ai)
     {
-        this.ai = ai;
+        this._ai = ai;
     }
 
     public override NodeState Execute()
     {
-        bool abilityUsed = ai.UseAbility();
+        bool abilityUsed = _ai.UseAbility();
         if (abilityUsed)
             myNodeState = NodeState.RUNNING;
         else

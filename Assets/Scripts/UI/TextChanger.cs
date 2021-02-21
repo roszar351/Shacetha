@@ -8,11 +8,11 @@ public class TextChanger : MonoBehaviour
 {
     public Slider mySlider;
 
-    private TextMeshProUGUI text;
+    private TextMeshProUGUI _text;
 
     private void Start()
     {
-        text = GetComponent<TextMeshProUGUI>();
+        _text = GetComponent<TextMeshProUGUI>();
         UpdateText(mySlider.value);
     }
 
@@ -22,9 +22,9 @@ public class TextChanger : MonoBehaviour
         int low2 = 0;
         int high1 = 20;
         int high2 = 100;
-        if (text == null)
+        if (_text == null)
             return;
 
-        text.SetText(((int)(low2 + (s - low1) * (high2 - low2) / (high1 - low1))).ToString());
+        _text.SetText(((int)(low2 + (s - low1) * (high2 - low2) / (high1 - low1))).ToString());
     }
 }

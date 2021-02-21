@@ -4,39 +4,47 @@ using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour
 {
-    private Animator playerAnimator;
-    private PlayerController player;
+    private Animator _playerAnimator;
+    private PlayerController _player;
+    
+    #region caching
+    private static readonly int Moving = Animator.StringToHash("Moving");
+    private static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
+    private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
+    private static readonly int VerticalLook = Animator.StringToHash("VerticalLook");
+    private static readonly int HorizontalLook = Animator.StringToHash("HorizontalLook");
+    #endregion
 
     void Start()
     {
-        playerAnimator = GetComponent<Animator>();
-        player = GetComponentInParent<PlayerController>();
+        _playerAnimator = GetComponent<Animator>();
+        _player = GetComponentInParent<PlayerController>();
     }
 
     public void StopPlayerMovement(float forHowLong)
     {
-        player.StopMovement(forHowLong);
+        _player.StopMovement(forHowLong);
     }
 
     public void ResumePlayerMovement()
     {
-        player.ResumeMovement();
+        _player.ResumeMovement();
     }
 
     public void PlayMovementAnimation(Vector2 movement)
     {
         if(movement.x == 0 && movement.y == 0)
-            playerAnimator.SetBool("Moving", false);
+            _playerAnimator.SetBool(Moving, false);
         else
-            playerAnimator.SetBool("Moving", true);
+            _playerAnimator.SetBool(Moving, true);
 
-        playerAnimator.SetFloat("VerticalMovement", movement.y);
-        playerAnimator.SetFloat("HorizontalMovement", movement.x);
+        _playerAnimator.SetFloat(VerticalMovement, movement.y);
+        _playerAnimator.SetFloat(HorizontalMovement, movement.x);
     }
 
     public void UpdateIdleAnimation(Vector2 lookVector)
     {
-        playerAnimator.SetFloat("VerticalLook", lookVector.y);
-        playerAnimator.SetFloat("HorizontalLook", lookVector.x);
+        _playerAnimator.SetFloat(VerticalLook, lookVector.y);
+        _playerAnimator.SetFloat(HorizontalLook, lookVector.x);
     }
 }

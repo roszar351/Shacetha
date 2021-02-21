@@ -8,7 +8,7 @@ public class SimpleReverseCollider : MonoBehaviour
     {
         if(collision.gameObject.layer == 14)
         {
-            transform.position = transform.position * -1;
+            transform.position *= -1;
         }
     }
 }
