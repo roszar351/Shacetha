@@ -314,6 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691bcaa87c9260547a54668fe31ee39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Enemy
   myStats: {fileID: 11400000, guid: a188d0a1251c8104e8e675a4e7b8bfc6, type: 2}
   myHands: {fileID: 8578230917321223251}
   myAnimations: {fileID: 5777566893195329197}
@@ -324,6 +325,7 @@ MonoBehaviour:
   myRenderer: {fileID: 5777566893195329106}
   onDeathEvent: {fileID: 11400000, guid: 5019f2baa26913045954d3a2dbcbdf92, type: 2}
   myTarget: {fileID: 1004254805884352218}
+  rangeMultiplier: 20
 --- !u!1 &5777566893195329104
 GameObject:
   m_ObjectHideFlags: 0

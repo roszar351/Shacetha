@@ -101,5 +101,9 @@ public class Projectile : MonoBehaviour
             }
             KillProjectile();
         }
+        else if (collision.gameObject.layer == 14)
+        {
+            KillProjectile();
+        }
     }
 }

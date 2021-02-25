@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: item_NULL
   m_EditorClassIdentifier: 
   name: NULL
+  itemID: NULL
   itemType: 5
   weaponSprite: {fileID: 0}
   modifierValue: 0
-  itemRange: 0
   damageRadius: 0
   useCooldown: 0
-  duration: 0

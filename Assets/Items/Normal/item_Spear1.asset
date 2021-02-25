@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: item_Spear1
   m_EditorClassIdentifier: 
   name: Spear
+  itemID: IID0002
   itemType: 1
   weaponSprite: {fileID: 21300000, guid: 703624d9b001d3d4d95244aeec61cd51, type: 3}
   modifierValue: 10

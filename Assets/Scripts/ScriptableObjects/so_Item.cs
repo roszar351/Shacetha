@@ -6,6 +6,7 @@ using UnityEngine;
 public class so_Item : ScriptableObject
 {
     new public string name = "New Item";
+    public string itemID = "IID0000";
     public ItemType itemType;
     public Sprite weaponSprite = null;
     public int modifierValue; // If item is a shield it will reduce incoming damage by this value, if its a weapon it will do this much damage

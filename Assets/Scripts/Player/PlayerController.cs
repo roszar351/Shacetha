@@ -76,6 +76,8 @@ public class PlayerController : MonoBehaviour
             TakeDamage(_constantDamage);
 
         _currentInvincibleTimer -= Time.deltaTime;
+        if(_currentInvincibleTimer <= 0)
+            playerAnimations.UpdateInvincibilityBool(false);
 
         Look();
         HandleMove();
@@ -123,6 +125,8 @@ public class PlayerController : MonoBehaviour
         if (_currentInvincibleTimer > 0)
             return;
 
+        playerAnimations.UpdateInvincibilityBool(true);
+        
         _currentInvincibleTimer = _invincibleTimer;
         float tempValue = 100f + _totalArmor;
         if (tempValue <= 0)
@@ -279,6 +283,11 @@ public class PlayerController : MonoBehaviour
             CurrentItemStats currentItem = collision.GetComponent<CurrentItemStats>();
             TakeDamage(currentItem.GetModifierValue() + currentItem.myCharStats.baseDamage);
         }
+        if (collision.gameObject.layer == 8)
+        {
+            Slime slime = collision.GetComponent<Slime>();
+            TakeConstantDamage((int)(slime.myStats.baseDamage * slime.GetDamageMultiplier()));
+        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -286,6 +295,14 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.layer == 16)
         {
             TakeDamage(other.GetComponent<StaticTrap>().GetDamage());
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.layer == 8)
+        {
+            StopConstantDamage();
         }
     }
 }

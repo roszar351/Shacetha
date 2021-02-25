@@ -16,6 +16,7 @@ public class EnemyAnimations : MonoBehaviour
     private static readonly int HorizontalLook = Animator.StringToHash("HorizontalLook");
     private static readonly int AttackTell = Animator.StringToHash("AttackTell");
     private static readonly int SpellTell = Animator.StringToHash("SpellTell");
+    private static readonly int Invincibility = Animator.StringToHash("Invincibility");
 
     #endregion 
 
@@ -38,8 +39,16 @@ public class EnemyAnimations : MonoBehaviour
 
     public void UpdateIdleAnimation(Vector2 lookVector)
     {
+        if (_myAnimator == null)
+            return;
+        
         _myAnimator.SetFloat(VerticalLook, lookVector.y);
         _myAnimator.SetFloat(HorizontalLook, lookVector.x);
+    }
+
+    public void UpdateInvincibilityBool(bool isInvincible)
+    {
+        _myAnimator.SetBool(Invincibility, isInvincible);
     }
 
     public void PlayAttackTell()

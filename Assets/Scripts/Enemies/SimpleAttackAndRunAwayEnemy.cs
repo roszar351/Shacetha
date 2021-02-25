@@ -10,6 +10,8 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
     [SerializeField]
     private Transform myTarget;
 
+    [SerializeField] private float rangeMultiplier = 20f;
+
     protected override void Start()
     {
         base.Start();
@@ -34,7 +36,7 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
         AttackNode attackNode = new AttackNode(this);
         RangeNode attackRangeNode = new RangeNode(myTransform, target, myStats.attackRange);
         ChaseNode chaseNode = new ChaseNode(this, myTransform, target);
-        RangeNode searchRangeNode = new RangeNode(myTransform, target, myStats.attackRange * 20);
+        RangeNode searchRangeNode = new RangeNode(myTransform, target, myStats.attackRange * rangeMultiplier);
   
         IdleNode idleNode = new IdleNode(this);
         Sequence movementSequence = new Sequence(new List<Node> { searchRangeNode, chaseNode });

@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e69239f44d534344fbafe104d79d061e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: Enemy
   myStats: {fileID: 11400000, guid: 68aef9ac58d372b42ba9fdf6988d9bed, type: 2}
   myHands: {fileID: 2867848691114161687}
   myAnimations: {fileID: 65672572136531177}
@@ -104,6 +105,7 @@ MonoBehaviour:
   invincibleTime: 1
   myRenderer: {fileID: 65672572136530966}
   onDeathEvent: {fileID: 11400000, guid: 5019f2baa26913045954d3a2dbcbdf92, type: 2}
+  rangeMultiplier: 20
 --- !u!1 &65672572136530964
 GameObject:
   m_ObjectHideFlags: 0

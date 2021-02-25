@@ -104,6 +104,8 @@ public class DashBoss : Enemy
 
         myHands.UseLeftHand();
         myHands.UseRightHand();
+        
+        yield return new WaitForSeconds(0.5f);
 
         attacking = false;
     }

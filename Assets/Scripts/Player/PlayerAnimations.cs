@@ -13,6 +13,8 @@ public class PlayerAnimations : MonoBehaviour
     private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
     private static readonly int VerticalLook = Animator.StringToHash("VerticalLook");
     private static readonly int HorizontalLook = Animator.StringToHash("HorizontalLook");
+    private static readonly int Invincibility = Animator.StringToHash("Invincibility");
+
     #endregion
 
     void Start()
@@ -29,6 +31,11 @@ public class PlayerAnimations : MonoBehaviour
     public void ResumePlayerMovement()
     {
         _player.ResumeMovement();
+    }
+    
+    public void UpdateInvincibilityBool(bool isInvincible)
+    {
+        _playerAnimator.SetBool(Invincibility, isInvincible);
     }
 
     public void PlayMovementAnimation(Vector2 movement)

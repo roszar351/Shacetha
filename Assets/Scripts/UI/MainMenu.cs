@@ -36,5 +36,6 @@ public class MainMenu : MonoBehaviour
     public void GoToArena()
     {
         //SceneManager.LoadScene(2);
+        _referenceKeeper.levelLoader.LoadSpecificLevel(2, false);
     }
 }

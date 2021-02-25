@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,10 +23,17 @@ public class PlayerCooldownUIHelper : MonoBehaviour
 
     public event System.Action<so_Item, bool> OnEquippedItemChanged;
 
+    [SerializeField] private Sprite emptySprite;
+    
     private float _maxLeftCd = 1;
     private float _maxRightCd = 1;
 
     public CooldownUI ui;
+
+    private void Start()
+    {
+        ui.UpdateImages(emptySprite, emptySprite);
+    }
 
     public void UpdateCooldowns(float left, float right)
     {

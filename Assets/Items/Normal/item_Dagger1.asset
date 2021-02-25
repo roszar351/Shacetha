@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: item_Dagger1
   m_EditorClassIdentifier: 
   name: Dagger
+  itemID: IID0004
   itemType: 2
   weaponSprite: {fileID: 21300000, guid: 05c44b5048a6c034ab709ae9c4238193, type: 3}
   modifierValue: 20

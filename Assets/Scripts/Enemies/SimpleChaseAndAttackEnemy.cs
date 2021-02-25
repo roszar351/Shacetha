@@ -5,6 +5,8 @@ using UnityEngine;
 public class SimpleChaseAndAttackEnemy : Enemy
 {
     private Node _rootNode;
+    
+    [SerializeField] private float rangeMultiplier = 20f;
 
     protected override void Start()
     {
@@ -28,7 +30,7 @@ public class SimpleChaseAndAttackEnemy : Enemy
         AttackNode attackNode = new AttackNode(this);
         RangeNode attackRangeNode = new RangeNode(myTransform, target, myStats.attackRange);
         ChaseNode chaseNode = new ChaseNode(this, myTransform, target);
-        RangeNode searchRangeNode = new RangeNode(myTransform, target, myStats.attackRange * 20);
+        RangeNode searchRangeNode = new RangeNode(myTransform, target, myStats.attackRange * rangeMultiplier);
 
         Sequence movementSequence = new Sequence(new List<Node> { searchRangeNode, chaseNode });
         Sequence attackSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });
@@ -76,6 +78,8 @@ public class SimpleChaseAndAttackEnemy : Enemy
         myHands.UseLeftHand();
         myHands.UseRightHand();
 
+        yield return new WaitForSeconds(0.5f);
+        
         attacking = false;
     }
 }

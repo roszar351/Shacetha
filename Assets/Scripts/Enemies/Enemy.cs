@@ -64,6 +64,8 @@ public class Enemy : MonoBehaviour
         }
 
         currentInvincibleTimer -= Time.deltaTime;
+        if(currentInvincibleTimer <= 0)
+            myAnimations.UpdateInvincibilityBool(false);
     }
 
     private void LateUpdate()
@@ -115,7 +117,9 @@ public class Enemy : MonoBehaviour
     {
         if (currentInvincibleTimer > 0)
             return;
-
+        
+        myAnimations.UpdateInvincibilityBool(true);
+        
         currentInvincibleTimer = invincibleTime;
         //Debug.Log("Damage taken!");
         damageAmount = (int)(damageAmount * (100f / (100f + totalArmor)));

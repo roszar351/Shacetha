@@ -32,6 +32,8 @@ public class Slime : Enemy
     [SerializeField]
     private GameObject puddlePrefab;
     
+    [SerializeField] private float rangeMultiplier = 10f;
+    
     private Node _rootNode;
     private bool _isExploding = false;
     private float _damageMultiplier = 1.5f;
@@ -99,6 +101,11 @@ public class Slime : Enemy
         _rootNode.Execute();
     }
 
+    public float GetDamageMultiplier()
+    {
+        return _damageMultiplier;
+    }
+
     private void ConstructBehaviourTree()
     {
         Transform myTransform = transform;
@@ -106,7 +113,7 @@ public class Slime : Enemy
         AbilityNode abilityNode = new AbilityNode(this);
         CheckBoolNode checkBoolNode = new CheckBoolNode(this);
         AttackNode attackNode = new AttackNode(this);
-        RangeNode attackRangeNode = new RangeNode(myTransform, target, myStats.attackRange * 10);
+        RangeNode attackRangeNode = new RangeNode(myTransform, target, myStats.attackRange * rangeMultiplier);
 
         IdleNode idleNode = new IdleNode(this);
         Sequence attackSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });
@@ -170,7 +177,7 @@ public class Slime : Enemy
         }
 
         // End of jump
-        StaticTrap.Create(transform.position - new Vector3(0, .3f, 0), new Vector3(transform.localScale.x * 5, transform.localScale.y * 2.5f, 1), puddlePrefab, 10f, (int)(myStats.baseDamage * _damageMultiplier / 2));
+        StaticTrap.Create(transform.position - new Vector3(0, .3f, 0), new Vector3(transform.localScale.x * 4, transform.localScale.y * 2f, 1), puddlePrefab, 10f, 5);
         shadowObject.SetActive(false);
         myCollider.enabled = true;
         AudioManager.instance.PlayOneShotSound("SlimeAttack");
@@ -196,12 +203,12 @@ public class Slime : Enemy
             return;
         
         explosionParticles.SetActive(true);
-        Collider2D[] damageArea = Physics2D.OverlapCircleAll(transform.position, transform.localScale.x * .75f, myEnemyLayers);
+        Collider2D[] damageArea = Physics2D.OverlapCircleAll(transform.position, transform.localScale.x * 1f, myEnemyLayers);
         if (damageArea.Length > 0)
         {
             PlayerManager.instance.DealDamageToPlayer((int) (myStats.baseDamage * (0.2f + _damageMultiplier)));
         }
-        StaticTrap.Create(transform.position - new Vector3(0, .3f, 0), new Vector3(transform.localScale.x * 5, transform.localScale.y * 2.5f, 1), puddlePrefab, 20f, (int)(myStats.baseDamage * _damageMultiplier / 2));
+        StaticTrap.Create(transform.position - new Vector3(0, .3f, 0), new Vector3(transform.localScale.x * 4f, transform.localScale.y * 2f, 1), puddlePrefab, 20f, 5);
         //explosionParticles.SetActive(false);
 
         if (splitsLeft > 0)
@@ -221,26 +228,9 @@ public class Slime : Enemy
         return _isExploding;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        base.OnTriggerEnter2D(collision);
-        if (collision.gameObject.layer == 8)
-        {
-            collision.GetComponent<PlayerController>().TakeConstantDamage((int)(myStats.baseDamage * _damageMultiplier));
-        }
-    }
-
-    protected void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.layer == 8)
-        {
-            other.GetComponent<PlayerController>().StopConstantDamage();
-        }
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, transform.localScale.x * .75f);
+        Gizmos.DrawWireSphere(transform.position, transform.localScale.x * 1f);
     }
 }
