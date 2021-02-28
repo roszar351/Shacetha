@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Dagger
   itemID: IID0004
   itemType: 2
-  weaponSprite: {fileID: 21300000, guid: 05c44b5048a6c034ab709ae9c4238193, type: 3}
+  weaponSprite: {fileID: 21300000, guid: 0f91159a70773e641b48d7cbd1731382, type: 3}
   modifierValue: 20
   damageRadius: 0.1
   useCooldown: 0.5

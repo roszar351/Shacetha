@@ -31,6 +31,7 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
     {
         Transform myTransform = transform;
         
+        // TODO: could have used the chase node but have the target be the runaway target instead, something to clean up if time allows
         RunAwayNode runAwayNode = new RunAwayNode(this);
         CheckBoolNode checkRunAwayNode = new CheckBoolNode(this);
         AttackNode attackNode = new AttackNode(this);
@@ -71,12 +72,15 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
 
         myAnimations.PlayMovementAnimation(movementVector);
 
-        rb.MovePosition(rb.position + movementVector.normalized * (myStats.movementSpeed * Time.fixedDeltaTime));
+        rb.MovePosition(rb.position + movementVector.normalized * (speed * Time.fixedDeltaTime));
     }
 
     public override void MoveAway()
     {
         if (target == null)
+            return;
+        
+        if (attacking)
             return;
 
         Vector2 movementVector = target.position - transform.position;
@@ -90,7 +94,7 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
 
         myAnimations.PlayMovementAnimation(movementVector);
 
-        rb.MovePosition(rb.position + movementVector.normalized * (myStats.movementSpeed * Time.fixedDeltaTime));
+        rb.MovePosition(rb.position + movementVector.normalized * (speed * Time.fixedDeltaTime));
     }
 
     public override bool CheckBool(int whichBool = 0)
@@ -109,7 +113,7 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
         myHands.UseLeftHand();
         myHands.UseRightHand();
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
 
         _runAway = true;
         Invoke(nameof(ResetRunAway), 1f);
@@ -120,5 +124,22 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
     private void ResetRunAway()
     {
         _runAway = false;
+    }
+    
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+        if (collision.gameObject.layer == 17)
+        {
+            speed *= collision.GetComponent<StaticSlowingTrap>().GetModifier();
+        }
+    }
+
+    protected void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.layer == 17)
+        {
+            speed = myStats.movementSpeed;
+        }
     }
 }

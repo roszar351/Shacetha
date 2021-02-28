@@ -4,6 +4,7 @@
 Character & Enemy Sprites - Lanea Zimmerman (https://opengameart.org/content/tiny-16-basic)
 Items - https://blodyavenger.itch.io/rpg-items-retro-pack
 Particles - Kenney.nl (https://kenney.nl/assets/particle-pack)
+SpiderWeb - Elthen (https://www.patreon.com/elthen)
 Other:
 - https://raou.itch.io/dungeon-tileset-top-down-rpg
 - https://raou.itch.io/topdown-rpg-pixel-art-tileset

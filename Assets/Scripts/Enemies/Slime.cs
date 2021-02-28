@@ -141,7 +141,6 @@ public class Slime : Enemy
     IEnumerator DoJumpAttack()
     {
         myCollider.enabled = false;
-        PlayerManager.instance.player.GetComponent<PlayerController>().StopConstantDamage();
         // Start of jump
         AudioManager.instance.PlayOneShotSound("SlimeAttack");
         
@@ -171,13 +170,14 @@ public class Slime : Enemy
             //transform.position += new Vector3(0, addedVal, 0);
             spriteTransform.localPosition = new Vector3(0f, currentY, 0f);
             
-            rb.MovePosition(rb.position + movementVector.normalized * (myStats.movementSpeed * Time.fixedDeltaTime));
+            rb.MovePosition(rb.position + movementVector.normalized * (speed * Time.fixedDeltaTime));
             
             yield return new WaitForSeconds(0.1f);
         }
 
         // End of jump
-        StaticTrap.Create(transform.position - new Vector3(0, .3f, 0), new Vector3(transform.localScale.x * 4, transform.localScale.y * 2f, 1), puddlePrefab, 10f, 5);
+        StaticTrap.Create(transform.position - new Vector3(0, .3f, 0),
+            new Vector3(transform.localScale.x * 4, transform.localScale.y * 2f, 1), puddlePrefab, 10f, (int)(myStats.baseDamage * _damageMultiplier));
         shadowObject.SetActive(false);
         myCollider.enabled = true;
         AudioManager.instance.PlayOneShotSound("SlimeAttack");
@@ -208,7 +208,8 @@ public class Slime : Enemy
         {
             PlayerManager.instance.DealDamageToPlayer((int) (myStats.baseDamage * (0.2f + _damageMultiplier)));
         }
-        StaticTrap.Create(transform.position - new Vector3(0, .3f, 0), new Vector3(transform.localScale.x * 4f, transform.localScale.y * 2f, 1), puddlePrefab, 20f, 5);
+        StaticTrap.Create(transform.position - new Vector3(0, .3f, 0),
+            new Vector3(transform.localScale.x * 4f, transform.localScale.y * 2f, 1), puddlePrefab, 20f, (int)(myStats.baseDamage * _damageMultiplier));
         //explosionParticles.SetActive(false);
 
         if (splitsLeft > 0)

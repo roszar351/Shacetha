@@ -47,7 +47,7 @@ public class SimpleChaseAndAttackEnemy : Enemy
         myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
         AudioManager.instance.StopSound("MovementEnemy");
 
-        StartCoroutine("MyAttackTell");
+        StartCoroutine(nameof(MyAttackTell));
     }
 
     public override void Move()
@@ -64,7 +64,7 @@ public class SimpleChaseAndAttackEnemy : Enemy
 
         myAnimations.PlayMovementAnimation(movementVector);
 
-        rb.MovePosition(rb.position + movementVector.normalized * (myStats.movementSpeed * Time.fixedDeltaTime));
+        rb.MovePosition(rb.position + movementVector.normalized * (speed * Time.fixedDeltaTime));
     }
 
     IEnumerator MyAttackTell()
@@ -78,8 +78,25 @@ public class SimpleChaseAndAttackEnemy : Enemy
         myHands.UseLeftHand();
         myHands.UseRightHand();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
         
         attacking = false;
+    }
+    
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+        if (collision.gameObject.layer == 17)
+        {
+            speed *= collision.GetComponent<StaticSlowingTrap>().GetModifier();
+        }
+    }
+
+    protected void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.layer == 17)
+        {
+            speed = myStats.movementSpeed;
+        }
     }
 }

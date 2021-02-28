@@ -47,6 +47,7 @@ public class AudioManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        // For sounds put them in a dictionary to improve finding them
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -59,6 +60,8 @@ public class AudioManager : MonoBehaviour
             _soundEffects.Add(s.name, s);
         }
 
+        // for music it will be played randomly most of the time and very rarely by their actual name
+        // i.e. should not require a dictionary to improve finding elements and would only reduce performance due to hashing
         foreach (Sound s in menuMusic)
         {
             s.source = gameObject.AddComponent<AudioSource>();

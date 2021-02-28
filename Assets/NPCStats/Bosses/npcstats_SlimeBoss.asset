@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Jumpy Slime
   maxHp: 80
-  baseDamage: 25
+  baseDamage: 20
   baseArmor: 10
   movementSpeed: 15
   attackRange: 1

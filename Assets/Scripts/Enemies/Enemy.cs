@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     protected Rigidbody2D rb;
     protected bool attacking = false;
     protected float currentInvincibleTimer = 0f;
+    protected float speed;
 
     [SerializeField]
     protected string deathSoundName = "DeathMonster";
@@ -50,6 +51,7 @@ public class Enemy : MonoBehaviour
         SetTarget(PlayerManager.instance.player.transform);
         rb = GetComponent<Rigidbody2D>();
         totalArmor = myStats.baseArmor;
+        speed = myStats.movementSpeed;
     }
 
     private void Update()

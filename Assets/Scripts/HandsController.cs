@@ -156,7 +156,21 @@ public class HandsController : MonoBehaviour
 
     public float GetHighestCooldown()
     {
+        if (leftItem == null && rightItem == null)
+            return 0;
+        
+        if (leftItem != null && rightItem == null)
+            return leftItem.useCooldown;
+        
+        if (leftItem == null && rightItem != null)
+            return rightItem.useCooldown;
+            
         return leftItem.useCooldown > rightItem.useCooldown ? leftItem.useCooldown : rightItem.useCooldown;
+    }
+    
+    public float GetItemCooldown(bool left)
+    {
+        return left ? leftItem.useCooldown : rightItem.useCooldown;
     }
 
     public void UseLeftHand()

@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _movementVector;
     private int _currentHp;
     private int _totalArmor;
+    private float _speed;
 
     private float _dissolveAmount;
     private bool _isDying;
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour
         _movementVector = new Vector2(0f, 0f);
         _currentHp = myStats.maxHp;
         _totalArmor = myStats.baseArmor;
+        _speed = myStats.movementSpeed;
     }
 
     // Update is called once per frame
@@ -166,16 +168,6 @@ public class PlayerController : MonoBehaviour
             Die();
     }
 
-    public void TakeConstantDamage(int damage)
-    {
-        _constantDamage = damage;
-    }
-
-    public void StopConstantDamage()
-    {
-        _constantDamage = 0;
-    }
-
     private void Look()
     {
         Vector2 lookDirection = (GetMousePosition() - transform.position).normalized;
@@ -231,7 +223,7 @@ public class PlayerController : MonoBehaviour
 
         // Normalizing as movementVector is initially used as just direction and then speed and fixedDeltaTime is the actual speed
         // Helped prevent quicker movement in diagonals(hopefully :)
-        _rb.MovePosition(_rb.position + _movementVector.normalized * (myStats.movementSpeed * Time.fixedDeltaTime));
+        _rb.MovePosition(_rb.position + _movementVector.normalized * (_speed * Time.fixedDeltaTime));
     }
 
     // Handle the attack input
@@ -248,7 +240,7 @@ public class PlayerController : MonoBehaviour
             _movementVector.y = 0;
 
             myHands.UseLeftHand();
-            playerAnimations.StopPlayerMovement(.5f);
+            playerAnimations.StopPlayerMovement(myHands.GetItemCooldown(true) / 3f);
         }
 
         if (Input.GetMouseButton(1))
@@ -257,7 +249,7 @@ public class PlayerController : MonoBehaviour
             _movementVector.y = 0;
 
             myHands.UseRightHand();
-            playerAnimations.StopPlayerMovement(.5f);
+            playerAnimations.StopPlayerMovement(myHands.GetItemCooldown(false) / 3f);
         }
     }
 
@@ -283,15 +275,16 @@ public class PlayerController : MonoBehaviour
             CurrentItemStats currentItem = collision.GetComponent<CurrentItemStats>();
             TakeDamage(currentItem.GetModifierValue() + currentItem.myCharStats.baseDamage);
         }
-        if (collision.gameObject.layer == 8)
+
+        if (collision.gameObject.layer == 17)
         {
-            Slime slime = collision.GetComponent<Slime>();
-            TakeConstantDamage((int)(slime.myStats.baseDamage * slime.GetDamageMultiplier()));
+            _speed *= collision.GetComponent<StaticSlowingTrap>().GetModifier();
         }
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
+        // trap moves by a very small amount causing physics update which will keep triggering this method
         if (other.gameObject.layer == 16)
         {
             TakeDamage(other.GetComponent<StaticTrap>().GetDamage());
@@ -300,9 +293,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.layer == 8)
+        if (other.gameObject.layer == 17)
         {
-            StopConstantDamage();
+            _speed = myStats.movementSpeed;
         }
     }
 }
