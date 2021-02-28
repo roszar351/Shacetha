@@ -13,11 +13,14 @@ public class so_Item : ScriptableObject
     //public float itemRange;
     public float damageRadius;
     public float useCooldown;
+
+    public ItemRarity rarity;
     //public float duration = 1f;
 
     public override string ToString()
     {
         string ret = name;
+        ret += "\nRarity: " + rarity;
         ret += "\nType: " + itemType;
         if (itemType == ItemType.Shield)
         {
@@ -44,5 +47,12 @@ public enum ItemType
     Axe,
     Shield,
     NULL
+}
+
+public enum ItemRarity
+{
+    Normal,
+    Rare,
+    Epic
 }
 

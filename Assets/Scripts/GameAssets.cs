@@ -20,5 +20,6 @@ public class GameAssets : MonoBehaviour
     }
 
     public Transform pfTextPopup;
-    public Material diffuseMaterial;
+    public Material diffuseMaterial1;
+    public Material diffuseMaterial2;
 }

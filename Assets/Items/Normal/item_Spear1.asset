@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a06b37e1e9d6c41860f1f77e65065c, type: 3}
   m_Name: item_Spear1
   m_EditorClassIdentifier: 
-  name: Spear
+  name: Simple Spear
   itemID: IID0002
   itemType: 1
   weaponSprite: {fileID: 21300000, guid: 703624d9b001d3d4d95244aeec61cd51, type: 3}
   modifierValue: 10
   damageRadius: 0.2
   useCooldown: 1.5
+  rarity: 0

@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18a06b37e1e9d6c41860f1f77e65065c, type: 3}
-  m_Name: item_Dagger5
+  m_Name: item_Axe4
   m_EditorClassIdentifier: 
-  name: Dagger
-  itemID: IID0019
-  itemType: 2
-  weaponSprite: {fileID: 908688334654409166, guid: 781f8929bc501e14e9668cca2ba7180b,
+  name: Silver Battleaxe
+  itemID: IID0008
+  itemType: 3
+  weaponSprite: {fileID: -7285913902278316575, guid: 479ea5d3221c95c499650551a0f91559,
     type: 3}
-  modifierValue: 35
-  damageRadius: 0.1
-  useCooldown: 0.3
+  modifierValue: 20
+  damageRadius: 0.2
+  useCooldown: 1.5
+  rarity: 1

@@ -203,7 +203,7 @@ public class Slime : Enemy
             return;
         
         explosionParticles.SetActive(true);
-        Collider2D[] damageArea = Physics2D.OverlapCircleAll(transform.position, transform.localScale.x * 1f, myEnemyLayers);
+        Collider2D[] damageArea = Physics2D.OverlapCircleAll(transform.position, transform.localScale.x * .9f, myEnemyLayers);
         if (damageArea.Length > 0)
         {
             PlayerManager.instance.DealDamageToPlayer((int) (myStats.baseDamage * (0.2f + _damageMultiplier)));

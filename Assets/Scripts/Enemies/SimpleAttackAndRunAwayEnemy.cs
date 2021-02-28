@@ -31,7 +31,7 @@ public class SimpleAttackAndRunAwayEnemy : Enemy
     {
         Transform myTransform = transform;
         
-        // TODO: could have used the chase node but have the target be the runaway target instead, something to clean up if time allows
+        // using run away node as dont want to change target when running away i.e. want the enemy to always be aiming at the player
         RunAwayNode runAwayNode = new RunAwayNode(this);
         CheckBoolNode checkRunAwayNode = new CheckBoolNode(this);
         AttackNode attackNode = new AttackNode(this);

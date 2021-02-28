@@ -10,7 +10,8 @@ public class Enemy : MonoBehaviour
     public HandsController myHands;
     public EnemyAnimations myAnimations;
     public so_NPCStats playerStats;
-
+    public int whichMaterial = 0; // temporary solution for deciding which material to create
+    
     protected int currentHp;
     protected int totalArmor;
     protected Transform target;
@@ -40,7 +41,15 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
-        myRenderer.material = Instantiate(GameAssets.I.diffuseMaterial);
+        switch (whichMaterial)
+        {
+            case 0:
+                myRenderer.material = Instantiate(GameAssets.I.diffuseMaterial1);
+                break;
+            case 1:
+                myRenderer.material = Instantiate(GameAssets.I.diffuseMaterial2);
+                break;
+        }
         //myMaterial = myRenderer.material;
         isDying = false;
         dissolveAmount = 1f;

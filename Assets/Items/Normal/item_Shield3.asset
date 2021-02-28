@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a06b37e1e9d6c41860f1f77e65065c, type: 3}
   m_Name: item_Shield3
   m_EditorClassIdentifier: 
-  name: Shield1
+  name: Spike Shield
   itemID: IID0015
   itemType: 4
   weaponSprite: {fileID: 21300000, guid: 4b0b7a115e68d1f41b9db4aa013c0337, type: 3}
   modifierValue: 40
   damageRadius: 0
   useCooldown: 3
+  rarity: 0

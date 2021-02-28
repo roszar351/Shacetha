@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18a06b37e1e9d6c41860f1f77e65065c, type: 3}
-  m_Name: item_Dagger6
+  m_Name: item_Shield4
   m_EditorClassIdentifier: 
-  name: Dagger
-  itemID: IID0020
-  itemType: 2
-  weaponSprite: {fileID: -6188727095280306428, guid: 4d201f469271e9a448f84cff786eb571,
-    type: 3}
-  modifierValue: 45
-  damageRadius: 0.1
-  useCooldown: 0.5
+  name: Iron Shield
+  itemID: IID0016
+  itemType: 4
+  weaponSprite: {fileID: 21300000, guid: e0a830dac0206024d8bb1a5668cfa2c9, type: 3}
+  modifierValue: 80
+  damageRadius: 0
+  useCooldown: 5
+  rarity: 1

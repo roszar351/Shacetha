@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a06b37e1e9d6c41860f1f77e65065c, type: 3}
-  m_Name: item_Axe6
+  m_Script: {fileID: 11500000, guid: 03d2ee8510db0d941add16a130cf009c, type: 3}
+  m_Name: npcstats_Goblin
   m_EditorClassIdentifier: 
-  name: AxeWeapon
-  itemID: IID0010
-  itemType: 3
-  weaponSprite: {fileID: 21300000, guid: 906dc8b62f86d2e41ba2d59691f62a0a, type: 3}
-  modifierValue: 50
-  damageRadius: 0.2
-  useCooldown: 3
+  name: Goblin
+  maxHp: 50
+  baseDamage: 5
+  baseArmor: 5
+  movementSpeed: 4
+  attackRange: 0.7

@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18a06b37e1e9d6c41860f1f77e65065c, type: 3}
-  m_Name: item_Dagger4
+  m_Name: item_Dagger6
   m_EditorClassIdentifier: 
-  name: Dagger
-  itemID: IID0013
+  name: Evil Dirk
+  itemID: IID0020
   itemType: 2
-  weaponSprite: {fileID: 21300000, guid: 48c9bb30325158f4a98e8825c3a1b272, type: 3}
-  modifierValue: 25
+  weaponSprite: {fileID: -6188727095280306428, guid: 4d201f469271e9a448f84cff786eb571,
+    type: 3}
+  modifierValue: 45
   damageRadius: 0.1
   useCooldown: 0.5
+  rarity: 2

@@ -11,9 +11,12 @@ public class RewardManager : MonoBehaviour
     //TODO: will have to change how this item list will work as currently all items are dragged in through editor and picked randomly
     // current idea is to have another scriptable object called item pool e.g. normal, rare, very rare and have rewward manager pick item from one of the pools depending
     // on a random number roll
-    public List<so_Item> allItems;
+    public List<so_Item> normalItems;
+    public List<so_Item> rareItems;
+    public List<so_Item> epicItems;
 
-    private List<so_Item> _itemPool;
+    //private List<so_Item> _itemPool;
+    private List<List<so_Item>> _itemPool;
     private InventorySlot[] _icons;
     private TextMeshProUGUI[] _descriptions;
 
@@ -23,7 +26,9 @@ public class RewardManager : MonoBehaviour
     private so_Item nullItem;
 
     private so_Item _item1;
+    private int _item1Rarity = 0;
     private so_Item _item2;
+    private int _item2Rarity = 0;
 
     // first index indicates which stat is to be improved
     // second index indicates by how much
@@ -64,8 +69,10 @@ public class RewardManager : MonoBehaviour
             }
         }
 
-        _itemPool = new List<so_Item>();
-        _itemPool.AddRange(allItems);
+        _itemPool = new List<List<so_Item>>();
+        _itemPool.Add(normalItems);
+        _itemPool.Add(rareItems);
+        _itemPool.Add(epicItems);
 
         _statReward1 = new int[2];
         _statReward2 = new int[2];
@@ -74,15 +81,15 @@ public class RewardManager : MonoBehaviour
         DisableButtons();
     }
 
+    /*
     private void Update()
     {
-        /* for testing
+        // for testing
         if(Input.GetKeyDown(KeyCode.R))
         {
             OpenRewardScreen();
         }
-        */
-    }
+    }*/
 
     public void OpenRewardScreen()
     {
@@ -111,6 +118,7 @@ public class RewardManager : MonoBehaviour
     {
         int healamount = 5;
         DisableButtons();
+        // Need to add back the item(s) that were not chosen to be available for future rewards.
         switch (whichReward)
         {
             case 0:
@@ -118,7 +126,11 @@ public class RewardManager : MonoBehaviour
                 if (_item1 != null && _item1.itemType != ItemType.NULL)
                 {
                     PlayerManager.instance.playerInventory.Add(_item1);
-                    _itemPool.Remove(_item1);
+                    //_itemPool[_item1Rarity].Remove(_item1);
+                    if (_item2 != null && _item2.itemType != ItemType.NULL)
+                    {
+                        _itemPool[_item2Rarity].Add(_item2);
+                    }
                 }
 
                 ApplyStatReward(0);
@@ -129,16 +141,38 @@ public class RewardManager : MonoBehaviour
                 if (_item1 != null && _item1.itemType != ItemType.NULL)
                 {
                     PlayerManager.instance.playerInventory.Add(_item2);
-                    _itemPool.Remove(_item2);
+                    //_itemPool[_item2Rarity].Remove(_item2);
+                    if (_item1 != null && _item1.itemType != ItemType.NULL)
+                    {
+                        _itemPool[_item1Rarity].Add(_item1);
+                    }
                 }
 
                 ApplyStatReward(1);
                 break;
             }
             case 2:
+                if (_item1 != null && _item1.itemType != ItemType.NULL)
+                {
+                    _itemPool[_item1Rarity].Add(_item1);
+                }
+
+                if (_item2 != null && _item2.itemType != ItemType.NULL)
+                {
+                    _itemPool[_item2Rarity].Add(_item2);
+                }
                 ApplyStatReward(2);
                 break;
             case 3:
+                if (_item1 != null && _item1.itemType != ItemType.NULL)
+                {
+                    _itemPool[_item1Rarity].Add(_item1);
+                }
+                
+                if (_item2 != null && _item2.itemType != ItemType.NULL)
+                {
+                    _itemPool[_item2Rarity].Add(_item2);
+                }
                 healamount = _healReward;
                 break;
             default:
@@ -161,41 +195,67 @@ public class RewardManager : MonoBehaviour
     private void RollNewItemRewards()
     {
         int firstRanNum = 0;
+        int itemRarity = 0;
+        float probabilityRoll = Random.Range(0, 100);
+        
+        if (probabilityRoll > 95)
+            itemRarity = 2;
+        else if (probabilityRoll > 65)
+            itemRarity = 1;
+        
+        while (itemRarity > 0 && _itemPool[itemRarity].Count < 1)
+        {
+            itemRarity--;
+        }
+        
         // If no items left assign dummy items to rewards
         // If 1 item left assign that to reward 1 and then assign dummy item to reward 2
         // Else just assign random items to the rewards
-        if (_itemPool.Count < 1)
+        if (_itemPool[itemRarity].Count < 1)
         {
             _item1 = nullItem;
             _item2 = nullItem;
-
-            choiceButtons[0].GetComponent<Button>().interactable = false;
-            choiceButtons[1].GetComponent<Button>().interactable = false;
         }
         else
         {
             do
             {
-                firstRanNum = Random.Range(0, _itemPool.Count);
-            } while (_itemPool[firstRanNum] == null);
+                firstRanNum = Random.Range(0, _itemPool[itemRarity].Count);
+            } while (_itemPool[itemRarity][firstRanNum] == null);
 
-            _item1 = _itemPool[firstRanNum];
+            _item1 = _itemPool[itemRarity][firstRanNum];
+            _item1Rarity = itemRarity;
+            _itemPool[itemRarity].Remove(_item1);
             //allItems[ranNum] = null;
 
-            if (_itemPool.Count < 2)
+            itemRarity = 0;
+            probabilityRoll = Random.Range(0, 100);
+        
+            if (probabilityRoll > 95)
+                itemRarity = 2;
+            else if (probabilityRoll > 65)
+                itemRarity = 1;
+        
+            while (itemRarity > 0 && _itemPool[itemRarity].Count < 1)
+            {
+                itemRarity--;
+            }
+            
+            if (_itemPool[itemRarity].Count < 1)
             {
                 _item2 = nullItem;
-                choiceButtons[1].GetComponent<Button>().interactable = false;
             }
             else
             {
                 int secondRanNum = 0;
                 do
                 {
-                    secondRanNum = Random.Range(0, _itemPool.Count);
-                } while (_itemPool[secondRanNum] == null || firstRanNum == secondRanNum);
+                    secondRanNum = Random.Range(0, _itemPool[itemRarity].Count);
+                } while (_itemPool[itemRarity][secondRanNum] == null);
 
-                _item2 = _itemPool[secondRanNum];
+                _item2 = _itemPool[itemRarity][secondRanNum];
+                _item2Rarity = itemRarity;
+                _itemPool[itemRarity].Remove(_item2);
                 //allItems[ranNum] = null;
             }
         }
@@ -232,8 +292,9 @@ public class RewardManager : MonoBehaviour
         {
             switch (i)
             {
-                case 0 when _item1 == nullItem:
-                case 1 when _item2 == nullItem:
+                case 0 when _item1 == null || _item1 == nullItem:
+                    continue;
+                case 1 when _item2 == null || _item2 == nullItem:
                     continue;
             }
 
@@ -464,6 +525,12 @@ public class RewardManager : MonoBehaviour
         {
             g.GetComponent<Button>().interactable = true;
         }
+
+        if (_item1 == null || _item1 == nullItem)
+            choiceButtons[0].GetComponent<Button>().interactable = false;
+        
+        if (_item2 == null || _item2 == nullItem)
+            choiceButtons[1].GetComponent<Button>().interactable = false;
     }
 
     private void DisableButtons()

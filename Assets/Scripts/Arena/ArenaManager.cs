@@ -111,7 +111,7 @@ public class ArenaManager : MonoBehaviour
     {
         //TODO: spawn enemies, rework spawn system
         // for each enemy to spawn, spawn enemy, enemiesLeft++
-        int howMany = 2 + (int)(1.5 * _level);
+        int howMany = 1 + (int)(0.4 * _level);
         int whichEnemy, whichPoint;
         Vector3 randomOffset;
 

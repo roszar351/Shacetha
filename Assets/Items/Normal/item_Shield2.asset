@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a06b37e1e9d6c41860f1f77e65065c, type: 3}
   m_Name: item_Shield2
   m_EditorClassIdentifier: 
-  name: Shield1
+  name: Reinforced Shield
   itemID: IID0014
   itemType: 4
   weaponSprite: {fileID: 21300000, guid: d7a4dcb05d4a7ad4792c1b662fa432ac, type: 3}
   modifierValue: 30
   damageRadius: 0
   useCooldown: 2.5
+  rarity: 0

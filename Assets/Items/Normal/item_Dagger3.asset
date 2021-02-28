@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18a06b37e1e9d6c41860f1f77e65065c, type: 3}
   m_Name: item_Dagger3
   m_EditorClassIdentifier: 
-  name: Dagger
+  name: Goblin Dagger
   itemID: IID0012
   itemType: 2
   weaponSprite: {fileID: 21300000, guid: 17461c8fb6d7bc24191849140cac7547, type: 3}
-  modifierValue: 30
+  modifierValue: 25
   damageRadius: 0.1
   useCooldown: 0.6
+  rarity: 0
