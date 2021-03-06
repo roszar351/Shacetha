@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc154a77038b67045b2da75198e36d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myBaseStats: {fileID: 11400000, guid: 185889900d176a44597a80ce86828ec0, type: 2}
+  myBaseStats: {fileID: 11400000, guid: 8815cdf9e0f74a9418fd66703d952319, type: 2}
   myLeftAnimator: {fileID: 4999590515321479947}
   myRightAnimator: {fileID: 4999590516272799093}
   followMouse: 0
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 4999590515187001972}
   - component: {fileID: 4999590515187001973}
   m_Layer: 9
-  m_Name: SpiderEnemy
+  m_Name: EasySpider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,10 +263,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Spider
-  myStats: {fileID: 11400000, guid: 185889900d176a44597a80ce86828ec0, type: 2}
+  myStats: {fileID: 11400000, guid: 8815cdf9e0f74a9418fd66703d952319, type: 2}
   myHands: {fileID: 4999590514563743371}
   myAnimations: {fileID: 4999590516406112148}
   playerStats: {fileID: 11400000, guid: adb8d98c45cb9244982c8305ff134047, type: 2}
+  whichMaterial: 0
   deathSoundName: DeathMonster
   damageSoundName: DeathOther
   invincibleTime: 1

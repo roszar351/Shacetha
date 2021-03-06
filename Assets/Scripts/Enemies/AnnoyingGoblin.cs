@@ -1,15 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AnnoyingGoblin : Enemy
 {
-    /* TODO: Implement
+    /* 
      * This enemy should attack the player if they come in range but the main behaviour will be
      * running away, throwing some projectile(e.g. rock) at the player, stopping for small amount of time and repeat
      * Running away can be done same as the attack and runaway enemy but experiment making it a bit more random or use of the
      * movement patterns tested in the 'ZigzagBat'.
-     *
      *
      */
     [SerializeField] private float rangeMultiplier = 10f;
@@ -96,10 +96,12 @@ public class AnnoyingGoblin : Enemy
 
         yield return new WaitForSeconds(1.5f);
 
-        myHands.UseLeftHand();
-        myHands.UseRightHand();
+        bool leftAttack = myHands.UseLeftHand();
+        bool rightAttack = myHands.UseRightHand();
 
-        yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
+        // only pause if one of the items got used
+        if(leftAttack || rightAttack)
+            yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
 
         attacking = false;
     }
@@ -125,10 +127,11 @@ public class AnnoyingGoblin : Enemy
 
         myAnimations.PlayAbilityTell();
         Vector3 rockTarget = PlayerManager.instance.player.transform.position;
+        Vector3 offset = rockTarget - transform.position;
 
         yield return new WaitForSeconds(1f);
         
-        Projectile.Create(transform.position, rockTarget, projectilePrefab, 1, 1, 1);
+        Projectile.Create(transform.position + (offset.normalized * .5f), rockTarget, projectilePrefab, 1, 1, 1);
         _currentThrowCooldown = throwCooldown;
         AudioManager.instance.PlayOneShotSound("Swing3");
 

@@ -430,6 +430,7 @@ MonoBehaviour:
   myStats: {fileID: 11400000, guid: adb8d98c45cb9244982c8305ff134047, type: 2}
   myHands: {fileID: 3216610979733544002}
   myRenderer: {fileID: 3216610980531334617}
+  usedItemEvent: {fileID: 11400000, guid: edca45138c2040f4781542aee169fc8c, type: 2}
 --- !u!114 &3216610980308457945
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,7 +8,6 @@ public class RewardManager : MonoBehaviour
 {
     public GameObject rewardUIParent;
     public GameObject[] choiceButtons;
-    //TODO: will have to change how this item list will work as currently all items are dragged in through editor and picked randomly
     // current idea is to have another scriptable object called item pool e.g. normal, rare, very rare and have rewward manager pick item from one of the pools depending
     // on a random number roll
     public List<so_Item> normalItems;

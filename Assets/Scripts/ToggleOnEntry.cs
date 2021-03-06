@@ -34,7 +34,7 @@ public class ToggleOnEntry : MonoBehaviour
                     secondObject.SetActive(!secondObject.activeSelf); 
                     break;
                 default:
-                    Debug.LogError("Unknown ToggleMode: " + toggleMode);
+                    Debug.LogWarning("Unknown ToggleMode: " + toggleMode);
                     break;
             }
             if(destroySelfAfterToggle)

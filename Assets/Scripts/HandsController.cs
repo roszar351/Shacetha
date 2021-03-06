@@ -173,14 +173,15 @@ public class HandsController : MonoBehaviour
         return left ? leftItem.useCooldown : rightItem.useCooldown;
     }
 
-    public void UseLeftHand()
+    public bool UseLeftHand()
     {
         if (leftItem == null || !gameObject.activeSelf)
-            return;
+            return false;
 
         if (_currentLeftCooldown <= 0)
         {
             StartCoroutine(nameof(UseLeftItem));
+            return true;
             /*
             if (leftItem.itemType != ItemType.Shield)
             {
@@ -204,16 +205,19 @@ public class HandsController : MonoBehaviour
             }
             */
         }
+
+        return false;
     }
 
-    public void UseRightHand()
+    public bool UseRightHand()
     {
         if (rightItem == null || !gameObject.activeSelf)
-            return;
+            return false;
         
         if (_currentRightCooldown <= 0)
         {
             StartCoroutine(nameof(UseRightItem));
+            return true;
             /*
             if (rightItem.itemType != ItemType.Shield)
             {
@@ -237,6 +241,8 @@ public class HandsController : MonoBehaviour
             }
             */
         }
+
+        return false;
     }
 
     IEnumerator UseLeftItem()
@@ -376,7 +382,6 @@ public class HandsController : MonoBehaviour
         _followTarget = target;
     }
 
-    // TODO: Move this function to some helper script as it is also used in PlayerController and might be useful in future
     private Vector3 GetMousePosition()
     {
         Vector3 temp = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -14,6 +14,14 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         _referenceKeeper = ReferenceKeeper.instance;
+        if (PlayerPrefs.HasKey("MaxLevel"))
+        {
+            highestArenaText.SetText("Highest Level: " + PlayerPrefs.GetInt("MaxLevel"));
+        }
+        else
+        {
+            highestArenaText.SetText("Highest Level: " + 0);
+        }
     }
 
     public void PlayGame()

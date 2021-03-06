@@ -25,7 +25,6 @@ public class TooltipScript : MonoBehaviour
                 gameObject.SetActive(false);
                 return;
             }
-            //TODO: currently only check if tooltip is on screen towards the bottom, need to add a check for left side(as tooltip always shows up on left
             // which prevents it from going off screen on right or up, also dont use hard coded value of 100f but currently its fine as tooltip doesn't dynamicaly resize to fit text
             Vector3 down = transform.position - new Vector3(0, 115f, 0);
             Vector3 left = transform.position - new Vector3(115f, 0, 0);
@@ -34,12 +33,12 @@ public class TooltipScript : MonoBehaviour
             float downMult = 1;
             if (!_screenRect.Contains(down))
             {
-                Debug.Log("OUTSIDE BOTTOM");
+                //Debug.Log("OUTSIDE BOTTOM");
                 downMult = -1;
             }
             if (!_screenRect.Contains(left))
             {
-                Debug.Log("OUTSIDE LEFT");
+                //Debug.Log("OUTSIDE LEFT");
                 leftMult = -1.2f;
             }
             backgroundRect.localPosition = new Vector3(-50 * leftMult, -50 * downMult, 0);

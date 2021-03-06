@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private MaterialPropertyBlock _propBlock;
 
     [SerializeField] private Renderer myRenderer;
+    [SerializeField] private so_GameEvent usedItemEvent;
 
     private float _invincibleTimer = 1f;
     private float _currentInvincibleTimer = 0f;
@@ -232,15 +233,17 @@ public class PlayerController : MonoBehaviour
         // dont attack if clicking in UI
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        // TODO: add animation + sound for attacks
-
         if (Input.GetMouseButton(0))
         {
             _movementVector.x = 0;
             _movementVector.y = 0;
 
-            myHands.UseLeftHand();
-            playerAnimations.StopPlayerMovement(myHands.GetItemCooldown(true) / 3f);
+            bool leftAttack = myHands.UseLeftHand();
+            if (leftAttack)
+            {
+                usedItemEvent.Raise();
+                playerAnimations.StopPlayerMovement(myHands.GetItemCooldown(true) / 3f);
+            }
         }
 
         if (Input.GetMouseButton(1))
@@ -248,8 +251,12 @@ public class PlayerController : MonoBehaviour
             _movementVector.x = 0;
             _movementVector.y = 0;
 
-            myHands.UseRightHand();
-            playerAnimations.StopPlayerMovement(myHands.GetItemCooldown(false) / 3f);
+            bool rightAttack = myHands.UseRightHand();
+            if (rightAttack)
+            {
+                usedItemEvent.Raise();
+                playerAnimations.StopPlayerMovement(myHands.GetItemCooldown(false) / 3f);
+            }
         }
     }
 

@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 973915315574356014}
   - component: {fileID: 973915315574356017}
   m_Layer: 17
-  m_Name: PoisonSprite
+  m_Name: WebSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

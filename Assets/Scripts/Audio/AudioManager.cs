@@ -41,7 +41,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            Debug.LogError("Tried to create another instance of " + this.name);
+            Debug.LogWarning("Tried to create another instance of " + this.name);
             return;
         }
 

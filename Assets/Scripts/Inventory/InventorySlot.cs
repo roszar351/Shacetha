@@ -31,7 +31,7 @@ public class InventorySlot : MonoBehaviour
     {
         if (_item != null && _item.itemType == ItemType.NULL)
         {
-            Debug.LogError("Attempted to remove a null item!");
+            Debug.LogWarning("Attempted to remove a null item!");
             return;
         }
 
@@ -46,7 +46,7 @@ public class InventorySlot : MonoBehaviour
     {
         if (_item.itemType == ItemType.NULL)
         {
-            Debug.LogError("Attempted to remove a null item!");
+            Debug.LogWarning("Attempted to remove a null item!");
             return;
         }
 
@@ -57,7 +57,7 @@ public class InventorySlot : MonoBehaviour
     {
         if (_item.itemType == ItemType.NULL)
         {
-            Debug.LogError("Attempted to use a null item!");
+            Debug.LogWarning("Attempted to use a null item!");
             return;
         }
 

@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
     {
         if (items.Count >= space)
         {
-            Debug.Log("Full inventory, no room to pick up: " + item.name);
+            Debug.LogWarning("Full inventory, no room to pick up: " + item.name);
 
             return false;
         }

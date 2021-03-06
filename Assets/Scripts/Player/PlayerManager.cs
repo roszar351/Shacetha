@@ -66,7 +66,7 @@ public class PlayerManager : MonoBehaviour
         _isPlayerAlive = false;
         _playerController.StopInput();
         onPlayerDied.Raise();
-        AudioManager.instance.PlayOneShotSound("DeathScreen"); //TODO: Implement a death screen currently only plays a sound
+        AudioManager.instance.PlayOneShotSound("DeathScreen");
 
         Invoke(nameof(TurnOnDeathOverlay), .7f);
         Destroy(player, 1f);

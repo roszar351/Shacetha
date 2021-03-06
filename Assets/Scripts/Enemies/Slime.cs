@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Slime : Enemy
@@ -38,7 +39,7 @@ public class Slime : Enemy
     private bool _isExploding = false;
     private float _damageMultiplier = 1.5f;
     private float _currentAttackCooldown = 0f;
-
+    
     public static Slime Create(Vector3 position, GameObject slimePrefab, int splitsLeft)
     {
         GameObject slime = Instantiate(slimePrefab, position, Quaternion.identity);
@@ -56,8 +57,8 @@ public class Slime : Enemy
         transform.localScale = transform.localScale * 0.5f;
         explosionParticles.SetActive(false);
         _damageMultiplier = .5f + .5f * splitsLeft;
-        currentHp = (int) (currentHp * 0.75f);
-        totalArmor = (int) (totalArmor * .5f);
+        currentHp = (int) (myStats.maxHp * Mathf.Clamp(.35f * (1+splitsLeft), 0f, .9f));
+        totalArmor = (int) (myStats.baseArmor * Mathf.Clamp(.25f * (1+splitsLeft), 0f, .9f));
         
         StartCoroutine(nameof(GrowOnStart));
     }
@@ -86,7 +87,29 @@ public class Slime : Enemy
 
     protected override void Start()
     {
-        base.Start();
+        switch (whichMaterial)
+        {
+            case 0:
+                myRenderer.material = Instantiate(GameAssets.I.diffuseMaterial1);
+                break;
+            case 1:
+                myRenderer.material = Instantiate(GameAssets.I.diffuseMaterial2);
+                break;
+        }
+        //myMaterial = myRenderer.material;
+        isDying = false;
+        dissolveAmount = 1f;
+        propBlock = new MaterialPropertyBlock();
+        //myMaterial.SetFloat(DissolveValue, dissolveAmount);
+
+        if(currentHp == 0)
+            currentHp = myStats.maxHp;
+        if(totalArmor == 0)
+            totalArmor = myStats.baseArmor;
+        
+        SetTarget(PlayerManager.instance.player.transform);
+        rb = GetComponent<Rigidbody2D>();
+        speed = myStats.movementSpeed;
         name = "Slime";
         shadowObject.SetActive(false);
         ConstructBehaviourTree();
@@ -104,6 +127,11 @@ public class Slime : Enemy
     public float GetDamageMultiplier()
     {
         return _damageMultiplier;
+    }
+
+    public int GetSplitsLeft()
+    {
+        return splitsLeft;
     }
 
     private void ConstructBehaviourTree()

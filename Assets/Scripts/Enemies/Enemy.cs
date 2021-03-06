@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     protected MaterialPropertyBlock propBlock;
 
     [SerializeField]
-    private Renderer myRenderer;
+    protected Renderer myRenderer;
     [SerializeField]
     private so_GameEvent onDeathEvent;
 

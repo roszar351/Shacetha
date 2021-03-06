@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spider : Enemy
 {
-    /* TODO: Implement
+    /*
      * This enemy should be similar to normal chase enemy in the fact it will have some form of weapon they attack the player with
      * and will try to get close to them, the main difference will be the movement and some kind of ability
      * currently thinking of spitting web maybe as a circle(similar to poison trap/slime) but slowing instead of damaging
@@ -78,8 +78,8 @@ public class Spider : Enemy
         movementVector += new Vector2(randomXOffset, randomYOffset);
         */
         //Vector2 offset = new Vector2(.5f, .5f);
-        //Vector2 offset = new Vector2(Mathf.Clamp01(Mathf.Sin(Time.time)), Mathf.Clamp01(Mathf.Sin(Time.time)));
-        Vector2 offset = new Vector2(Mathf.Sin(Time.time) + 1, Mathf.Sin(Time.time) + 1);
+        Vector2 offset = new Vector2(Mathf.Clamp01(Mathf.Sin(Time.time)), Mathf.Clamp01(Mathf.Sin(Time.time)));
+        //Vector2 offset = new Vector2(Mathf.Sin(Time.time) + 1, Mathf.Sin(Time.time) + 1);
         movementVector += offset;
 
         rb.MovePosition(rb.position + movementVector.normalized * (speed * Time.fixedDeltaTime));
@@ -105,11 +105,13 @@ public class Spider : Enemy
         myAnimations.PlayAttackTell();
 
         yield return new WaitForSeconds(.5f);
+        
+        bool leftAttack = myHands.UseLeftHand();
+        bool rightAttack = myHands.UseRightHand();
 
-        myHands.UseLeftHand();
-        myHands.UseRightHand();
-
-        yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
+        // only pause if one of the items got used
+        if(leftAttack || rightAttack)
+            yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
 
         attacking = false;
     }

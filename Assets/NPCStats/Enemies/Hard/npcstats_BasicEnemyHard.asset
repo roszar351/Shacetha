@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03d2ee8510db0d941add16a130cf009c, type: 3}
-  m_Name: npcstats_Bat
+  m_Name: npcstats_BasicEnemyHard
   m_EditorClassIdentifier: 
-  name: Bat
-  maxHp: 30
-  baseDamage: 15
-  baseArmor: 0
-  movementSpeed: 1.5
-  attackRange: 0.5
+  name: BoringEnemy
+  maxHp: 100
+  baseDamage: 25
+  baseArmor: 20
+  movementSpeed: 3.5
+  attackRange: 1

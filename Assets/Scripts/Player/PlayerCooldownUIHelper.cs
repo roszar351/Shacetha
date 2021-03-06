@@ -16,7 +16,7 @@ public class PlayerCooldownUIHelper : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Tried to create another instance of " + this.name);
+            Debug.LogWarning("Tried to create another instance of " + this.name);
         }
     }
     #endregion

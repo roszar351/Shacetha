@@ -36,7 +36,7 @@ public class BaseTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public virtual void DisplayTooltip(PointerEventData pointerEventData)
     {
         Color color = Random.ColorHSV();
-        Debug.Log("Override DisplayTooltip!");
+        //Debug.Log("Override DisplayTooltip!");
 
         tooltipText.SetText("Override DisplayTooltip!");
 
@@ -48,7 +48,7 @@ public class BaseTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public virtual void CloseTooltip(PointerEventData pointerEventData)
     {
-        Debug.Log("Override CloseTooltip!");
+        //Debug.Log("Override CloseTooltip!");
         tooltipParent.gameObject.SetActive(false);
     }
 }

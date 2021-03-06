@@ -96,12 +96,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc154a77038b67045b2da75198e36d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myBaseStats: {fileID: 11400000, guid: a188d0a1251c8104e8e675a4e7b8bfc6, type: 2}
+  myBaseStats: {fileID: 11400000, guid: b0ebac77cbfba784f93a6f42e2bbd90f, type: 2}
   myLeftAnimator: {fileID: 125070481050961833}
   myRightAnimator: {fileID: 1292005007730425837}
   followMouse: 0
-  leftItem: {fileID: 11400000, guid: 4b0302f900edc9042a4627d5f14dbb59, type: 2}
-  rightItem: {fileID: 11400000, guid: 0f96d461ecb34ab4793fa9f849ac3f06, type: 2}
+  leftItem: {fileID: 11400000, guid: 0f96d461ecb34ab4793fa9f849ac3f06, type: 2}
+  rightItem: {fileID: 11400000, guid: 4b0302f900edc9042a4627d5f14dbb59, type: 2}
   leftHand: {fileID: 3662544464214817156}
   rightHand: {fileID: 7919193367494704818}
   leftCollider: {fileID: 3808394486089087288}
@@ -176,9 +176,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1386083159
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 48c9bb30325158f4a98e8825c3a1b272, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c2f838f836588f7499ef89bce32c431b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 5777566892811556649}
   - component: {fileID: 5777566892811556653}
   m_Layer: 9
-  m_Name: SkeletonAttackAndRun
+  m_Name: EasyAttackAndRunSwordShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -315,10 +315,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Enemy
-  myStats: {fileID: 11400000, guid: a188d0a1251c8104e8e675a4e7b8bfc6, type: 2}
+  myStats: {fileID: 11400000, guid: b0ebac77cbfba784f93a6f42e2bbd90f, type: 2}
   myHands: {fileID: 8578230917321223251}
   myAnimations: {fileID: 5777566893195329197}
   playerStats: {fileID: 11400000, guid: adb8d98c45cb9244982c8305ff134047, type: 2}
+  whichMaterial: 0
   deathSoundName: DeathMonster
   damageSoundName: DamagedMonster
   invincibleTime: 1
@@ -396,7 +397,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1378871095
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 7729768860333772239, guid: 314216032fc9ea24e8bc56ee29319b4f,
     type: 3}
@@ -638,9 +639,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1386083159
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 48c9bb30325158f4a98e8825c3a1b272, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a449e4e9d0611634c8ee0b739fa68a6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 1

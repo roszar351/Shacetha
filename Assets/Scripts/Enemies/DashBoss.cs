@@ -10,7 +10,7 @@ public class DashBoss : Enemy
     [SerializeField]
     private int dashDamage = 30;
 
-    //TODO: Implement dashing boss, move some methods/logic into the base class
+    //TODO: Implement dashing boss, move some methods/logic into the base class if time allows
     private Node _rootNode;
     private float _currentAbilityCooldown = 0f;
     private bool _usingAbility = false;
@@ -103,10 +103,12 @@ public class DashBoss : Enemy
 
         AudioManager.instance.PlayOneShotSound("ScaryGhost");
 
-        myHands.UseLeftHand();
-        myHands.UseRightHand();
-        
-        yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
+        bool leftAttack = myHands.UseLeftHand();
+        bool rightAttack = myHands.UseRightHand();
+
+        // only pause if one of the items got used
+        if(leftAttack || rightAttack)
+            yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
 
         attacking = false;
     }

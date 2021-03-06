@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,12 @@ public class LevelLoader : MonoBehaviour
     public Animator transition;
     
     private static readonly int StartFade = Animator.StringToHash("StartFade");
+    private static readonly int EndFadeTrigger = Animator.StringToHash("EndFadeTrigger");
+
+    private void Start()
+    {
+        EndFadeAnimation();
+    }
 
     public void LoadNextLevelWithStory()
     {
@@ -31,6 +38,17 @@ public class LevelLoader : MonoBehaviour
     {
         AudioManager.instance.PlayRandomMusic(MusicType.MenuMusic);
         StartCoroutine(LoadLevel(0, false));
+    }
+
+    public void StartFadeAnimation()
+    {
+        transition.SetTrigger(StartFade);
+    }
+
+    public void EndFadeAnimation()
+    {
+        //Debug.Log("Playing fade animation");
+        transition.SetTrigger(EndFadeTrigger);
     }
 
     IEnumerator LoadLevel(int levelIndex, bool withStory)

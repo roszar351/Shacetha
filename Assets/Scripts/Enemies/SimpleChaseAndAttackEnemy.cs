@@ -75,10 +75,12 @@ public class SimpleChaseAndAttackEnemy : Enemy
 
         yield return new WaitForSeconds(1f);
 
-        myHands.UseLeftHand();
-        myHands.UseRightHand();
+        bool leftAttack = myHands.UseLeftHand();
+        bool rightAttack = myHands.UseRightHand();
 
-        yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
+        // only pause if one of the items got used
+        if(leftAttack || rightAttack)
+            yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
         
         attacking = false;
     }
