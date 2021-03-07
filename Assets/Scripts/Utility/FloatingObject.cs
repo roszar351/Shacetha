@@ -3,13 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script for a floating object that floats up and down
 public class FloatingObject : MonoBehaviour
 {
-    [SerializeField]
-    private float maxYOffset = 1f;
-    
-    [SerializeField]
-    private float floatStep = .1f;
+    [SerializeField] private float maxYOffset = 1f;
+    [SerializeField] private float floatStep = .1f;
 
     private Vector3 _initialPosition;
 

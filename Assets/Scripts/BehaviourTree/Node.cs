@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Describes a node in a behaviour tree
 [System.Serializable]
 public abstract class Node 
 {

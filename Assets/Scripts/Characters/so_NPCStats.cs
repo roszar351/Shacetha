@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+// Describes a characters stats
 [CreateAssetMenu(fileName = "npcstats_", menuName = "NPC/Stats")]
 public class so_NPCStats : ScriptableObject
 {

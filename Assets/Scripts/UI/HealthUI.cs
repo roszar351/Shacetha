@@ -10,8 +10,7 @@ public class HealthUI : MonoBehaviour
     public TextMeshProUGUI hpText;
     public so_NPCStats initialStats;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         GetComponent<PlayerController>().OnHealthChanged += OnHealthChanged;
         OnHealthChanged(initialStats.maxHp, initialStats.maxHp);

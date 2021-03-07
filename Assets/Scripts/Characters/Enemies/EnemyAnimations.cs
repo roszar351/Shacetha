@@ -20,7 +20,7 @@ public class EnemyAnimations : MonoBehaviour
 
     #endregion 
 
-    void Start()
+    private void Start()
     {
         _myAnimator = GetComponent<Animator>();
         _enemy = GetComponentInParent<Enemy>();

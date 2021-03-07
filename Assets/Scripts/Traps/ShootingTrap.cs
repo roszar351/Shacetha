@@ -12,8 +12,7 @@ public class ShootingTrap : MonoBehaviour
     [Tooltip("Should be higher than 0.5f as it waits that long between the tell and actually shooting")]
     public float cooldown = 3f;
 
-    [SerializeField]
-    private GameObject particles;
+    [SerializeField] private GameObject particles;
 
     private float _currentShotCooldown = 0f;
     private Projectile _currentProjectile;
@@ -43,10 +42,10 @@ public class ShootingTrap : MonoBehaviour
 
     public virtual void ShootProjectile()
     {
-        StartCoroutine("Shoot");
+        StartCoroutine(nameof(Shoot));
     }
 
-    IEnumerator Shoot()
+    private IEnumerator Shoot()
     {
         animator.SetTrigger(TrapTell);
         if (particles != null)

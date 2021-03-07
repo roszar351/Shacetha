@@ -5,20 +5,11 @@ using UnityEngine.Serialization;
 
 public class ToggleOnEntry : MonoBehaviour
 {
-    [SerializeField]
-    private ToggleMode toggleMode;
-
-    [SerializeField]
-    private int colliderLayer = 8;
-    
-    [SerializeField]
-    private bool destroySelfAfterToggle;
-    
-    [SerializeField]
-    private GameObject firstObject;
-    
-    [SerializeField]
-    private GameObject secondObject;
+    [SerializeField] private ToggleMode toggleMode;
+    [SerializeField] private int colliderLayer = 8;
+    [SerializeField] private bool destroySelfAfterToggle;
+    [SerializeField] private GameObject firstObject;
+    [SerializeField] private GameObject secondObject;
 
     private void OnTriggerEnter2D(Collider2D other)
     {

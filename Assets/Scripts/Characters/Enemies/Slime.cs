@@ -8,31 +8,15 @@ public class Slime : Enemy
     public static int slimesPerSplit = 2;
     public LayerMask myEnemyLayers;
     
-    [SerializeField]
     [Tooltip("Always splits into two smaller versions, this decides how many times it will split.")]
-    private int splitsLeft = 2;
-    
-    [SerializeField] 
-    private GameObject explosionParticles;
-
-    [SerializeField]
-    private GameObject slimePrefab;
-    
-    [SerializeField]
-    private float jumpAttackCooldown = 1f;
-
-    [SerializeField]
-    private GameObject shadowObject;
-
-    [SerializeField]
-    private Transform spriteTransform;
-
-    [SerializeField]
-    private Collider2D myCollider;
-
-    [SerializeField]
-    private GameObject puddlePrefab;
-    
+    [SerializeField] private int splitsLeft = 2;
+    [SerializeField] private GameObject explosionParticles;
+    [SerializeField] private GameObject slimePrefab;
+    [SerializeField] private float jumpAttackCooldown = 1f;
+    [SerializeField] private GameObject shadowObject;
+    [SerializeField] private Transform spriteTransform;
+    [SerializeField] private Collider2D myCollider;
+    [SerializeField] private GameObject puddlePrefab;
     [SerializeField] private float rangeMultiplier = 10f;
     
     private Node _rootNode;
@@ -63,7 +47,7 @@ public class Slime : Enemy
         StartCoroutine(nameof(GrowOnStart));
     }
 
-    IEnumerator GrowOnStart()
+    private IEnumerator GrowOnStart()
     {
         shadowObject.SetActive(false);
         float maxScale = transform.localScale.x;

@@ -98,6 +98,18 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 2.2
       objectReference: {fileID: 0}
+    - target: {fileID: 6260134809924267566, guid: 8c2cd61aaf7bc6b4b9afe1f3125cfb7e,
+        type: 3}
+      propertyPath: myCharStats
+      value: 
+      objectReference: {fileID: 11400000, guid: b237792d763e9494f923bfb8351f03ad,
+        type: 2}
+    - target: {fileID: 6260134810916354838, guid: 8c2cd61aaf7bc6b4b9afe1f3125cfb7e,
+        type: 3}
+      propertyPath: myCharStats
+      value: 
+      objectReference: {fileID: 11400000, guid: b237792d763e9494f923bfb8351f03ad,
+        type: 2}
     - target: {fileID: 6260134811067517008, guid: 8c2cd61aaf7bc6b4b9afe1f3125cfb7e,
         type: 3}
       propertyPath: myBaseStats

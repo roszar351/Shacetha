@@ -25,7 +25,7 @@ public class PlayerStatsUI : MonoBehaviour
 
     private void Update()
     {
-        //TODO: probably shouldnt update every loop
+        //TODO: probably shouldn't update every update call
         UpdateCharacterSheetUI();
     }
 

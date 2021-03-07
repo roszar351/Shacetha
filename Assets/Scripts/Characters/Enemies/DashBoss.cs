@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class DashBoss : Enemy
 {
-    [SerializeField]
-    private float abilityCooldown = 10f;
-    [SerializeField]
-    private int dashDamage = 30;
+    [SerializeField] private float abilityCooldown = 10f;
+    [SerializeField] private int dashDamage = 30;
 
-    //TODO: Implement dashing boss, move some methods/logic into the base class if time allows
+    //TODO: move some methods/logic into the base class if time allows
     private Node _rootNode;
     private float _currentAbilityCooldown = 0f;
     private bool _usingAbility = false;
@@ -93,7 +91,7 @@ public class DashBoss : Enemy
         rb.MovePosition(rb.position + movementVector.normalized * (speed * Time.fixedDeltaTime));
     }
 
-    IEnumerator MyAttackTell()
+    private IEnumerator MyAttackTell()
     {
         attacking = true;
 
@@ -108,12 +106,16 @@ public class DashBoss : Enemy
 
         // only pause if one of the items got used
         if(leftAttack || rightAttack)
-            yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
+        {
+            float time = myHands.GetHighestCooldown() / 3f;
+            time = Mathf.Clamp(time, 0.35f, 5f);
+            yield return new WaitForSeconds(time);
+        }
 
         attacking = false;
     }
 
-    IEnumerator MyAbilityTell()
+    private IEnumerator MyAbilityTell()
     {
         attacking = true;
 

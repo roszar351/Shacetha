@@ -13,8 +13,7 @@ public class Projectile : MonoBehaviour
     protected Rigidbody2D rb;
     protected Vector3 myTarget;
 
-    [SerializeField]
-    protected LayerMask enemyMask;
+    [SerializeField] protected LayerMask enemyMask;
 
     public static Projectile Create(Vector3 position, Vector3 target, GameObject projectilePrefab, float damageMultiplier, float speedMultiplier, float lifeTimeMultiplier)
     {

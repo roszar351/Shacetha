@@ -1,6 +1,7 @@
 ﻿using UnityEngine.Audio;
 using UnityEngine;
 
+// Class that describes a sound
 [System.Serializable]
 public class Sound
 {

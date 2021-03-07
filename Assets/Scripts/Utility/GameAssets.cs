@@ -4,7 +4,6 @@ using UnityEngine;
 
 /*
  * Hold references to some commonly used prefabs
- * 
  */
 public class GameAssets : MonoBehaviour
 {

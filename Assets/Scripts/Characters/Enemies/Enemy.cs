@@ -32,10 +32,8 @@ public class Enemy : MonoBehaviour
     //protected Material myMaterial;
     protected MaterialPropertyBlock propBlock;
 
-    [SerializeField]
-    protected Renderer myRenderer;
-    [SerializeField]
-    private so_GameEvent onDeathEvent;
+    [SerializeField] protected Renderer myRenderer;
+    [SerializeField] private so_GameEvent onDeathEvent;
 
     private static readonly int DissolveValue = Shader.PropertyToID("_DissolveValue");
 

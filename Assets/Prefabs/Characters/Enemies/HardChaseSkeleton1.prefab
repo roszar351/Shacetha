@@ -73,6 +73,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 68aef9ac58d372b42ba9fdf6988d9bed,
         type: 2}
+    - target: {fileID: 2638943500453476847, guid: 6d98f74a588a08a45bf307be52a8ed12,
+        type: 3}
+      propertyPath: myCharStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 68aef9ac58d372b42ba9fdf6988d9bed,
+        type: 2}
+    - target: {fileID: 2739543463942863908, guid: 6d98f74a588a08a45bf307be52a8ed12,
+        type: 3}
+      propertyPath: myCharStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 68aef9ac58d372b42ba9fdf6988d9bed,
+        type: 2}
     - target: {fileID: 2867848691114161687, guid: 6d98f74a588a08a45bf307be52a8ed12,
         type: 3}
       propertyPath: myBaseStats

@@ -4,25 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// Responsible for presenting the reward options to the player and handle player's choice
 public class RewardManager : MonoBehaviour
 {
     public GameObject rewardUIParent;
     public GameObject[] choiceButtons;
-    // current idea is to have another scriptable object called item pool e.g. normal, rare, very rare and have rewward manager pick item from one of the pools depending
-    // on a random number roll
+
+    // Lists for the different rarities of items, if time allows should use item database to make it cleaner and
+    // would also let database be responsible for item pools
     public List<so_Item> normalItems;
     public List<so_Item> rareItems;
     public List<so_Item> epicItems;
 
     //private List<so_Item> _itemPool;
+    // Current item pool from which the rewards are chosen
     private List<List<so_Item>> _itemPool;
     private InventorySlot[] _icons;
     private TextMeshProUGUI[] _descriptions;
 
-    [SerializeField]
-    private so_NPCStats playerStats;
-    [SerializeField]
-    private so_Item nullItem;
+    [SerializeField] private so_NPCStats playerStats;
+    [SerializeField] private so_Item nullItem;
 
     private so_Item _item1;
     private int _item1Rarity = 0;
@@ -38,19 +39,17 @@ public class RewardManager : MonoBehaviour
     private int[] _statReward3;
     private int _healReward = 0;
 
+    // Defines ranges for stats e.g. low stat reward is 1-3, average 3-5 etc.
     private int _lowStatStartRange = 1;
     private int _averageStatStartRange = 3;
     private int _highStatStartRange = 5;
     private int _veryHighStatStartRange = 8;
     private int _extremeStatStartRange = 11;
 
-    private string[] _statStrings = new string[] { " max HP", " attack damage", " base armor" };
+    private readonly string[] _statStrings = { " max HP", " attack damage", " base armor" };
 
-    [SerializeField]
-    private so_GameEvent onRewardUIOpen;
-        
-    [SerializeField]
-    private so_GameEvent onRewardUIClose;
+    [SerializeField] private so_GameEvent onRewardUIOpen;
+    [SerializeField] private so_GameEvent onRewardUIClose;
 
     private void Start()
     {
@@ -68,10 +67,7 @@ public class RewardManager : MonoBehaviour
             }
         }
 
-        _itemPool = new List<List<so_Item>>();
-        _itemPool.Add(normalItems);
-        _itemPool.Add(rareItems);
-        _itemPool.Add(epicItems);
+        _itemPool = new List<List<so_Item>> {normalItems, rareItems, epicItems};
 
         _statReward1 = new int[2];
         _statReward2 = new int[2];
@@ -100,7 +96,7 @@ public class RewardManager : MonoBehaviour
         StartCoroutine(nameof(RewardSetup));
     }
 
-    IEnumerator RewardSetup()
+    private IEnumerator RewardSetup()
     {
         RollNewItemRewards();
         RollStatReward();
@@ -115,13 +111,13 @@ public class RewardManager : MonoBehaviour
 
     public void PickReward(int whichReward)
     {
-        int healamount = 5;
+        int healAmount = 5;
         DisableButtons();
         // Need to add back the item(s) that were not chosen to be available for future rewards.
         switch (whichReward)
         {
             case 0:
-            {
+                // Picked first item
                 if (_item1 != null && _item1.itemType != ItemType.NULL)
                 {
                     PlayerManager.instance.playerInventory.Add(_item1);
@@ -134,9 +130,8 @@ public class RewardManager : MonoBehaviour
 
                 ApplyStatReward(0);
                 break;
-            }
             case 1:
-            {
+                // Picked second item
                 if (_item1 != null && _item1.itemType != ItemType.NULL)
                 {
                     PlayerManager.instance.playerInventory.Add(_item2);
@@ -149,20 +144,8 @@ public class RewardManager : MonoBehaviour
 
                 ApplyStatReward(1);
                 break;
-            }
             case 2:
-                if (_item1 != null && _item1.itemType != ItemType.NULL)
-                {
-                    _itemPool[_item1Rarity].Add(_item1);
-                }
-
-                if (_item2 != null && _item2.itemType != ItemType.NULL)
-                {
-                    _itemPool[_item2Rarity].Add(_item2);
-                }
-                ApplyStatReward(2);
-                break;
-            case 3:
+                // Picked stat reward
                 if (_item1 != null && _item1.itemType != ItemType.NULL)
                 {
                     _itemPool[_item1Rarity].Add(_item1);
@@ -172,9 +155,25 @@ public class RewardManager : MonoBehaviour
                 {
                     _itemPool[_item2Rarity].Add(_item2);
                 }
-                healamount = _healReward;
+                
+                ApplyStatReward(2);
+                break;
+            case 3:
+                // Picked the heal
+                if (_item1 != null && _item1.itemType != ItemType.NULL)
+                {
+                    _itemPool[_item1Rarity].Add(_item1);
+                }
+                
+                if (_item2 != null && _item2.itemType != ItemType.NULL)
+                {
+                    _itemPool[_item2Rarity].Add(_item2);
+                }
+                
+                healAmount = _healReward;
                 break;
             default:
+                // Somehow picked non existent reward :(
                 Debug.LogError("Picked reward with index out of bounds!");
                 return;
         }
@@ -188,7 +187,7 @@ public class RewardManager : MonoBehaviour
         onRewardUIClose.Raise();
 
         //Debug.Log("Healing after picking reward!");
-        PlayerManager.instance.player.GetComponent<PlayerController>().Heal(healamount);
+        PlayerManager.instance.player.GetComponent<PlayerController>().Heal(healAmount);
     }
 
     private void RollNewItemRewards()
@@ -289,6 +288,7 @@ public class RewardManager : MonoBehaviour
         // Currently only 2 item rewards planned.
         for (int i = 0; i < 2; ++i)
         {
+            // If item reward is null then dont roll for additional stat for that item
             switch (i)
             {
                 case 0 when _item1 == null || _item1 == nullItem:
@@ -416,7 +416,6 @@ public class RewardManager : MonoBehaviour
         // currently heal player for 25% of their max hp
         _healReward = playerStats.maxHp / 4;
         _descriptions[3].SetText("Heal for " + _healReward);
-
     }
 
     private void ApplyStatReward(int whichReward)

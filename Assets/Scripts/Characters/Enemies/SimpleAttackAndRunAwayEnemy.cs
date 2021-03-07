@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleChaseAndAttackEnemy : Enemy
+public class SimpleAttackAndRunAwayEnemy : Enemy
 {
     private Node _rootNode;
-    
+    private bool _runAway = false;
+
+    [SerializeField] private Transform myTarget;
     [SerializeField] private float rangeMultiplier = 20f;
 
     protected override void Start()
     {
         base.Start();
-        name = "SimpleChaseAndAttack";
+        name = "SimpleAttackAndRun";
         ConstructBehaviourTree();
     }
 
@@ -27,16 +29,20 @@ public class SimpleChaseAndAttackEnemy : Enemy
     {
         Transform myTransform = transform;
         
+        // using run away node as dont want to change target when running away i.e. want the enemy to always be aiming at the player
+        RunAwayNode runAwayNode = new RunAwayNode(this);
+        CheckBoolNode checkRunAwayNode = new CheckBoolNode(this);
         AttackNode attackNode = new AttackNode(this);
         RangeNode attackRangeNode = new RangeNode(myTransform, target, myStats.attackRange);
         ChaseNode chaseNode = new ChaseNode(this, myTransform, target);
         RangeNode searchRangeNode = new RangeNode(myTransform, target, myStats.attackRange * rangeMultiplier);
-
+  
+        IdleNode idleNode = new IdleNode(this);
         Sequence movementSequence = new Sequence(new List<Node> { searchRangeNode, chaseNode });
         Sequence attackSequence = new Sequence(new List<Node> { attackRangeNode, attackNode });
-        IdleNode idleNode = new IdleNode(this);
+        Sequence runAwaySequence = new Sequence(new List<Node> { checkRunAwayNode, runAwayNode });
 
-        _rootNode = new Selector(new List<Node> { attackSequence, movementSequence, idleNode });
+        _rootNode = new Selector(new List<Node> { runAwaySequence, attackSequence, movementSequence, idleNode });
     }
 
     public override void Attack()
@@ -44,8 +50,8 @@ public class SimpleChaseAndAttackEnemy : Enemy
         if (attacking)
             return;
 
-        myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
         AudioManager.instance.StopSound("MovementEnemy");
+        myAnimations.PlayMovementAnimation(new Vector2(0f, 0f));
 
         StartCoroutine(nameof(MyAttackTell));
     }
@@ -67,7 +73,34 @@ public class SimpleChaseAndAttackEnemy : Enemy
         rb.MovePosition(rb.position + movementVector.normalized * (speed * Time.fixedDeltaTime));
     }
 
-    IEnumerator MyAttackTell()
+    public override void MoveAway()
+    {
+        if (target == null)
+            return;
+        
+        if (attacking)
+            return;
+
+        Vector2 movementVector = target.position - transform.position;
+        myTarget.position = movementVector.normalized * -4;
+
+        //myHands.UseRightHand();
+
+        AudioManager.instance.PlaySound("MovementEnemy");
+
+        movementVector = myTarget.position - transform.position;
+
+        myAnimations.PlayMovementAnimation(movementVector);
+
+        rb.MovePosition(rb.position + movementVector.normalized * (speed * Time.fixedDeltaTime));
+    }
+
+    public override bool CheckBool(int whichBool = 0)
+    {
+        return _runAway;
+    }
+
+    private IEnumerator MyAttackTell()
     {
         attacking = true;
 
@@ -79,10 +112,22 @@ public class SimpleChaseAndAttackEnemy : Enemy
         bool rightAttack = myHands.UseRightHand();
 
         // only pause if one of the items got used
-        if(leftAttack || rightAttack)
-            yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
-        
+        if(leftAttack || rightAttack) 
+        {
+            float time = myHands.GetHighestCooldown() / 3f;
+            time = Mathf.Clamp(time, 0.35f, 5f);
+            yield return new WaitForSeconds(time);
+        }
+
+        _runAway = true;
+        Invoke(nameof(ResetRunAway), 1f);
+
         attacking = false;
+    }
+
+    private void ResetRunAway()
+    {
+        _runAway = false;
     }
     
     protected override void OnTriggerEnter2D(Collider2D collision)

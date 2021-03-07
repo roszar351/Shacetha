@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Handles loading different scenes
 public class LevelLoader : MonoBehaviour
 {
     public Animator transition;
@@ -51,7 +52,7 @@ public class LevelLoader : MonoBehaviour
         transition.SetTrigger(EndFadeTrigger);
     }
 
-    IEnumerator LoadLevel(int levelIndex, bool withStory)
+    private IEnumerator LoadLevel(int levelIndex, bool withStory)
     {
         // Disable player input while level is loading
         if (PlayerManager.instance != null && PlayerManager.instance.player != null)

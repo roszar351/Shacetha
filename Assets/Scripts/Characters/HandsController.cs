@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO: if enough time try to seperate HandsController into 2 seperate scripts one for player and one for enemies
+// Responsible for equipping, aiming and using items on characters
 public class HandsController : MonoBehaviour
 {
     public so_NPCStats myBaseStats; // Used to get and alter character stats when using items i.e. for damage and defense
@@ -10,20 +11,13 @@ public class HandsController : MonoBehaviour
     public Animator myLeftAnimator;
     public Animator myRightAnimator;
 
-    [SerializeField]
-    private bool followMouse = false;
-    [SerializeField]
-    private so_Item leftItem = null;
-    [SerializeField]
-    private so_Item rightItem = null;
-    [SerializeField]
-    private GameObject leftHand = null;
-    [SerializeField]
-    private GameObject rightHand = null;
-    [SerializeField]
-    private CircleCollider2D leftCollider = null;
-    [SerializeField]
-    private CircleCollider2D rightCollider = null;
+    [SerializeField] private bool followMouse = false;
+    [SerializeField] private so_Item leftItem = null;
+    [SerializeField] private so_Item rightItem = null;
+    [SerializeField] private GameObject leftHand = null;
+    [SerializeField] private GameObject rightHand = null;
+    [SerializeField] private CircleCollider2D leftCollider = null;
+    [SerializeField] private CircleCollider2D rightCollider = null;
 
     private SpriteRenderer _leftSprite;
     private SpriteRenderer _rightSprite;
@@ -41,6 +35,8 @@ public class HandsController : MonoBehaviour
 
     private void Start()
     {
+        // if following the mouse its the players character,
+        // could also be used in future to have enemies that mimics player's behaviour
         if(followMouse)
         {
             _playerScript = transform.parent.gameObject.GetComponent<PlayerController>();
@@ -82,7 +78,7 @@ public class HandsController : MonoBehaviour
         Aiming();
     }
 
-    // Handles equiping an item
+    // Handles equipping an item
     public void EquipItem(so_Item item, bool inLeft = true)
     {
         if (item == null)
@@ -170,12 +166,18 @@ public class HandsController : MonoBehaviour
     
     public float GetItemCooldown(bool left)
     {
+        if (left && leftItem == null)
+            return 0;
+        
+        if (!left && rightItem == null)
+            return 0;
+            
         return left ? leftItem.useCooldown : rightItem.useCooldown;
     }
 
     public bool UseLeftHand()
     {
-        if (leftItem == null || !gameObject.activeSelf)
+        if (!gameObject.activeSelf || leftItem == null)
             return false;
 
         if (_currentLeftCooldown <= 0)
@@ -211,7 +213,7 @@ public class HandsController : MonoBehaviour
 
     public bool UseRightHand()
     {
-        if (rightItem == null || !gameObject.activeSelf)
+        if (!gameObject.activeSelf || rightItem == null)
             return false;
         
         if (_currentRightCooldown <= 0)
@@ -245,7 +247,7 @@ public class HandsController : MonoBehaviour
         return false;
     }
 
-    IEnumerator UseLeftItem()
+    private IEnumerator UseLeftItem()
     {
         float waitTime = 0.5f;
         _currentLeftCooldown = leftItem.useCooldown;
@@ -299,7 +301,7 @@ public class HandsController : MonoBehaviour
         }
     }
 
-    IEnumerator UseRightItem()
+    private IEnumerator UseRightItem()
     {
         float waitTime = 0.5f;
         _currentRightCooldown = rightItem.useCooldown;

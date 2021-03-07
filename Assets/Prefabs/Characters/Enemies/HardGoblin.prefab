@@ -83,6 +83,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7424486981732576852, guid: 37ee9f48438d4234fb9000b5535ba1d5,
+        type: 3}
+      propertyPath: myCharStats
+      value: 
+      objectReference: {fileID: 11400000, guid: ce1be64416cb8184e98b5af1bef9362c,
+        type: 2}
     - target: {fileID: 7424486981962251116, guid: 37ee9f48438d4234fb9000b5535ba1d5,
         type: 3}
       propertyPath: m_Color.r
@@ -101,6 +107,12 @@ PrefabInstance:
     - target: {fileID: 7424486982170032831, guid: 37ee9f48438d4234fb9000b5535ba1d5,
         type: 3}
       propertyPath: myBaseStats
+      value: 
+      objectReference: {fileID: 11400000, guid: ce1be64416cb8184e98b5af1bef9362c,
+        type: 2}
+    - target: {fileID: 7424486982316670508, guid: 37ee9f48438d4234fb9000b5535ba1d5,
+        type: 3}
+      propertyPath: myCharStats
       value: 
       objectReference: {fileID: 11400000, guid: ce1be64416cb8184e98b5af1bef9362c,
         type: 2}

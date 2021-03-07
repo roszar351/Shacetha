@@ -7,8 +7,7 @@ public class StaticTrap : MonoBehaviour
 {
     public float trapLifeDuration = 5f;
 
-    [SerializeField]
-    private int damage = 10;
+    [SerializeField] private int damage = 10;
     
     private float _trapLifeCounter = 0f;
 

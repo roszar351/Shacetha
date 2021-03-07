@@ -10,7 +10,6 @@ public class Spider : Enemy
      * currently thinking of spitting web maybe as a circle(similar to poison trap/slime) but slowing instead of damaging
      * another possibility is shooting web directly at the player which could just do damage or debuff, need experimentation to decide
      *
-     * 
      */
 
     [SerializeField] private float rangeMultiplier = 10f;
@@ -98,7 +97,7 @@ public class Spider : Enemy
         StartCoroutine(nameof(MyAttackTell));
     }
     
-    IEnumerator MyAttackTell()
+    private IEnumerator MyAttackTell()
     {
         attacking = true;
 
@@ -110,8 +109,12 @@ public class Spider : Enemy
         bool rightAttack = myHands.UseRightHand();
 
         // only pause if one of the items got used
-        if(leftAttack || rightAttack)
-            yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
+        if (leftAttack || rightAttack)
+        {
+            float time = myHands.GetHighestCooldown() / 3f;
+            time = Mathf.Clamp(time, 0.1f, 1f);
+            yield return new WaitForSeconds(time);
+        }
 
         attacking = false;
     }

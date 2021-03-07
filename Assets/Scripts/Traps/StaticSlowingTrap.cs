@@ -8,9 +8,7 @@ public class StaticSlowingTrap : MonoBehaviour
 
     [SerializeField] private Sprite[] cobwebSprites;
     [SerializeField] private SpriteRenderer cobwebRenderer;
-
-    [SerializeField]
-    private float speedModifier = 0.5f;
+    [SerializeField] private float speedModifier = 0.5f;
     
     private float _trapLifeCounter = 0f;
 

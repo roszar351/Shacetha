@@ -88,7 +88,7 @@ public class AnnoyingGoblin : Enemy
         StartCoroutine(nameof(MyAttackTell));
     }
     
-    IEnumerator MyAttackTell()
+    private IEnumerator MyAttackTell()
     {
         attacking = true;
 
@@ -101,7 +101,11 @@ public class AnnoyingGoblin : Enemy
 
         // only pause if one of the items got used
         if(leftAttack || rightAttack)
-            yield return new WaitForSeconds(myHands.GetHighestCooldown() / 3f);
+        {
+            float time = myHands.GetHighestCooldown() / 3f;
+            time = Mathf.Clamp(time, 0.35f, 5f);
+            yield return new WaitForSeconds(time);
+        }
 
         attacking = false;
     }
@@ -120,7 +124,7 @@ public class AnnoyingGoblin : Enemy
         return true;
     }
     
-    IEnumerator MyAbilityTell()
+    private IEnumerator MyAbilityTell()
     {
         attacking = true;
         _usingAbility = true;
@@ -131,7 +135,7 @@ public class AnnoyingGoblin : Enemy
 
         yield return new WaitForSeconds(1f);
         
-        Projectile.Create(transform.position + (offset.normalized * .5f), rockTarget, projectilePrefab, 1, 1, 1);
+        Projectile.Create(transform.position + (offset.normalized * .5f), rockTarget, projectilePrefab, 1f + (myStats.baseDamage / 10), 1, 1);
         _currentThrowCooldown = throwCooldown;
         AudioManager.instance.PlayOneShotSound("Swing3");
 

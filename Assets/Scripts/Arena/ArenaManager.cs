@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.Animations;
 
+// Controls arena behaviour i.e. keeps track of current level, updates max level reached, responsible for spawning enemies and bosses
 public class ArenaManager : MonoBehaviour
 {
     // Using gameobject over transform provides more flexibility for future if wanted to add an spawn animation, effect, sprite or something similar
@@ -23,7 +21,7 @@ public class ArenaManager : MonoBehaviour
 
     // Mostly used for variance but allows possibility for expanding boss pools in the future
     public GameObject[] easyBosses;
-    public GameObject[] mediumBossses;
+    public GameObject[] mediumBosses;
     public GameObject[] hardBosses;
 
     public GameObject[] arenas;
@@ -31,32 +29,28 @@ public class ArenaManager : MonoBehaviour
 
     private int _level = 0;
     //private float _levelTimer = 0f; // might be used for score or some other stat
+    // Keep track of enemies left and killed to start next level and when rewards should be given
     private int _enemiesLeft = 0;
     private int _enemiesKilled = 0;
-    // next 6 variables are used to decide which difficulty of enemy should spawn
+    
+    // Variables responsible for increasing difficulty as player reaches higher levels
     private int _easyEnemyCounter = 0;
     private int _mediumEnemyCounter = 0;
     private int _hardEnemyCounter = 0;
     private int _easyBossCounter = 0;
     private int _mediumBossCounter = 0;
     private int _hardBossCounter = 0;
+    
     private bool _isRewardUIOpen = false;
     private bool _bossFight = false;
     private bool _nextLevelTransmission = false;
     private AudioManager _audioManager;
 
-    [SerializeField]
-    private int rewardScreenRequirement = 5;
-
-    [SerializeField]
-    private GameObject enemiesParent;
-
-    [SerializeField]
-    private so_GameEvent onRewardUIOpen;
-    
-    [SerializeField]
-    private so_GameEvent onRewardUIClose;
-
+    [Tooltip("Controls how many enemies need to be defeated before player is eligible for a reward, bosses always trigger reward screen after being defeated.")]
+    [SerializeField] private int rewardScreenRequirement = 5;
+    [SerializeField] private GameObject enemiesParent;
+    [SerializeField] private so_GameEvent onRewardUIOpen;
+    [SerializeField] private so_GameEvent onRewardUIClose;
     [SerializeField] private LevelLoader fadeScript;
 
     private void Start()
@@ -76,12 +70,12 @@ public class ArenaManager : MonoBehaviour
         {
             NextLevel();
         }
-        /* For testing purposes only!
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            NextLevel();
-        }
-        */
+        /* For testing purposes only! */
+        // if (Input.GetKeyDown(KeyCode.F))
+        // {
+        //     Debug.LogError("Next level! Should only be used for testing!");
+        //     NextLevel();
+        // }
     }
 
     public void EnemyDied()
@@ -89,13 +83,18 @@ public class ArenaManager : MonoBehaviour
         _enemiesLeft -= 1;
         _enemiesKilled++;
 
-        if(_enemiesLeft <= 0 && _bossFight)
+        // At least 1 enemy is still alive therefore dont check for reward screen
+        if (_enemiesLeft > 0)
+            return;
+        
+        // show reward screen after a boss fight or if enough enemies were defeated
+        if(_bossFight)
         {
             _bossFight = false;
             onRewardUIOpen.Raise();
             AudioManager.instance.PlayRandomMusic(MusicType.GameMusic);
         }
-        else if(_enemiesLeft <= 0 && _enemiesKilled / rewardScreenRequirement > 0)
+        else if(_enemiesKilled / rewardScreenRequirement > 0)
         {
             onRewardUIOpen.Raise();
         }
@@ -130,11 +129,12 @@ public class ArenaManager : MonoBehaviour
         StartCoroutine(StartNextLevel());
     }
 
-    IEnumerator StartNextLevel()
+    private IEnumerator StartNextLevel()
     {
         _audioManager.PlayOneShotSound("NextLevel");
         _level++;
         levelText.SetText("Level: " + _level);
+        // Switch to different arena
         switch (_level)
         {
             case 11:
@@ -158,7 +158,7 @@ public class ArenaManager : MonoBehaviour
 
         if (_level % 5 == 0)
         {
-            SpawnBoss();
+            SpawnBosses();
         }
         else
         {
@@ -171,7 +171,7 @@ public class ArenaManager : MonoBehaviour
     private void SpawnEnemies()
     {
         // for each enemy to spawn, spawn enemy, enemiesLeft++
-        //int howMany = 1 + (int)(0.4 * _level);
+        //int howMany = 1 + (int)(0.4 * _level); // old formula for how many enemies should be spawned
         _easyEnemyCounter++;
         if (_easyEnemyCounter - 5 == 0)
         {
@@ -183,9 +183,14 @@ public class ArenaManager : MonoBehaviour
             _mediumEnemyCounter = 0;
             _hardEnemyCounter++;
         }
+
+        EnemySpawner(_easyEnemyCounter, easyEnemies);
+        EnemySpawner(_mediumEnemyCounter, mediumEnemies);
+        EnemySpawner(_hardEnemyCounter, hardEnemies);
+        
+        /* Replaced these for loops with the EnemySpawner method to clean up the code
         int whichEnemy, whichPoint;
         Vector3 randomOffset;
-
         for (int i = 0; i < _easyEnemyCounter; ++i)
         {
             whichEnemy = Random.Range(0, easyEnemies.Length);
@@ -221,9 +226,28 @@ public class ArenaManager : MonoBehaviour
             Instantiate(hardEnemies[whichEnemy], spawnPoints[whichPoint].transform.position + randomOffset, Quaternion.identity, enemiesParent.transform);
             _enemiesLeft++;
         }
+        */
     }
 
-    private void SpawnBoss()
+    private void EnemySpawner(int howMany, IReadOnlyList<GameObject> enemies)
+    {
+        int whichEnemy, whichPoint;
+        Vector3 randomOffset;
+
+        for (int i = 0; i < howMany; ++i)
+        {
+            whichEnemy = Random.Range(0, enemies.Count);
+            whichPoint = Random.Range(0, spawnPoints.Length);
+
+            randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
+
+            //spawnPoints[whichPoint].SetActive(true); // can be used to play an animation attached to the spawn point, currently not used
+            Instantiate(enemies[whichEnemy], spawnPoints[whichPoint].transform.position + randomOffset, Quaternion.identity, enemiesParent.transform);
+            _enemiesLeft++;
+        }
+    }
+
+    private void SpawnBosses()
     {
         _bossFight = true;
         
@@ -238,8 +262,13 @@ public class ArenaManager : MonoBehaviour
             _mediumBossCounter = 0;
             _hardBossCounter++;
         }
+        
+        BossSpawner(_easyBossCounter, easyBosses);
+        BossSpawner(_mediumBossCounter, mediumBosses);
+        BossSpawner(_hardBossCounter, hardBosses);
+        
+        /* Replaced these for loops with the BossSpawner method to clean up the code
         Vector3 randomOffset;
-
         for (int i = 0; i < _easyBossCounter; ++i)
         {
             int whichBoss = Random.Range(0, easyBosses.Length);
@@ -261,8 +290,8 @@ public class ArenaManager : MonoBehaviour
         
         for (int i = 0; i < _mediumBossCounter; ++i)
         {
-            int whichBoss = Random.Range(0, mediumBossses.Length);
-            if (Regex.IsMatch(mediumBossses[whichBoss].name, "^SlimeBoss.*$"))
+            int whichBoss = Random.Range(0, mediumBosses.Length);
+            if (Regex.IsMatch(mediumBosses[whichBoss].name, "^SlimeBoss.*$"))
             {
                 //Debug.Log("Spawning slime!");
                 _enemiesLeft += 7;
@@ -275,7 +304,7 @@ public class ArenaManager : MonoBehaviour
             
             randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
 
-            Instantiate(mediumBossses[whichBoss], spawnPoints[0].transform.position + randomOffset * 2, Quaternion.identity, enemiesParent.transform);
+            Instantiate(mediumBosses[whichBoss], spawnPoints[0].transform.position + randomOffset * 2, Quaternion.identity, enemiesParent.transform);
         }
         
         for (int i = 0; i < _hardBossCounter; ++i)
@@ -296,7 +325,33 @@ public class ArenaManager : MonoBehaviour
 
             Instantiate(hardBosses[whichBoss], spawnPoints[0].transform.position + randomOffset * 2, Quaternion.identity, enemiesParent.transform);
         }
+        */
 
         _audioManager.PlayRandomMusic(MusicType.BossMusic);
+    }
+
+    private void BossSpawner(int howMany, IReadOnlyList<GameObject> bosses)
+    {
+        int whichBoss;
+        Vector3 randomOffset;
+
+        for (int i = 0; i < howMany; ++i)
+        {
+            whichBoss = Random.Range(0, bosses.Count);
+            if (Regex.IsMatch(bosses[whichBoss].name, "^SlimeBoss.*$"))
+            {
+                //Debug.Log("Spawning slime!");
+                _enemiesLeft += 7;
+            }
+            else
+            {
+                //Debug.Log("Spawning Ghost!");
+                _enemiesLeft++;
+            }
+            
+            randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
+
+            Instantiate(bosses[whichBoss], spawnPoints[0].transform.position + randomOffset * 2, Quaternion.identity, enemiesParent.transform);
+        }
     }
 }

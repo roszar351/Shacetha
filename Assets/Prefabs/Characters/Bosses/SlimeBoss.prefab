@@ -127,7 +127,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1378871095
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -7365091535247084893, guid: 314216032fc9ea24e8bc56ee29319b4f,
     type: 3}
@@ -278,6 +278,7 @@ MonoBehaviour:
   myHands: {fileID: 0}
   myAnimations: {fileID: 2379160020897899031}
   playerStats: {fileID: 11400000, guid: adb8d98c45cb9244982c8305ff134047, type: 2}
+  whichMaterial: 0
   deathSoundName: SlimeDamaged
   damageSoundName: SlimeDeath
   invincibleTime: 1
@@ -295,6 +296,7 @@ MonoBehaviour:
   myCollider: {fileID: 2379160022926641954}
   puddlePrefab: {fileID: 2091405852903925817, guid: cec5607a02d90d845962dd9044d4de25,
     type: 3}
+  rangeMultiplier: 10
 --- !u!1 &4048547405141579078
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +365,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1378871095
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: -1
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
@@ -5105,7 +5107,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1378871095
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -5200,7 +5202,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1386083159
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5241,7 +5243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29254b33162199f4894a7f03b60d69ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCharStats: {fileID: 11400000, guid: 300ded8dea10dd849b705ec92cd3f1a7, type: 2}
+  myCharStats: {fileID: 11400000, guid: 75b0278972c174c49b841da6cb0b9d8e, type: 2}
 --- !u!1 &6260134810335460699
 GameObject:
   m_ObjectHideFlags: 0
@@ -5394,7 +5396,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1386083159
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5435,7 +5437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29254b33162199f4894a7f03b60d69ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCharStats: {fileID: 11400000, guid: 300ded8dea10dd849b705ec92cd3f1a7, type: 2}
+  myCharStats: {fileID: 11400000, guid: 75b0278972c174c49b841da6cb0b9d8e, type: 2}
 --- !u!1 &6260134811067517006
 GameObject:
   m_ObjectHideFlags: 0
@@ -5481,7 +5483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc154a77038b67045b2da75198e36d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myBaseStats: {fileID: 11400000, guid: 300ded8dea10dd849b705ec92cd3f1a7, type: 2}
+  myBaseStats: {fileID: 11400000, guid: 75b0278972c174c49b841da6cb0b9d8e, type: 2}
   myLeftAnimator: {fileID: 6260134810335460701}
   myRightAnimator: {fileID: 6260134811383450728}
   followMouse: 0

@@ -1,31 +1,23 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 /*
  * Responsible for handling input and logic behind player movement.
- * 
  */
 public class PlayerController : MonoBehaviour
 {
-    // Uninitialized public variables
     public PlayerAnimations playerAnimations;
     public so_NPCStats myStats;
     public HandsController myHands;
 
-    // Initialized private variables
     private bool _stopInput = false;
     private float _stopMovementTimer = 0f;
 
-    // Uninitialized private variables
     private Rigidbody2D _rb;
     private Vector2 _movementVector;
     private int _currentHp;
     private int _totalArmor;
     private float _speed;
-
     private float _dissolveAmount;
     private bool _isDying;
 
@@ -42,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private static readonly int DissolveValue = Shader.PropertyToID("_DissolveValue");
 
     // Events
+    // Could be updated to use scriptable object event created later in the project
     public event System.Action<int, int> OnHealthChanged;
 
     private void Start()
@@ -60,8 +53,7 @@ public class PlayerController : MonoBehaviour
         _speed = myStats.movementSpeed;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (_isDying)
         {
@@ -107,7 +99,7 @@ public class PlayerController : MonoBehaviour
         _stopMovementTimer = 0f;
     }
 
-    // For pausing the game or other similar situation where player shouldnt be able to move/attack.
+    // For pausing the game or other similar situation where player shouldn't be able to move/attack.
     public void StopInput()
     {
         _stopInput = true;
@@ -242,7 +234,9 @@ public class PlayerController : MonoBehaviour
             if (leftAttack)
             {
                 usedItemEvent.Raise();
-                playerAnimations.StopPlayerMovement(myHands.GetItemCooldown(true) / 3f);
+                float time1 = myHands.GetItemCooldown(true) / 3f;
+                time1 = Mathf.Clamp(time1, 0.35f, 5f);
+                playerAnimations.StopPlayerMovement(time1);
             }
         }
 
@@ -255,7 +249,9 @@ public class PlayerController : MonoBehaviour
             if (rightAttack)
             {
                 usedItemEvent.Raise();
-                playerAnimations.StopPlayerMovement(myHands.GetItemCooldown(false) / 3f);
+                float time2 = myHands.GetItemCooldown(false) / 3f;
+                time2 = Mathf.Clamp(time2, 0.35f, 5f);
+                playerAnimations.StopPlayerMovement(time2);
             }
         }
     }

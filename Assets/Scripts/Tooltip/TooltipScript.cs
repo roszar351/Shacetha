@@ -25,7 +25,8 @@ public class TooltipScript : MonoBehaviour
                 gameObject.SetActive(false);
                 return;
             }
-            // which prevents it from going off screen on right or up, also dont use hard coded value of 100f but currently its fine as tooltip doesn't dynamicaly resize to fit text
+            // this prevents it from going off screen on right or up, also in future dont use hard coded value of 115f
+            // but currently its fine as tooltip doesn't dynamicaly resize to fit text
             Vector3 down = transform.position - new Vector3(0, 115f, 0);
             Vector3 left = transform.position - new Vector3(115f, 0, 0);
             _screenRect = new Rect(0f, 0f, Screen.width, Screen.height);

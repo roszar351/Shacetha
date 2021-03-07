@@ -13,6 +13,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 185889900d176a44597a80ce86828ec0,
         type: 2}
+    - target: {fileID: 4999590514576919336, guid: a8e64b5136956f34983e8d2b0e45d4af,
+        type: 3}
+      propertyPath: myCharStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 185889900d176a44597a80ce86828ec0,
+        type: 2}
     - target: {fileID: 4999590515187001970, guid: a8e64b5136956f34983e8d2b0e45d4af,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -94,6 +100,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: HardSpider
       objectReference: {fileID: 0}
+    - target: {fileID: 4999590516038492922, guid: a8e64b5136956f34983e8d2b0e45d4af,
+        type: 3}
+      propertyPath: myCharStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 185889900d176a44597a80ce86828ec0,
+        type: 2}
     - target: {fileID: 4999590516406112151, guid: a8e64b5136956f34983e8d2b0e45d4af,
         type: 3}
       propertyPath: m_Color.r
