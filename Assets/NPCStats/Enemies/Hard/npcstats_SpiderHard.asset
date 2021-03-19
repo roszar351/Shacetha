@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: npcstats_SpiderHard
   m_EditorClassIdentifier: 
   name: Spider
-  maxHp: 55
+  maxHp: 60
   baseDamage: 30
-  baseArmor: 10
-  movementSpeed: 3
+  baseArmor: 20
+  movementSpeed: 3.7
   attackRange: 1

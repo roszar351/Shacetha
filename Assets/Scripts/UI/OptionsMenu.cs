@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class OptionsMenu : MonoBehaviour
 {
-    public GameObject mainMenu;
-
     public Slider masterSlider;
     public Slider musicSlider;
     public Slider effectsSlider;
@@ -20,11 +18,5 @@ public class OptionsMenu : MonoBehaviour
         musicSlider.value = temp;
         AudioManager.instance.mixer.GetFloat("effectsVolume", out temp);
         effectsSlider.value = temp;
-    }
-
-    public void BackButton()
-    {
-        mainMenu.SetActive(true);
-        gameObject.SetActive(false);
     }
 }

@@ -56,6 +56,16 @@ public class PlayerManager : MonoBehaviour
         _playerController.ResumeInput();
     }
 
+    public void SlowPlayMovement(float modifier)
+    {
+        _playerController.SlowMovement(modifier);
+    }
+
+    public void ResetPlayerMovementValue()
+    {
+        _playerController.ResetMovementValue();
+    }
+
     public void DealDamageToPlayer(int damage)
     {
         _playerController.TakeDamage(damage);

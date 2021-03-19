@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: npcstats_BaseAttackAndRunTut
   m_EditorClassIdentifier: 
   name: Runner
-  maxHp: 35
-  baseDamage: 10
+  maxHp: 25
+  baseDamage: 7
   baseArmor: 0
-  movementSpeed: 4
+  movementSpeed: 3.5
   attackRange: 0.75

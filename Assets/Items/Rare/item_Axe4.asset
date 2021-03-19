@@ -17,7 +17,7 @@ MonoBehaviour:
   itemType: 3
   weaponSprite: {fileID: -7285913902278316575, guid: 479ea5d3221c95c499650551a0f91559,
     type: 3}
-  modifierValue: 20
+  modifierValue: 25
   damageRadius: 0.2
-  useCooldown: 1.5
+  useCooldown: 2
   rarity: 1

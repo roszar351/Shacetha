@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Spider
   maxHp: 30
-  baseDamage: 25
+  baseDamage: 10
   baseArmor: 0
-  movementSpeed: 2.5
+  movementSpeed: 3
   attackRange: 1

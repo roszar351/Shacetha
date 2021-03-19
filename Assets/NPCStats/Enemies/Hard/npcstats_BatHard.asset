@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: npcstats_BatHard
   m_EditorClassIdentifier: 
   name: Bat
-  maxHp: 60
-  baseDamage: 30
-  baseArmor: 10
-  movementSpeed: 3
+  maxHp: 70
+  baseDamage: 40
+  baseArmor: 25
+  movementSpeed: 3.2
   attackRange: 0.5

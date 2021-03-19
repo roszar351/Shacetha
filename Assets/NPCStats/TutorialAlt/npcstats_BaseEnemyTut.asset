@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03d2ee8510db0d941add16a130cf009c, type: 3}
   m_Name: npcstats_BaseEnemyTut
   m_EditorClassIdentifier: 
-  name: BoringEnemy
-  maxHp: 50
+  name: ChaseEnemy
+  maxHp: 40
   baseDamage: 5
-  baseArmor: 5
-  movementSpeed: 3
+  baseArmor: 10
+  movementSpeed: 2.5
   attackRange: 1

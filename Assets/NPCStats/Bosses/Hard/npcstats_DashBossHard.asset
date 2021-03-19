@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: npcstats_DashBossHard
   m_EditorClassIdentifier: 
   name: Im a Dasher
-  maxHp: 300
-  baseDamage: 45
+  maxHp: 320
+  baseDamage: 50
   baseArmor: 50
-  movementSpeed: 2.5
+  movementSpeed: 3
   attackRange: 1.3

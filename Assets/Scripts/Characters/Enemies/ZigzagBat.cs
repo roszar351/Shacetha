@@ -26,18 +26,22 @@ public class ZigzagBat : Enemy
     [SerializeField] private Transform rightHandPosition;
 
     private Node _rootNode;
-    private bool _aimAgain = true;
+    private bool _aimAgain = false;
     private bool _goingForLeftHand = true;
     //private float _currentAimTimer = 0f;
     private float _currentZigzagTimer = 0f;
     private Vector3 _playersLastPosition;
     private float _angle;
+    private bool _coroutineRunning = false;
 
     protected override void Start()
     {
         base.Start();
         name = "Bat";
         ConstructBehaviourTree();
+        // initially start orbiting its spawn point, waiting for player to use an item
+        _playersLastPosition = transform.position;
+        followTargetPosition.UpdatePosition(_playersLastPosition);
     }
 
     private void FixedUpdate()
@@ -135,9 +139,7 @@ public class ZigzagBat : Enemy
         // i.e. bat will got towards players last known position and will update once player uses an item
         _playersLastPosition = PlayerManager.instance.player.transform.position;
         followTargetPosition.UpdatePosition(_playersLastPosition);
-        
-        myAnimations.PlayAbilityTell();
-        
+
         return true;
     }
 
@@ -148,6 +150,20 @@ public class ZigzagBat : Enemy
 
     public void AimAgain()
     {
+        if (_coroutineRunning)
+            return;
+        
+        StartCoroutine(nameof(AimDelay));
+    }
+
+    private IEnumerator AimDelay()
+    {
+        _coroutineRunning = true;
+        myAnimations.PlayAbilityTell();
+        
+        yield return new WaitForSeconds(0.4f);
+
+        _coroutineRunning = false;
         _aimAgain = true;
     }
 

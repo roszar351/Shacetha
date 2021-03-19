@@ -17560,6 +17560,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6affd4d16ea21af4db17046e0795e0ce, type: 3}
+--- !u!114 &356634864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 806243935838519446, guid: 6affd4d16ea21af4db17046e0795e0ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 356634863}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e17bcbf6a3d6148bf96b45e3f93a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &370254447
 GameObject:
   m_ObjectHideFlags: 0
@@ -18031,6 +18043,11 @@ PrefabInstance:
       propertyPath: rightItem
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3216610979733544002, guid: b353a38a5233f2a4b85be634b0775199,
+        type: 3}
+      propertyPath: leftItem
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3216610980308457940, guid: b353a38a5233f2a4b85be634b0775199,
         type: 3}
       propertyPath: m_Name
@@ -18104,8 +18121,14 @@ PrefabInstance:
     - target: {fileID: 3216610980308457950, guid: b353a38a5233f2a4b85be634b0775199,
         type: 3}
       propertyPath: items.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3216610980308457950, guid: b353a38a5233f2a4b85be634b0775199,
+        type: 3}
+      propertyPath: items.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4b0302f900edc9042a4627d5f14dbb59,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b353a38a5233f2a4b85be634b0775199, type: 3}
 --- !u!4 &557133795 stripped
@@ -23518,7 +23541,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "You picked up a shield! \nPress 'i' to open up the inventory, and use
-    the left or right mouse buttons to equip it. "
+    the left or right mouse buttons to equip it. \nMake sure to equip the sword as
+    well!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0fc294ca5cf7ea546a6f4140c196cc5d, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 0fc294ca5cf7ea546a6f4140c196cc5d, type: 2}
@@ -23632,6 +23656,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7545959988106322313, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 356634864}
+    - target: {fileID: 7545959988106322313, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayMouseOver
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545959988106322314, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 356634864}
+    - target: {fileID: 7545959988106322314, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayButtonClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545959988230085756, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 356634864}
+    - target: {fileID: 7545959988230085756, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayMouseOver
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545959988230085757, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 356634864}
+    - target: {fileID: 7545959988230085757, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayButtonClicked
+      objectReference: {fileID: 0}
     - target: {fileID: 7545959988979645350, guid: 06c547e77c16a2340949620730d8777d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23741,6 +23805,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PauseUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545959989668260470, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 356634864}
+    - target: {fileID: 7545959989668260470, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayMouseOver
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545959989668260471, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 356634864}
+    - target: {fileID: 7545959989668260471, guid: 06c547e77c16a2340949620730d8777d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayButtonClicked
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06c547e77c16a2340949620730d8777d, type: 3}
@@ -98247,7 +98331,7 @@ Tilemap:
       - {fileID: 21300000, guid: c7250cd72959d564e900fdd2ea4af902, type: 3}
       - {fileID: 21300000, guid: 04d9dc04a32055c429386e5d6b05584a, type: 3}
       - {fileID: 21300000, guid: 80443f10806369c46b05955ab88a25d5, type: 3}
-      m_AnimationSpeed: 6.814448
+      m_AnimationSpeed: 4.377792
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 11, y: 21, z: 0}
@@ -98257,7 +98341,7 @@ Tilemap:
       - {fileID: 21300000, guid: c7250cd72959d564e900fdd2ea4af902, type: 3}
       - {fileID: 21300000, guid: 04d9dc04a32055c429386e5d6b05584a, type: 3}
       - {fileID: 21300000, guid: 80443f10806369c46b05955ab88a25d5, type: 3}
-      m_AnimationSpeed: 6.854079
+      m_AnimationSpeed: 9.975237
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 5, y: 25, z: 0}
@@ -98267,7 +98351,7 @@ Tilemap:
       - {fileID: 21300000, guid: c7250cd72959d564e900fdd2ea4af902, type: 3}
       - {fileID: 21300000, guid: 04d9dc04a32055c429386e5d6b05584a, type: 3}
       - {fileID: 21300000, guid: 80443f10806369c46b05955ab88a25d5, type: 3}
-      m_AnimationSpeed: 5.9681115
+      m_AnimationSpeed: 5.3258877
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 11, y: 25, z: 0}
@@ -98277,7 +98361,7 @@ Tilemap:
       - {fileID: 21300000, guid: c7250cd72959d564e900fdd2ea4af902, type: 3}
       - {fileID: 21300000, guid: 04d9dc04a32055c429386e5d6b05584a, type: 3}
       - {fileID: 21300000, guid: 80443f10806369c46b05955ab88a25d5, type: 3}
-      m_AnimationSpeed: 2.2189407
+      m_AnimationSpeed: 8.243113
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   m_TileAssetArray:

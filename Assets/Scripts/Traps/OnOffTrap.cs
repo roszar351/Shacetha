@@ -64,7 +64,7 @@ public class OnOffTrap : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == 8)
+        if (other.gameObject.layer == 19)
         {
             _playerInTrap = true;
             if (!_trapEnabled)
@@ -76,7 +76,7 @@ public class OnOffTrap : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.layer == 8)
+        if (other.gameObject.layer == 19)
         {
             _playerInTrap = false;
         }

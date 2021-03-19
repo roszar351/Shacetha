@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Runner
   maxHp: 40
-  baseDamage: 20
+  baseDamage: 15
   baseArmor: 10
-  movementSpeed: 4.2
+  movementSpeed: 4
   attackRange: 0.75

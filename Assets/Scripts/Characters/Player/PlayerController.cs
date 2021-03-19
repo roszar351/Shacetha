@@ -161,6 +161,16 @@ public class PlayerController : MonoBehaviour
             Die();
     }
 
+    public void SlowMovement(float modifier)
+    {
+        _speed *= modifier;
+    }
+
+    public void ResetMovementValue()
+    {
+        _speed = myStats.movementSpeed;
+    }
+
     private void Look()
     {
         Vector2 lookDirection = (GetMousePosition() - transform.position).normalized;
@@ -279,26 +289,28 @@ public class PlayerController : MonoBehaviour
             TakeDamage(currentItem.GetModifierValue() + currentItem.myCharStats.baseDamage);
         }
 
-        if (collision.gameObject.layer == 17)
-        {
-            _speed *= collision.GetComponent<StaticSlowingTrap>().GetModifier();
-        }
+        // if (collision.gameObject.layer == 17)
+        // {
+        //     _speed *= collision.GetComponent<StaticSlowingTrap>().GetModifier();
+        // }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        // trap moves by a very small amount causing physics update which will keep triggering this method
-        if (other.gameObject.layer == 16)
-        {
-            TakeDamage(other.GetComponent<StaticTrap>().GetDamage());
-        }
-    }
+    // moved to feet script
+    // private void OnTriggerStay2D(Collider2D other)
+    // {
+    //     // trap moves by a very small amount causing physics update which will keep triggering this method
+    //     if (other.gameObject.layer == 16)
+    //     {
+    //         TakeDamage(other.GetComponent<StaticTrap>().GetDamage());
+    //     }
+    // }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.layer == 17)
-        {
-            _speed = myStats.movementSpeed;
-        }
-    }
+    // moved to feet script
+    // private void OnTriggerExit2D(Collider2D other)
+    // {
+    //     if (other.gameObject.layer == 17)
+    //     {
+    //         _speed = myStats.movementSpeed;
+    //     }
+    // }
 }

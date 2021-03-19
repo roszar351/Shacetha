@@ -6,7 +6,6 @@ using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject optionsMenu;
     public TextMeshProUGUI highestArenaText;
 
     private ReferenceKeeper _referenceKeeper;
@@ -33,12 +32,6 @@ public class MainMenu : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
-    }
-
-    public void OpenOptionMenu()
-    {
-        optionsMenu.SetActive(true);
-        gameObject.SetActive(false);
     }
 
     public void GoToArena()

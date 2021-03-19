@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: npcstats_BasicEnemyMedium
   m_EditorClassIdentifier: 
   name: ChaseEnemy
-  maxHp: 75
-  baseDamage: 15
-  baseArmor: 10
+  maxHp: 60
+  baseDamage: 10
+  baseArmor: 20
   movementSpeed: 3
   attackRange: 1

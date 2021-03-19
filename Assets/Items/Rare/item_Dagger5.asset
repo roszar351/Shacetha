@@ -19,5 +19,5 @@ MonoBehaviour:
     type: 3}
   modifierValue: 35
   damageRadius: 0.1
-  useCooldown: 0.3
+  useCooldown: 0.6
   rarity: 1

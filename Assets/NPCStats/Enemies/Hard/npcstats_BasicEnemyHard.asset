@@ -15,6 +15,6 @@ MonoBehaviour:
   name: ChaseEnemy
   maxHp: 100
   baseDamage: 25
-  baseArmor: 20
-  movementSpeed: 3.5
+  baseArmor: 50
+  movementSpeed: 3.7
   attackRange: 1

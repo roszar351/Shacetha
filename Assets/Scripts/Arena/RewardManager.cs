@@ -190,15 +190,23 @@ public class RewardManager : MonoBehaviour
         PlayerManager.instance.player.GetComponent<PlayerController>().Heal(healAmount);
     }
 
+    /*
+     *  2 % chance for epic item
+     *  68% chance for normal item
+     *  30% chance for rare item
+     *  Will give a reward from the rolled rarity pool, if no items left in that pool it will try to give from 1 lower rarity
+     *  If no items found it will not present a reward
+     * 
+     */
     private void RollNewItemRewards()
     {
         int firstRanNum = 0;
         int itemRarity = 0;
         float probabilityRoll = Random.Range(0, 100);
         
-        if (probabilityRoll > 95)
+        if (probabilityRoll > 97)
             itemRarity = 2;
-        else if (probabilityRoll > 65)
+        else if (probabilityRoll > 67)
             itemRarity = 1;
         
         while (itemRarity > 0 && _itemPool[itemRarity].Count < 1)
@@ -229,9 +237,9 @@ public class RewardManager : MonoBehaviour
             itemRarity = 0;
             probabilityRoll = Random.Range(0, 100);
         
-            if (probabilityRoll > 95)
+            if (probabilityRoll > 97)
                 itemRarity = 2;
-            else if (probabilityRoll > 65)
+            else if (probabilityRoll > 67)
                 itemRarity = 1;
         
             while (itemRarity > 0 && _itemPool[itemRarity].Count < 1)
@@ -413,8 +421,8 @@ public class RewardManager : MonoBehaviour
 
     private void RollHealReward()
     {
-        // currently heal player for 25% of their max hp
-        _healReward = playerStats.maxHp / 4;
+        // currently heal player for 25% of their max hp(rounded up)
+        _healReward = (playerStats.maxHp + 1) / 4;
         _descriptions[3].SetText("Heal for " + _healReward);
     }
 

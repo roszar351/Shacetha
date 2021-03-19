@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: DEFAULTPLAYER
   maxHp: 50
-  baseDamage: 10
+  baseDamage: 5
   baseArmor: 0
   movementSpeed: 4
   attackRange: 0.5
