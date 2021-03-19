@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23001887}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9d67379a87a9b4419eb7365bb05857b, type: 3}
   m_Name: 
@@ -3877,6 +3877,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6860703459711655142, guid: e096e3b70b56eb64089c8c950edca03b,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860703459711655142, guid: e096e3b70b56eb64089c8c950edca03b,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -3892,6 +3897,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6860703459711655142, guid: e096e3b70b56eb64089c8c950edca03b,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860703459711655142, guid: e096e3b70b56eb64089c8c950edca03b,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -3903,16 +3913,6 @@ PrefabInstance:
     - target: {fileID: 6860703459711655142, guid: e096e3b70b56eb64089c8c950edca03b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6860703459711655142, guid: e096e3b70b56eb64089c8c950edca03b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6860703459711655142, guid: e096e3b70b56eb64089c8c950edca03b,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6860703459711655142, guid: e096e3b70b56eb64089c8c950edca03b,
@@ -4931,16 +4931,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.27450982}
+  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 0.39215687}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3501350889093356843, guid: 314216032fc9ea24e8bc56ee29319b4f,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7b355f8a1e21c841ba6116b7bb0bcd2, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -6606,6 +6605,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 806243935838519447, guid: 6affd4d16ea21af4db17046e0795e0ce,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 806243935838519447, guid: 6affd4d16ea21af4db17046e0795e0ce,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -6621,6 +6625,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 806243935838519447, guid: 6affd4d16ea21af4db17046e0795e0ce,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 806243935838519447, guid: 6affd4d16ea21af4db17046e0795e0ce,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -6633,16 +6642,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 806243935838519447, guid: 6affd4d16ea21af4db17046e0795e0ce,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 806243935838519447, guid: 6affd4d16ea21af4db17046e0795e0ce,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 806243935838519447, guid: 6affd4d16ea21af4db17046e0795e0ce,
         type: 3}
@@ -6680,6 +6679,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3472939683174109419, guid: c3e0d82271873444fb740ee457774ead,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472939683174109419, guid: c3e0d82271873444fb740ee457774ead,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -6695,6 +6699,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3472939683174109419, guid: c3e0d82271873444fb740ee457774ead,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472939683174109419, guid: c3e0d82271873444fb740ee457774ead,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -6707,16 +6716,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3472939683174109419, guid: c3e0d82271873444fb740ee457774ead,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3472939683174109419, guid: c3e0d82271873444fb740ee457774ead,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3472939683174109419, guid: c3e0d82271873444fb740ee457774ead,
         type: 3}
