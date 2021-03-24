@@ -32927,6 +32927,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1063805736 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7982485997913878077, guid: ec64ddbde84ea954b89e01a95d433cd8,
+    type: 3}
+  m_PrefabInstance: {fileID: 7982485998210311172}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1069599922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34568,6 +34580,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1262577915}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1263778918 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7982485997015472399, guid: ec64ddbde84ea954b89e01a95d433cd8,
+    type: 3}
+  m_PrefabInstance: {fileID: 7982485998210311172}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1273487282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45694,14 +45718,34 @@ PrefabInstance:
       objectReference: {fileID: 1457480954}
     - target: {fileID: 3121881581780439649, guid: 989cfee3bdb46794bbb5d206ff4fdab7,
         type: 3}
+      propertyPath: tooltipText
+      value: 
+      objectReference: {fileID: 1263778918}
+    - target: {fileID: 3121881581780439649, guid: 989cfee3bdb46794bbb5d206ff4fdab7,
+        type: 3}
       propertyPath: tooltipParent
       value: 
       objectReference: {fileID: 1157658733}
+    - target: {fileID: 3121881581780439649, guid: 989cfee3bdb46794bbb5d206ff4fdab7,
+        type: 3}
+      propertyPath: tooltipBackground
+      value: 
+      objectReference: {fileID: 1063805736}
+    - target: {fileID: 3121881582181687830, guid: 989cfee3bdb46794bbb5d206ff4fdab7,
+        type: 3}
+      propertyPath: tooltipText
+      value: 
+      objectReference: {fileID: 1263778918}
     - target: {fileID: 3121881582181687830, guid: 989cfee3bdb46794bbb5d206ff4fdab7,
         type: 3}
       propertyPath: tooltipParent
       value: 
       objectReference: {fileID: 1157658733}
+    - target: {fileID: 3121881582181687830, guid: 989cfee3bdb46794bbb5d206ff4fdab7,
+        type: 3}
+      propertyPath: tooltipBackground
+      value: 
+      objectReference: {fileID: 1063805736}
     - target: {fileID: 3121881582246858616, guid: 989cfee3bdb46794bbb5d206ff4fdab7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

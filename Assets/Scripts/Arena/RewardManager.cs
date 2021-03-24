@@ -421,8 +421,8 @@ public class RewardManager : MonoBehaviour
 
     private void RollHealReward()
     {
-        // currently heal player for 25% of their max hp(rounded up)
-        _healReward = (playerStats.maxHp + 1) / 4;
+        // currently heal player for 25% of their max hp
+        _healReward = playerStats.maxHp / 4 + 5;
         _descriptions[3].SetText("Heal for " + _healReward);
     }
 
