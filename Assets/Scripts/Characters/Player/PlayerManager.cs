@@ -40,8 +40,11 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if(!_isPlayerAlive && Input.GetKeyDown(KeyCode.R))
+        if (!_isPlayerAlive && Input.GetKeyDown(KeyCode.R))
+        {
+            AudioManager.instance.PlayRandomMusic(MusicType.GameMusic);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     public void StopPlayerInput()

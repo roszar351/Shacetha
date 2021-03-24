@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,17 @@ public class PauseMenu : MonoBehaviour
     public static bool isPaused = false;
     public GameObject pauseMenuUI;
 
+    [SerializeField] private GameObject characterSheet;
+    [SerializeField] private GameObject inventory;
+    private bool _charSheetAssigned = true;
+    private bool _inventoryAssigned = true;
+
+    private void Start()
+    {
+        _charSheetAssigned = characterSheet != null;
+        _inventoryAssigned = inventory != null;
+    }
+
     private void Update()
     {
         if (SceneManager.GetActiveScene().buildIndex == 0)
@@ -16,13 +28,35 @@ public class PauseMenu : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
+            bool pause = true;
+            if (_charSheetAssigned)
             {
-                Resume();
+                if (characterSheet.activeSelf)
+                {
+                    characterSheet.SetActive(false);
+                    pause = false;
+                }
             }
-            else
+
+            if (_inventoryAssigned)
             {
-                Pause();
+                if (inventory.activeSelf)
+                {
+                    inventory.SetActive(false);
+                    pause = false;
+                }
+            }
+
+            if (pause)
+            {
+                if (isPaused)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Pause();
+                }
             }
         }
     }
