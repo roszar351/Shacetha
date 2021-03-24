@@ -7,7 +7,8 @@ public class TooltipScript : MonoBehaviour
 {
     public RectTransform backgroundRect;
     public RectTransform textRect;
-
+    public ItemTooltip toolTip;
+    
     private Rect _screenRect;
 
     private void Start()
@@ -19,12 +20,16 @@ public class TooltipScript : MonoBehaviour
     {
         if (gameObject.activeSelf)
         {
-            transform.position = Input.mousePosition;
             if (!EventSystem.current.IsPointerOverGameObject())
             {
+                backgroundRect.gameObject.SetActive(false);
+                textRect.gameObject.SetActive(false);
                 gameObject.SetActive(false);
                 return;
             }
+            backgroundRect.gameObject.SetActive(true);
+            textRect.gameObject.SetActive(true);
+            transform.position = Input.mousePosition;
             // this prevents it from going off screen on right or up, also in future dont use hard coded value of 115f
             // but currently its fine as tooltip doesn't dynamicaly resize to fit text
             Vector3 down = transform.position - new Vector3(0, 115f, 0);

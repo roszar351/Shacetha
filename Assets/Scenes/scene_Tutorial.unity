@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -98341,7 +98341,7 @@ Tilemap:
       - {fileID: 21300000, guid: c7250cd72959d564e900fdd2ea4af902, type: 3}
       - {fileID: 21300000, guid: 04d9dc04a32055c429386e5d6b05584a, type: 3}
       - {fileID: 21300000, guid: 80443f10806369c46b05955ab88a25d5, type: 3}
-      m_AnimationSpeed: 5.816264
+      m_AnimationSpeed: 3.3082988
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 11, y: 21, z: 0}
@@ -98351,7 +98351,7 @@ Tilemap:
       - {fileID: 21300000, guid: c7250cd72959d564e900fdd2ea4af902, type: 3}
       - {fileID: 21300000, guid: 04d9dc04a32055c429386e5d6b05584a, type: 3}
       - {fileID: 21300000, guid: 80443f10806369c46b05955ab88a25d5, type: 3}
-      m_AnimationSpeed: 9.991481
+      m_AnimationSpeed: 9.586386
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 5, y: 25, z: 0}
@@ -98361,7 +98361,7 @@ Tilemap:
       - {fileID: 21300000, guid: c7250cd72959d564e900fdd2ea4af902, type: 3}
       - {fileID: 21300000, guid: 04d9dc04a32055c429386e5d6b05584a, type: 3}
       - {fileID: 21300000, guid: 80443f10806369c46b05955ab88a25d5, type: 3}
-      m_AnimationSpeed: 5.0207133
+      m_AnimationSpeed: 1.8448755
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 11, y: 25, z: 0}
@@ -98371,7 +98371,7 @@ Tilemap:
       - {fileID: 21300000, guid: c7250cd72959d564e900fdd2ea4af902, type: 3}
       - {fileID: 21300000, guid: 04d9dc04a32055c429386e5d6b05584a, type: 3}
       - {fileID: 21300000, guid: 80443f10806369c46b05955ab88a25d5, type: 3}
-      m_AnimationSpeed: 5.0716143
+      m_AnimationSpeed: 1.8399638
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   m_TileAssetArray:
