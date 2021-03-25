@@ -19,6 +19,7 @@ public class BaseTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
         //Debug.Log("Cursor Entering " + name + " GameObject");
+        CheckTooltipParts();
         isTooltipActive = true;
         tooltipParent.transform.position = pointerEventData.position;
         DisplayTooltip(pointerEventData);
@@ -35,6 +36,7 @@ public class BaseTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     // Override this to specify what text should be displayed
     public virtual void DisplayTooltip(PointerEventData pointerEventData)
     {
+        CheckTooltipParts();
         Color color = Random.ColorHSV();
         //Debug.Log("Override DisplayTooltip!");
 
@@ -50,5 +52,23 @@ public class BaseTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         //Debug.Log("Override CloseTooltip!");
         tooltipParent.gameObject.SetActive(false);
+    }
+
+    public void CheckTooltipParts()
+    {
+        if (tooltipParent == null)
+        {
+            tooltipParent = FindObjectOfType<TooltipScript>().transform;
+        }
+        
+        if (tooltipParent != null && tooltipBackground == null)
+        {
+            tooltipBackground = tooltipParent.GetComponentInChildren<Image>();
+        }
+
+        if (tooltipParent != null && tooltipText == null)
+        {
+            tooltipText = tooltipParent.GetComponentInChildren<TextMeshProUGUI>();
+        }
     }
 }

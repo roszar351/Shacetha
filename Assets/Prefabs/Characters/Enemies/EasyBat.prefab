@@ -614,7 +614,7 @@ MonoBehaviour:
   invincibleTime: 1
   myRenderer: {fileID: 6978528082125580746}
   onDeathEvent: {fileID: 11400000, guid: 5019f2baa26913045954d3a2dbcbdf92, type: 2}
-  rangeMultiplier: 20
+  rangeMultiplier: 45
   zigzagTimer: 1
   myFollowTarget: {fileID: 6048759631091588509}
   followTargetPosition: {fileID: 8937640109314518167}

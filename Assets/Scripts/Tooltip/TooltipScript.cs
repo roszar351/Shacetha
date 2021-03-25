@@ -7,7 +7,6 @@ public class TooltipScript : MonoBehaviour
 {
     public RectTransform backgroundRect;
     public RectTransform textRect;
-    public ItemTooltip toolTip;
     
     private Rect _screenRect;
 

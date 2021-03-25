@@ -11,8 +11,6 @@ public class ItemTooltip : BaseTooltip
 
     private void Start()
     {
-        tooltipBackground = tooltipParent.gameObject.GetComponentInChildren<Image>();
-        tooltipText = tooltipParent.gameObject.GetComponentInChildren<TextMeshProUGUI>();
         _invSlot = gameObject.GetComponent<InventorySlot>();
     }
 
@@ -26,6 +24,7 @@ public class ItemTooltip : BaseTooltip
 
     public override void DisplayTooltip(PointerEventData pointerEventData)
     {
+        CheckTooltipParts();
         SetItemText();
     }
 
