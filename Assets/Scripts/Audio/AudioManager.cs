@@ -29,11 +29,12 @@ public class AudioManager : MonoBehaviour
 
     private bool _isGamePaused = false;
 
-    // Singleton, need to initialize all the sound clips and make sure the audio manager doesnt get destroyed between scenes to keep music playing
-    // using singleton as game should only ever have one audio manager playing sounds i.e. prevents duplication of sounds.
+    // Singleton, need to initialize all the sound clips and make sure the audio
+    // manager doesnt get destroyed between scenes to keep music playing
+    // using singleton as game should only ever have one audio manager playing sounds
+    // i.e. prevents duplication of sounds.
     private void Awake()
     {
-        _soundEffects = new Dictionary<string, Sound>();
         if (instance == null)
         {
             instance = this;
@@ -48,6 +49,7 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         // For sounds put them in a dictionary to improve finding them
+        _soundEffects = new Dictionary<string, Sound>();
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
